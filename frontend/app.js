@@ -1630,7 +1630,7 @@ nav_reports: "Жалобы",
       return '';
     }
 
-    const API_URL = 'http://localhost:3000';
+    const API_URL = '';
 
     /** JWT access + refresh */
     let authToken = null;
