@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handlio — Samochody, Motocykle, Nieruchomości | handlio.pl</title>
+  
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="#top" role="button" class="logo" data-action="nav" data-page="home">
+        <div class="logo-icon">H</div>
+        <div class="logo-text">
+          <span class="brand">Hand<span>lio</span></span>
+          <span class="tagline">Local Marketplace</span>
+        </div>
+      </a>
+      <nav>
+        <button class="nav-btn active" data-action="nav" data-page="home" data-i18n="nav_home">Główna</button>
+        <button class="nav-btn" data-action="nav" data-page="auto" data-i18n="nav_auto">Samochody</button>
+        <button class="nav-btn" data-action="nav" data-page="moto" data-i18n="nav_moto">Motocykle</button>
+        <button class="nav-btn" data-action="nav" data-page="realty" data-i18n="nav_realty">Nieruchomości</button>
+        <button class="nav-btn" data-action="nav" data-page="abroad" data-i18n="nav_abroad">Nieruchomości zagraniczne</button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="fav" data-i18n="nav_fav">Ulubione</button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="my" data-i18n="nav_my">Moje</button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="messages">💬 Chat <span id="chat-badge" class="h23-badge" hidden>0</span></button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="seller">👤 Kabinet</button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="notifications">🔔 <span id="notify-badge" class="h23-badge" hidden>0</span></button>
+        <button class="nav-btn" data-action="nav" data-page="pricing" data-i18n="nav_pricing">Cennik</button>
+        <button class="nav-btn" data-page="add" data-action="go-add" data-i18n="nav_add">+ Dodaj</button>
+      </nav>
+      <div class="header-right">
+        <button type="button" class="theme-btn" id="theme-btn" data-action="theme" title="Theme">🌙</button>
+        <div class="lang-switch">
+          <button class="lang-btn active" data-action="lang" data-lang="pl">PL</button>
+          <button class="lang-btn" data-action="lang" data-lang="en">EN</button>
+          <button class="lang-btn" data-action="lang" data-lang="ru">RU</button>
+        </div>
+        <div id="auth-nav" class="auth-nav"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="side-banner" id="side-banner-left" aria-label="Reklama">
+      <div class="banner-box banner-generic" id="banner-left">
+        <div class="banner-label">Reklama</div>
+        <div class="banner-placeholder">Miejsce<br>na reklamę</div>
+      </div>
+    </aside>
+
+    <main>
+    <div id="page-home" class="page active">
+      <div class="hero-badge" data-i18n="hero_badge">Tanie ogłoszenia dla wszystkich</div>
+      <h1 data-i18n="home_title">Kupuj i sprzedawaj prosto</h1>
+      <p class="subtitle" data-i18n="home_subtitle">Samochody, motocykle i nieruchomości — wszystko w jednym miejscu</p>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="section-title">
+        <h2 data-i18n="recent_title">Najnowsze ogłoszenia</h2>
+        <button class="btn btn-outline btn-sm" data-action="go-add" data-i18n="btn_add">+ Dodaj ogłoszenie</button>
+      </div>
+      <div class="ads-grid" id="home-ads"></div>
+
+      <div class="home-footer">
+        <h3 data-i18n="footer_info">Informacje</h3>
+        <div class="site-footer-links">
+          <a href="#top" role="button" data-action="nav" data-page="rules" data-i18n="nav_rules">Regulamin</a>
+          <a href="#top" role="button" data-action="nav" data-page="privacy" data-i18n="nav_privacy">Polityka prywatności</a>
+          <a href="#top" role="button" data-action="nav" data-page="cookies" data-i18n="nav_cookies">Polityka cookies</a>
+          <a href="#top" role="button" data-action="nav" data-page="help" data-i18n="nav_help">Pomoc</a>
+          <a href="#top" role="button" data-action="nav" data-page="safety" data-i18n="nav_safety">Zasady bezpieczeństwa</a>
+          <a href="#top" role="button" data-action="nav" data-page="pricing" data-i18n="nav_pricing">Cennik</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="page-auto" class="page">
+      <h1 data-i18n="auto_title">Samochody</h1>
+      <p class="subtitle" data-i18n="auto_subtitle">Osobowe, SUV-y, dostawcze</p>
+      
+      <div class="filters" id="filters-auto">
+        <div class="filters-grid">
+          <div class="filter-group" style="flex:3; min-width:250px; position:relative">
+            <label data-i18n="filter_search">🔍 Szukaj</label>
+            <div class="search-wrapper">
+              <input type="text" id="auto-search" data-i18n-placeholder="ph_search_auto" placeholder="Szukaj marki, modelu, miasta..." data-on-input="debounced-search" data-on-focus="search-history" data-on-keydown="search-enter" data-cat="auto">
+              <button class="btn" data-action="clear-search" data-cat="auto" title="Wyczyść">✕</button>
+              <button class="btn" data-action="voice" data-cat="auto" title="Szukaj głosem">🎤</button>
+            </div>
+          </div>
+
+          <div class="filter-group loc-picker">
+            <label data-i18n="filter_location">Lokalizacja</label>
+            <button type="button" class="loc-picker-btn" data-action="loc-panel" data-cat="auto">
+              <span class="pin">📍</span>
+              <span class="loc-label" id="auto-loc-label">Cała Polska</span>
+              <span class="chev">▼</span>
+            </button>
+            <div class="loc-panel" id="auto-loc-panel" data-action="stop">
+              <div class="loc-panel-head" id="auto-loc-head"></div>
+              <div class="loc-panel-search">
+                <input type="text" id="auto-loc-search" placeholder="Szukaj..." data-on-input="render-loc" data-cat="auto">
+              </div>
+              <div class="loc-panel-list" id="auto-loc-list"></div>
+            </div>
+          </div>
+          <div class="filter-group brand-selector">
+            <label data-i18n="filter_brand">Marka</label>
+            <div class="selected" data-action="brand-dd" data-cat="auto">
+              <span id="auto-brand-label">Wszystkie marki</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="brand-dropdown" id="auto-brand-dropdown">
+              <div class="search-input">
+                <input type="text" id="auto-brand-search" placeholder="Szukaj marki..." data-on-input="filter-brands" data-cat="auto">
+              </div>
+              <div id="auto-brand-list"></div>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="filter_model">Model</label>
+            <button class="btn btn-outline btn-sm" data-action="model-modal" data-cat="auto" style="margin-top:0; width:100%; justify-content:space-between">
+              <span id="auto-model-label">Wszystkie modele</span>
+              <span>▾</span>
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="filter_price_from">💰 Od</label>
+            <input type="number" id="auto-min" placeholder="0" data-on-input="render-category" data-cat="auto">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_price_to">💰 Do</label>
+            <input type="number" id="auto-max" data-i18n-placeholder="ph_any" placeholder="Dowolna" data-on-input="render-category" data-cat="auto">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_sort">📊 Sortuj</label>
+            <select id="auto-sort" data-on-change="render-category" data-cat="auto">
+              <option value="new" data-i18n="sort_new">Najnowsze</option>
+              <option value="price-asc" data-i18n="sort_cheap">Najtańsze</option>
+              <option value="price-desc" data-i18n="sort_exp">Najdroższe</option>
+              <option value="popular" data-i18n="sort_popular">Najpopularniejsze</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button class="btn btn-outline btn-sm" data-action="advanced" data-cat="auto" style="margin-top:18px">
+              ⚙️ Rozszerzone
+            </button>
+          </div>
+        </div>
+        
+        <div class="quick-filters" id="quick-filters-auto"></div>
+        
+        <div class="advanced-search" id="advanced-auto">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="filter_year_from">Rok od</label>
+              <input type="number" id="auto-year-from" min="1950" max="2027" data-on-input="render-category" data-cat="auto">
+            </div>
+            <div class="form-group">
+              <label data-i18n="filter_year_to">Rok do</label>
+              <input type="number" id="auto-year-to" min="1950" max="2027" data-on-input="render-category" data-cat="auto">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="filter_fuel">Paliwo</label>
+              <select id="auto-fuel" data-on-change="render-category" data-cat="auto">
+                <option value="">Wszystkie</option>
+                <option value="benzyna">Benzyna</option>
+                <option value="diesel">Diesel</option>
+                <option value="lpg">LPG</option>
+                <option value="hybrid">Hybryda</option>
+                <option value="electric">Elektryczny</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label data-i18n="filter_gearbox">Skrzynia</label>
+              <select id="auto-gearbox" data-on-change="render-category" data-cat="auto">
+                <option value="">Wszystkie</option>
+                <option value="manual">Manualna</option>
+                <option value="auto">Automatyczna</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="ads-grid" id="auto-ads"></div>
+    </div>
+
+    <div id="page-moto" class="page">
+      <h1 data-i18n="moto_title">Motocykle</h1>
+      <p class="subtitle" data-i18n="moto_subtitle">Motocykle, skutery, quady</p>
+      
+      <div class="filters" id="filters-moto">
+        <div class="filters-grid">
+          <div class="filter-group" style="flex:3; min-width:250px; position:relative">
+            <label data-i18n="filter_search">🔍 Szukaj</label>
+            <div class="search-wrapper">
+              <input type="text" id="moto-search" data-i18n-placeholder="ph_search_moto" placeholder="Szukaj marki, modelu, miasta..." data-on-input="debounced-search" data-on-focus="search-history" data-on-keydown="search-enter" data-cat="moto">
+              <button class="btn" data-action="clear-search" data-cat="moto" title="Wyczyść">✕</button>
+              <button class="btn" data-action="voice" data-cat="moto" title="Szukaj głosem">🎤</button>
+            </div>
+          </div>
+
+          <div class="filter-group loc-picker">
+            <label data-i18n="filter_location">Lokalizacja</label>
+            <button type="button" class="loc-picker-btn" data-action="loc-panel" data-cat="moto">
+              <span class="pin">📍</span>
+              <span class="loc-label" id="moto-loc-label">Cała Polska</span>
+              <span class="chev">▼</span>
+            </button>
+            <div class="loc-panel" id="moto-loc-panel" data-action="stop">
+              <div class="loc-panel-head" id="moto-loc-head"></div>
+              <div class="loc-panel-search">
+                <input type="text" id="moto-loc-search" placeholder="Szukaj..." data-on-input="render-loc" data-cat="moto">
+              </div>
+              <div class="loc-panel-list" id="moto-loc-list"></div>
+            </div>
+          </div>
+          <div class="filter-group brand-selector">
+            <label data-i18n="filter_brand">Marka</label>
+            <div class="selected" data-action="brand-dd" data-cat="moto">
+              <span id="moto-brand-label">Wszystkie marki</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="brand-dropdown" id="moto-brand-dropdown">
+              <div class="search-input">
+                <input type="text" id="moto-brand-search" placeholder="Szukaj marki..." data-on-input="filter-brands" data-cat="moto">
+              </div>
+              <div id="moto-brand-list"></div>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="filter_model">Model</label>
+            <button class="btn btn-outline btn-sm" data-action="model-modal" data-cat="moto" style="margin-top:0; width:100%; justify-content:space-between">
+              <span id="moto-model-label">Wszystkie modele</span>
+              <span>▾</span>
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="filter_price_from">💰 Od</label>
+            <input type="number" id="moto-min" placeholder="0" data-on-input="render-category" data-cat="moto">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_price_to">💰 Do</label>
+            <input type="number" id="moto-max" data-i18n-placeholder="ph_any" placeholder="Dowolna" data-on-input="render-category" data-cat="moto">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_sort">📊 Sortuj</label>
+            <select id="moto-sort" data-on-change="render-category" data-cat="moto">
+              <option value="new" data-i18n="sort_new">Najnowsze</option>
+              <option value="price-asc" data-i18n="sort_cheap">Najtańsze</option>
+              <option value="price-desc" data-i18n="sort_exp">Najdroższe</option>
+              <option value="popular" data-i18n="sort_popular">Najpopularniejsze</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button class="btn btn-outline btn-sm" data-action="advanced" data-cat="moto" style="margin-top:18px">
+              ⚙️ Rozszerzone
+            </button>
+          </div>
+        </div>
+        
+        <div class="quick-filters" id="quick-filters-moto"></div>
+        
+        <div class="advanced-search" id="advanced-moto">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="filter_year_from">Rok od</label>
+              <input type="number" id="moto-year-from" min="1950" max="2027" data-on-input="render-category" data-cat="moto">
+            </div>
+            <div class="form-group">
+              <label data-i18n="filter_year_to">Rok do</label>
+              <input type="number" id="moto-year-to" min="1950" max="2027" data-on-input="render-category" data-cat="moto">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Pojemność od (cm³)</label>
+              <input type="number" id="moto-cc-from" min="0" data-on-input="render-category" data-cat="moto">
+            </div>
+            <div class="form-group">
+              <label>Pojemność do (cm³)</label>
+              <input type="number" id="moto-cc-to" min="0" data-on-input="render-category" data-cat="moto">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="ads-grid" id="moto-ads"></div>
+    </div>
+
+    <div id="page-realty" class="page">
+      <h1 data-i18n="realty_title">Nieruchomości</h1>
+      <p class="subtitle" data-i18n="realty_subtitle">Nieruchomości w Polsce — mieszkania, domy, działki, lokale</p>
+
+      <div class="deal-tabs" id="realty-tabs">
+        <button type="button" class="deal-tab active" data-action="realty-deal" data-deal="all" data-i18n="tab_all">Wszystkie</button>
+        <button type="button" class="deal-tab" data-action="realty-deal" data-deal="sale" data-i18n="tab_sale">Sprzedaż</button>
+        <button type="button" class="deal-tab" data-action="realty-deal" data-deal="rent" data-i18n="tab_rent">Wynajem</button>
+      </div>
+<div class="filters" id="filters-realty">
+        <div class="filters-grid">
+          <div class="filter-group" style="flex:2; min-width:200px; position:relative">
+            <label data-i18n="filter_search">🔍 Szukaj</label>
+            <div class="search-wrapper">
+              <input type="text" id="realty-search" data-i18n-placeholder="ph_search_realty" placeholder="Miasto, dzielnica..." data-on-input="debounced-search" data-on-focus="search-history" data-on-keydown="search-enter" data-cat="realty">
+              <button class="btn" data-action="clear-search" data-cat="realty" title="Wyczyść">✕</button>
+              <button class="btn" data-action="voice" data-cat="realty" title="Szukaj głosem">🎤</button>
+            </div>
+          </div>
+          <div class="filter-group loc-picker">
+            <label data-i18n="filter_location">Lokalizacja</label>
+            <button type="button" class="loc-picker-btn" data-action="loc-panel" data-cat="realty">
+              <span class="pin">📍</span>
+              <span class="loc-label" id="realty-loc-label">Cała Polska</span>
+              <span class="chev">▼</span>
+            </button>
+            <div class="loc-panel" id="realty-loc-panel" data-action="stop">
+              <div class="loc-panel-head" id="realty-loc-head"></div>
+              <div class="loc-panel-search">
+                <input type="text" id="realty-loc-search" placeholder="Szukaj..." data-on-input="render-loc" data-cat="realty">
+              </div>
+              <div class="loc-panel-list" id="realty-loc-list"></div>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_price_from">💰 Od</label>
+            <input type="number" id="realty-min" placeholder="0" data-on-input="render-category" data-cat="realty">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_price_to">💰 Do</label>
+            <input type="number" id="realty-max" data-i18n-placeholder="ph_any" placeholder="Dowolna" data-on-input="render-category" data-cat="realty">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_sort">📊 Sortuj</label>
+            <select id="realty-sort" data-on-change="render-category" data-cat="realty">
+              <option value="new" data-i18n="sort_new">Najnowsze</option>
+              <option value="price-asc" data-i18n="sort_cheap">Najtańsze</option>
+              <option value="price-desc" data-i18n="sort_exp">Najdroższe</option>
+              <option value="popular" data-i18n="sort_popular">Najpopularniejsze</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button class="btn btn-outline btn-sm" data-action="advanced" data-cat="realty" style="margin-top:18px">
+              ⚙️ Rozszerzone
+            </button>
+          </div>
+        </div>
+        <div class="quick-filters" id="quick-filters-realty"></div>
+        <div class="advanced-search" id="advanced-realty">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Powierzchnia od (m²)</label>
+              <input type="number" id="realty-area-from" min="0" step="1" data-on-input="render-category" data-cat="realty">
+            </div>
+            <div class="form-group">
+              <label>Powierzchnia do (m²)</label>
+              <input type="number" id="realty-area-to" min="0" step="1" data-on-input="render-category" data-cat="realty">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="filter_rooms">Liczba pokoi</label>
+              <div class="room-chips" id="realty-rooms" data-cat="realty">
+                <button type="button" class="room-chip" data-rooms="1" data-action="room-chip">1</button>
+                <button type="button" class="room-chip" data-rooms="2" data-action="room-chip">2</button>
+                <button type="button" class="room-chip" data-rooms="3" data-action="room-chip">3</button>
+                <button type="button" class="room-chip" data-rooms="4" data-action="room-chip">4+</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label data-i18n="filter_prop_type">Typ nieruchomości</label>
+              <select id="realty-type" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="apartment">Mieszkanie</option>
+                <option value="house">Dom</option>
+                <option value="plot">Działka</option>
+                <option value="commercial">Lokal użytkowy</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group"><label>Rok budowy od</label>
+              <input type="number" id="flt-build-from" min="1800" data-on-input="render-category" data-cat="realty"></div>
+            <div class="form-group"><label>Rok budowy do</label>
+              <input type="number" id="flt-build-to" min="1800" data-on-input="render-category" data-cat="realty"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Rynek</label>
+              <select id="flt-market" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="primary" data-i18n="market_primary">Pierwotny</option>
+                <option value="secondary" data-i18n="market_secondary">Wtórny</option>
+              </select></div>
+            <div class="form-group"><label>Ogrzewanie</label>
+              <select id="flt-heating" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="gas" data-i18n="heat_gas">Gazowe</option>
+                <option value="district" data-i18n="heat_district">Miejskie</option>
+                <option value="electric" data-i18n="heat_electric">Elektryczne</option>
+                <option value="heat_pump" data-i18n="heat_pump">Pompa ciepła</option>
+              </select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Stan</label>
+              <select id="flt-cond-type" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="ready" data-i18n="cond_ready">Do zamieszkania</option>
+                <option value="to_renovate" data-i18n="cond_renovate">Do remontu</option>
+                <option value="developer">Deweloperski</option>
+              </select></div>
+            <div class="form-group"><label>Umeblowanie</label>
+              <select id="flt-furnished" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="yes">Tak</option>
+                <option value="partial" data-i18n="furn_partial">Częściowo</option>
+                <option value="no">Nie</option>
+              </select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Parking</label>
+              <select id="flt-parking" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="garage" data-i18n="park_garage">Garaż</option>
+                <option value="place">Miejsce</option>
+                <option value="street" data-i18n="park_street">Ulica</option>
+                <option value="none">Brak</option>
+              </select></div>
+            <div class="form-group"><label>Winda</label>
+              <select id="flt-elevator" data-on-change="render-category" data-cat="realty">
+                <option value="">Wszystkie</option>
+                <option value="yes">Tak</option>
+                <option value="no">Nie</option>
+              </select></div>
+          </div>
+        </div>
+      </div>
+      <div class="ads-grid" id="realty-ads"></div>
+    </div>
+
+    
+    <div id="page-abroad" class="page">
+      <h1 data-i18n="abroad_title">Nieruchomości zagraniczne</h1>
+      <p class="subtitle" data-i18n="abroad_subtitle">Apartamenty, domy i inwestycje poza Polską</p>
+
+      <div class="deal-tabs" id="abroad-tabs">
+        <button type="button" class="deal-tab active" data-action="abroad-deal" data-deal="all" data-i18n="tab_all">Wszystkie</button>
+        <button type="button" class="deal-tab" data-action="abroad-deal" data-deal="sale" data-i18n="tab_sale">Sprzedaż</button>
+        <button type="button" class="deal-tab" data-action="abroad-deal" data-deal="rent" data-i18n="tab_rent">Wynajem</button>
+      </div>
+
+      <div class="filters" id="filters-abroad">
+        <div class="filters-grid">
+          <div class="filter-group" style="flex:3; min-width:220px">
+            <label data-i18n="filter_search">🔍 Szukaj</label>
+            <div class="search-wrapper">
+              <input type="text" id="abroad-search" data-i18n-placeholder="ph_search_abroad" placeholder="Kraj, miasto, opis..." data-on-input="debounced-search" data-on-focus="search-history" data-on-keydown="search-enter" data-cat="abroad">
+              <button class="btn" data-action="clear-search" data-cat="abroad" title="Wyczyść">✕</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_country">Kraj</label>
+            <select id="abroad-country" data-on-change="render-category" data-cat="abroad">
+              <option value="">Wszystkie kraje</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_price_from">Cena od</label>
+            <input type="number" id="abroad-min" placeholder="0" data-on-input="render-category" data-cat="abroad">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_price_to">Cena do</label>
+            <input type="number" id="abroad-max" data-i18n-placeholder="ph_any" placeholder="Dowolna" data-on-input="render-category" data-cat="abroad">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_sort">Sortuj</label>
+            <select id="abroad-sort" data-on-change="render-category" data-cat="abroad">
+              <option value="new" data-i18n="sort_new">Najnowsze</option>
+              <option value="price-asc" data-i18n="sort_price_asc">Cena: rosnąco</option>
+              <option value="price-desc" data-i18n="sort_price_desc">Cena: malejąco</option>
+              <option value="popular" data-i18n="sort_popular">Najpopularniejsze</option>
+            </select>
+          </div>
+        </div>
+        <div class="filters-grid" style="margin-top:10px">
+          <div class="filter-group">
+            <label data-i18n="filter_area_from">Powierzchnia od</label>
+            <input type="number" id="abroad-area-from" min="0" step="1" data-on-input="render-category" data-cat="abroad">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_area_to">Powierzchnia do</label>
+            <input type="number" id="abroad-area-to" min="0" step="1" data-on-input="render-category" data-cat="abroad">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_rooms">Pokoje</label>
+            <div class="room-chips" id="abroad-rooms" data-cat="abroad">
+              <button type="button" class="room-chip" data-rooms="1" data-action="room-chip">1</button>
+              <button type="button" class="room-chip" data-rooms="2" data-action="room-chip">2</button>
+              <button type="button" class="room-chip" data-rooms="3" data-action="room-chip">3</button>
+              <button type="button" class="room-chip" data-rooms="4" data-action="room-chip">4+</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label data-i18n="filter_prop_type">Typ</label>
+            <select id="abroad-type" data-on-change="render-category" data-cat="abroad">
+              <option value="" data-i18n="form_choose">Wszystkie</option>
+              <option value="apartment" data-i18n="prop_apartment">Mieszkanie</option>
+              <option value="house" data-i18n="prop_house">Dom</option>
+              <option value="plot" data-i18n="prop_plot">Działka</option>
+              <option value="commercial" data-i18n="prop_commercial">Lokal</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="spec_energy">Klasa energetyczna</label>
+            <select id="flt-energy" data-on-change="render-category" data-cat="abroad">
+              <option value="" data-i18n="filter_all">Wszystkie</option>
+              <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+              <option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label data-i18n="spec_beach_max">Max. do plaży (m)</label>
+            <input type="number" id="flt-beach-max" min="0" placeholder="1000" data-on-input="render-category" data-cat="abroad">
+          </div>
+          <div class="filter-group">
+            <label data-i18n="spec_yield_min">Min. rentowność %</label>
+            <input type="number" id="flt-yield-min" min="0" step="0.1" placeholder="3" data-on-input="render-category" data-cat="abroad">
+          </div>
+        </div>
+      </div>
+      <div class="ads-grid" id="abroad-ads"></div>
+    </div>
+
+    <div id="page-fav" class="page">
+      <h1 data-i18n="fav_title">Ulubione</h1>
+      <p class="subtitle" data-i18n="fav_subtitle">Ogłoszenia, które zapisałeś</p>
+      <div class="ads-grid" id="fav-ads"></div>
+    </div>
+
+    <div id="page-my" class="page">
+      <h1 data-i18n="my_title">Moje ogłoszenia</h1>
+      <p class="subtitle" data-i18n="my_subtitle">Zarządzaj swoimi ogłoszeniami</p>
+      <div class="ads-grid" id="my-ads"></div>
+    </div>
+
+    <div id="page-messages" class="page"><div class="page-head"><h1>💬 Chat</h1><p class="subtitle">Rozmowy z kupującymi i sprzedającymi</p></div><div id="h23-chat-list" class="h23-list"></div></div>
+    <div id="page-notifications" class="page"><div class="page-head h23-head-row"><div><h1>🔔 Powiadomienia</h1><p class="subtitle">Ważne informacje dotyczące Twojego konta</p></div><button class="btn btn-outline" data-action="h23-mark-all">Oznacz wszystkie jako przeczytane</button></div><div id="h23-notifications" class="h23-list"></div></div>
+    <div id="page-seller" class="page"><div id="h23-seller-dashboard"></div></div>
+    <div id="page-reports" class="page"><div class="page-head h23-head-row"><div><h1>🚨 Жалобы / Reports</h1><p class="subtitle">Moderation queue</p></div><div id="h23-report-stats"></div></div><div id="h23-reports" class="h23-list"></div></div>
+
+    <div id="page-pricing" class="page">
+      <h1 data-i18n="pricing_title">Cennik</h1>
+      <p class="subtitle" data-i18n="pricing_subtitle">Proste i przejrzyste ceny — bez ukrytych opłat</p>
+      <div class="pricing-section-title" data-i18n="pricing_private">Dla osób prywatnych</div>
+      <div class="pricing-grid">
+        <div class="price-card featured">
+          <div class="price-badge" data-i18n="badge_popular">Popularne</div>
+          <h3 data-i18n="plan_basic">Ogłoszenie podstawowe</h3>
+          <div class="price-amount">1,99 zł <span data-i18n="per_15">/ 15 dni</span></div>
+          <p class="price-desc" data-i18n="plan_basic_desc">Idealne, by szybko sprzedać auto, motocykl lub nieruchomość.</p>
+          <ul class="price-list">
+            <li data-i18n="feat_15">✓ 15 dni publikacji</li>
+            <li data-i18n="feat_photos">✓ Do 15 zdjęć</li>
+            <li data-i18n="feat_edit">✓ Edycja ogłoszenia</li>
+          </ul>
+          <button class="btn btn-primary" data-action="go-add" data-i18n="btn_start">Dodaj ogłoszenie</button>
+        </div>
+        <div class="price-card">
+          <h3 data-i18n="plan_extend">Przedłużenie</h3>
+          <div class="price-amount">0,99 zł <span data-i18n="per_15">/ 15 dni</span></div>
+          <p class="price-desc" data-i18n="plan_extend_desc">Przedłuż aktywne ogłoszenie o kolejne 15 dni.</p>
+          <ul class="price-list">
+            <li data-i18n="feat_extend">✓ +15 dni do ogłoszenia</li>
+            <li data-i18n="feat_keep">✓ Zachowujesz pozycję</li>
+          </ul>
+          <button class="btn btn-outline" data-action="extend-ad" data-i18n="plan_extend">Przedłuż</button>
+        </div>
+        <div class="price-card">
+          <h3 data-i18n="plan_boost">Podbicie</h3>
+          <div class="price-amount">4,99 zł</div>
+          <p class="price-desc" data-i18n="plan_boost_desc">Wypchnij ogłoszenie na górę listy na 24 godziny.</p>
+          <ul class="price-list">
+            <li data-i18n="feat_top">✓ Na górze listy</li>
+            <li data-i18n="feat_24h">✓ Działa 24 godziny</li>
+          </ul>
+          <button class="btn btn-outline" data-action="boost-my" data-i18n="plan_boost">Podbij</button>
+        </div>
+      </div>
+      <div class="pricing-section-title" data-i18n="pricing_business">Dla firm i pośredników</div>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3 data-i18n="biz_single">1 ogłoszenie</h3>
+          <div class="price-amount">14,99 zł <span data-i18n="per_15">/ 15 dni</span></div>
+          <p class="price-desc" data-i18n="biz_single_desc">Pojedyncze ogłoszenie firmowe.</p>
+          <ul class="price-list">
+            <li data-i18n="feat_15">✓ 15 dni publikacji</li>
+            <li data-i18n="feat_20photos">✓ Do 20 zdjęć</li>
+          </ul>
+          <button class="btn btn-outline" data-action="go-add" data-i18n="btn_start">Dodaj ogłoszenie</button>
+        </div>
+        <div class="price-card featured">
+          <div class="price-badge" data-i18n="badge_best">Najlepszy wybór</div>
+          <h3 data-i18n="biz_pack5">Pakiet 5</h3>
+          <div class="price-amount">59 zł <span>/ 30 dni</span></div>
+          <p class="price-desc" data-i18n="biz_pack5_desc">5 ogłoszeń na 30 dni — ok. 11,80 zł / szt.</p>
+          <ul class="price-list">
+            <li>✓ 5 ogłoszeń</li>
+            <li data-i18n="feat_30">✓ 30 dni</li>
+            <li data-i18n="feat_stats">✓ Statystyki</li>
+          </ul>
+          <button class="btn btn-primary" data-action="go-add" data-i18n="btn_start">Dodaj ogłoszenie</button>
+        </div>
+        <div class="price-card">
+          <h3 data-i18n="biz_pack15">Pakiet 15</h3>
+          <div class="price-amount">149 zł <span>/ 30 dni</span></div>
+          <p class="price-desc" data-i18n="biz_pack15_desc">Dla aktywnych sprzedawców — ok. 9,93 zł / szt.</p>
+          <ul class="price-list">
+            <li>✓ 15 ogłoszeń</li>
+            <li data-i18n="feat_30">✓ 30 dni</li>
+            <li data-i18n="feat_stats">✓ Statystyki</li>
+            <li data-i18n="feat_1boost">✓ 1 podbicie gratis</li>
+          </ul>
+          <button class="btn btn-outline" data-action="go-add" data-i18n="btn_start">Dodaj ogłoszenie</button>
+        </div>
+        <div class="price-card">
+          <h3 data-i18n="biz_pack40">Pakiet 40</h3>
+          <div class="price-amount">349 zł <span>/ 30 dni</span></div>
+          <p class="price-desc" data-i18n="biz_pack40_desc">Dla salonów i agencji — ok. 8,73 zł / szt.</p>
+          <ul class="price-list">
+            <li>✓ 40 ogłoszeń</li>
+            <li data-i18n="feat_30">✓ 30 dni</li>
+            <li data-i18n="feat_stats">✓ Statystyki</li>
+            <li data-i18n="feat_3boost">✓ 3 podbicia gratis</li>
+          </ul>
+          <button class="btn btn-outline" data-action="go-add" data-i18n="btn_start">Dodaj ogłoszenie</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="page-auth" class="page">
+      <h1 data-i18n="auth_title">Rejestracja</h1>
+      <p class="subtitle" data-i18n="auth_subtitle">Zarejestruj się, aby dodawać ogłoszenia</p>
+      <div class="form-card">
+        <div class="auth-note" id="auth-note" data-i18n="auth_note">Aby dodać ogłoszenie, musisz mieć konto.</div>
+        <div class="user-type-tabs">
+          <button type="button" class="user-type-tab active" id="tab-private" data-action="user-type" data-type="private" data-i18n="type_private">Osoba prywatna</button>
+          <button type="button" class="user-type-tab" id="tab-business" data-action="user-type" data-type="business" data-i18n="type_business">Firma</button>
+        </div>
+        <form id="auth-form" data-on-submit="auth">
+          <div id="reg-private">
+            <div class="form-group">
+              <label data-i18n="form_name">Imię i nazwisko *</label>
+              <input type="text" id="a-name" placeholder="Jan Kowalski">
+            </div>
+          </div>
+          <div id="reg-business" style="display:none">
+            <div class="form-group">
+              <label data-i18n="form_company">Nazwa firmy *</label>
+              <input type="text" id="a-company" placeholder="Auto Salon Sp. z o.o.">
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_nip">NIP *</label>
+              <input type="text" id="a-nip" placeholder="1234567890" maxlength="13">
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_contact">Osoba kontaktowa *</label>
+              <input type="text" id="a-contact" placeholder="Jan Kowalski">
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_email">E-mail *</label>
+            <input type="email" id="a-email" required placeholder="jan@email.com">
+          </div>
+          <div id="reg-phone">
+  <div class="form-group">
+    <label data-i18n="form_phone_reg">Telefon *</label>
+    <input type="tel" id="a-phone" required placeholder="+48 123 456 789">
+  </div>
+</div>
+          <div class="form-group">
+            <label data-i18n="form_password">Hasło *</label>
+            <div class="pwd-wrap">
+              <input type="password" id="a-password" required minlength="4" placeholder="••••••••">
+              <button type="button" class="pwd-toggle" data-action="pwd-toggle" data-target="a-password" aria-label="Show password">👁</button>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="auth-submit-btn" data-i18n="btn_register">Zarejestruj się</button>
+          </div>
+          <p id="forgot-password-link" style="display:none;text-align:center;margin-top:14px;font-size:0.9rem">
+            <a href="#top" role="button" data-action="forgot" style="color:var(--primary);font-weight:600" data-i18n="link_forgot">Nie pamiętasz hasła?</a>
+          </p>
+        </form>
+        <div class="auth-switch">
+          <span id="auth-switch-text" data-i18n="have_account">Masz już konto?</span>
+          <a data-action="toggle-auth" id="auth-switch-link" data-i18n="btn_login_link">Zaloguj się</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="page-admin" class="page">
+      <h1 data-i18n="admin_title">Panel moderacji</h1>
+      <p class="subtitle" data-i18n="admin_subtitle">Zarządzaj ogłoszeniami i użytkownikami</p>
+      <div class="admin-stats" id="admin-stats"></div>
+      <div class="admin-filters" id="admin-filters">
+        <button type="button" class="deal-tab active" data-action="admin-filter" data-filter="pending" data-i18n="mod_pending">Oczekujące</button>
+        <button type="button" class="deal-tab" data-action="admin-filter" data-filter="approved" data-i18n="mod_approved">Zatwierdzone</button>
+        <button type="button" class="deal-tab" data-action="admin-filter" data-filter="rejected" data-i18n="mod_rejected">Odrzucone</button>
+        <button type="button" class="deal-tab" data-action="admin-filter" data-filter="all" data-i18n="mod_all">Wszystkie</button>
+      </div>
+      <div class="ads-grid" id="admin-ads"></div>
+    </div>
+
+    <div id="page-add" class="page">
+      <h1 data-i18n="add_title">Dodaj ogłoszenie</h1>
+      <p class="subtitle" data-i18n="add_subtitle">Wypełnij formularz — ogłoszenie pojawi się od razu</p>
+      <div class="form-card">
+        <form id="ad-form" data-on-submit="ad">
+          <div class="form-group">
+            <label data-i18n="form_category">Kategoria <span class="required">*</span></label>
+            <select id="f-category" required data-on-change="toggle-category">
+              <option value="" data-i18n="form_choose">Wybierz...</option>
+              <option value="auto" data-i18n="cat_auto">Samochody</option>
+<option value="moto" data-i18n="cat_moto">Motocykle</option>
+<option value="realty" data-i18n="cat_realty">Nieruchomości</option>
+<option value="realty_abroad">Nieruchomości za granicą</option>
+            </select>
+          </div>
+
+          <!-- AUTO FIELDS with Brand and Model selection -->
+          <div id="fields-auto" class="category-fields" style="display:none">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Marka <span class="required">*</span></label>
+                <select id="f-auto-brand" required data-on-change="auto-brand">
+                  <option value="">Wybierz markę...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Model <span class="required">*</span></label>
+                <select id="f-auto-model" required data-on-change="auto-title">
+                  <option value="">Wybierz model...</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Rok <span class="required">*</span></label>
+              <input type="number" id="f-year-auto" min="1950" max="2027" required placeholder="2019" data-on-change="auto-title" data-on-input="auto-title">
+            </div>
+            <div class="form-group">
+              <label>Tytuł ogłoszenia (generowany automatycznie)</label>
+              <div class="auto-title-preview" id="auto-title-preview">
+                <span class="label">📝</span>
+                <span id="auto-title-text">Wybierz markę, model i rok</span>
+              </div>
+              <input type="hidden" id="f-title">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_price">Cena (zł) <span class="required">*</span></label>
+                <input type="number" id="f-price" required min="0" placeholder="45000">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_city">Miasto <span class="required">*</span></label>
+                <input type="text" id="f-city" required data-i18n-placeholder="ph_city" placeholder="Warszawa" data-on-input="auto-title">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_mileage">Przebieg (km) <span class="required">*</span></label>
+                <input type="number" id="f-mileage-auto" min="0" required placeholder="87000">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_fuel">Paliwo</label>
+                <select id="f-fuel">
+                  <option value="" data-i18n="form_choose">Wybierz...</option>
+                  <option value="benzyna" data-i18n="fuel_petrol">Benzyna</option>
+                  <option value="diesel" data-i18n="fuel_diesel">Diesel</option>
+                  <option value="lpg" data-i18n="fuel_lpg">LPG</option>
+                  <option value="hybrid" data-i18n="fuel_hybrid">Hybryda</option>
+                  <option value="electric" data-i18n="fuel_electric">Elektryczny</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_gearbox">Skrzynia</label>
+                <select id="f-gearbox">
+                  <option value="" data-i18n="form_choose">Wybierz...</option>
+                  <option value="manual" data-i18n="gear_manual">Manualna</option>
+                  <option value="auto" data-i18n="gear_auto">Automatyczna</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_condition">Stan</label>
+                <select id="f-condition-auto">
+                  <option value="" data-i18n="form_choose">Wybierz...</option>
+                  <option value="new" data-i18n="cond_new">Nowy</option>
+                  <option value="used" data-i18n="cond_used">Używany</option>
+                  <option value="damaged" data-i18n="cond_damaged">Uszkodzony</option>
+                </select>
+              </div>
+<div class="form-group">
+  <label>Kolor</label>
+  <select id="f-color-auto">
+    <option value="">Wybierz...</option>
+    <option value="black">Czarny</option>
+    <option value="white">Biały</option>
+    <option value="silver">Srebrny</option>
+    <option value="gray">Szary</option>
+    <option value="blue">Niebieski</option>
+    <option value="red">Czerwony</option>
+    <option value="green">Zielony</option>
+    <option value="brown">Brązowy</option>
+    <option value="beige">Beżowy</option>
+    <option value="yellow">Żółty</option>
+    <option value="orange">Pomarańczowy</option>
+    <option value="other">Inny</option>
+  </select>
+</div>
+
+            </div>
+          </div>
+
+
+            <div class="form-section" id="form-section-auto-params">
+              <h4 class="form-section-title">📐 Parametry techniczne</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nadwozie</label>
+                  <select id="f-body-type">
+                    <option value="">Wybierz...</option>
+                    <option value="sedan" data-i18n="body_sedan">Sedan</option>
+                    <option value="hatchback" data-i18n="body_hatchback">Hatchback</option>
+                    <option value="kombi" data-i18n="body_kombi">Kombi</option>
+                    <option value="suv" data-i18n="body_suv">SUV / Crossover</option>
+                    <option value="coupe" data-i18n="body_coupe">Coupe</option>
+                    <option value="cabriolet" data-i18n="body_cabriolet">Cabriolet</option>
+                    <option value="van" data-i18n="body_van">Van / Minibus</option>
+                    <option value="pickup" data-i18n="body_pickup">Pickup</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Pojemność (cm³)</label>
+                  <input type="number" id="f-engine-capacity" min="0" max="10000" placeholder="1998">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Moc (KM)</label>
+                  <input type="number" id="f-power-auto" min="0" max="2000" placeholder="150">
+                </div>
+                <div class="form-group">
+                  <label>Napęd</label>
+                  <select id="f-drive-type">
+                    <option value="">Wybierz...</option>
+                    <option value="fwd" data-i18n="drive_fwd">Przedni (FWD)</option>
+                    <option value="rwd" data-i18n="drive_rwd">Tylny (RWD)</option>
+                    <option value="awd" data-i18n="drive_awd">4x4 (AWD)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Liczba drzwi</label>
+                  <select id="f-doors">
+                    <option value="">Wybierz...</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Pochodzenie</label>
+                  <select id="f-polish-origin">
+                    <option value="">Wybierz...</option>
+                    <option value="krajowy" data-i18n="origin_krajowy">Krajowy</option>
+                    <option value="import" data-i18n="origin_import">Import</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-section" id="form-section-auto-condition">
+              <h4 class="form-section-title">🔧 Stan pojazdu</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Uszkodzenia</label>
+                  <select id="f-damaged">
+                    <option value="">Wybierz...</option>
+                    <option value="none" data-i18n="dmg_none">Bezwypadkowy / brak</option>
+                    <option value="light" data-i18n="dmg_light">Lekkie uszkodzenia</option>
+                    <option value="heavy" data-i18n="dmg_heavy">Poważne uszkodzenia</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Bezwypadkowy</label>
+                  <select id="f-accident-free">
+                    <option value="">Wybierz...</option>
+                    <option value="yes">Tak</option>
+                    <option value="no">Nie</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Pierwszy właściciel</label>
+                <select id="f-first-owner">
+                  <option value="">Wybierz...</option>
+                  <option value="yes">Tak</option>
+                  <option value="no">Nie</option>
+                </select>
+              </div>
+            </div>
+
+          <!-- MOTO FIELDS with Brand and Model selection -->
+          <div id="fields-moto" class="category-fields" style="display:none">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Marka <span class="required">*</span></label>
+                <select id="f-moto-brand" required data-on-change="moto-brand">
+                  <option value="">Wybierz markę...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Model <span class="required">*</span></label>
+                <select id="f-moto-model" required data-on-change="moto-title">
+                  <option value="">Wybierz model...</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Rok <span class="required">*</span></label>
+              <input type="number" id="f-year-moto" min="1950" max="2027" required placeholder="2021" data-on-change="moto-title" data-on-input="moto-title">
+            </div>
+            <div class="form-group">
+              <label>Tytuł ogłoszenia (generowany automatycznie)</label>
+              <div class="auto-title-preview" id="moto-title-preview">
+                <span class="label">📝</span>
+                <span id="moto-title-text">Wybierz markę, model i rok</span>
+              </div>
+              <input type="hidden" id="f-title-moto">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_price">Cena (zł) <span class="required">*</span></label>
+                <input type="number" id="f-price-moto" required min="0" placeholder="34500">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_city">Miasto <span class="required">*</span></label>
+                <input type="text" id="f-city-moto" required data-i18n-placeholder="ph_city" placeholder="Warszawa" data-on-input="moto-title">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_mileage">Przebieg (km) <span class="required">*</span></label>
+                <input type="number" id="f-mileage-moto" min="0" required placeholder="9200">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_engine">Pojemność (cm³)</label>
+                <input type="number" id="f-engine" min="0" placeholder="689">
+              </div>
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_condition">Stan</label>
+              <select id="f-condition-moto">
+                <option value="" data-i18n="form_choose">Wybierz...</option>
+                <option value="new" data-i18n="cond_new">Nowy</option>
+                <option value="used" data-i18n="cond_used">Używany</option>
+                <option value="damaged" data-i18n="cond_damaged">Uszkodzony</option>
+              </select>
+            </div>
+          </div>
+
+
+            <div class="form-section" id="form-section-moto">
+              <h4 class="form-section-title">📐 Parametry moto</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Typ motocykla</label>
+                  <select id="f-moto-type">
+                    <option value="">Wybierz...</option>
+                    <option value="sport" data-i18n="moto_sport">Sportowy</option>
+                    <option value="naked" data-i18n="moto_naked">Naked</option>
+                    <option value="touring" data-i18n="moto_touring">Touring</option>
+                    <option value="cruiser" data-i18n="moto_cruiser">Cruiser</option>
+                    <option value="enduro" data-i18n="moto_enduro">Enduro / Cross</option>
+                    <option value="scooter" data-i18n="moto_scooter">Skuter</option>
+                    <option value="chopper">Chopper</option>
+                    <option value="other">Inny</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Moc (KM)</label>
+                  <input type="number" id="f-power-moto" min="0" max="500" placeholder="75">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Napęd</label>
+                  <select id="f-drive-moto">
+                    <option value="">Wybierz...</option>
+                    <option value="chain" data-i18n="drive_chain">Łańcuch</option>
+                    <option value="belt" data-i18n="drive_belt">Pasek</option>
+                    <option value="shaft" data-i18n="drive_shaft">Wał</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Silnik</label>
+                  <select id="f-engine-type">
+                    <option value="">Wybierz...</option>
+                    <option value="2t" data-i18n="eng_2t">2-suwowy (2T)</option>
+                    <option value="4t" data-i18n="eng_4t">4-suwowy (4T)</option>
+                    <option value="electric">Elektryczny</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Kategoria prawa jazdy</label>
+                <select id="f-license-cat">
+                  <option value="">Wybierz...</option>
+                  <option value="AM">AM</option>
+                  <option value="A1">A1</option>
+                  <option value="A2">A2</option>
+                  <option value="A">A</option>
+                  <option value="B">B (z kodem 79.03)</option>
+                </select>
+              </div>
+            </div>
+
+          <!-- REALTY FIELDS -->
+          <div id="fields-realty" class="category-fields" style="display:none">
+            <div class="form-group">
+              <label data-i18n="form_title">Tytuł <span class="required">*</span></label>
+              <div class="auto-title-preview" style="padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg);font-weight:600">
+                <span id="realty-title-text" style="color:var(--muted)">Wybierz typ, powierzchnię i liczbę pokoi</span>
+              </div>
+              <input type="hidden" id="f-title-realty">
+              <p style="font-size:0.8rem;color:var(--muted);margin-top:6px" data-i18n="form_title_auto_hint">Tytuł tworzy się automatycznie z parametrów ogłoszenia.</p>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_price">Cena (zł) <span class="required">*</span></label>
+                <input type="number" id="f-price-realty" required min="0" placeholder="890000">
+              </div>
+              
+            </div>
+            <div class="form-row" id="realty-pl-fields">
+              <div class="form-group">
+                <label data-i18n="form_city">Miasto / miejscowość <span class="required">*</span></label>
+                <select id="f-city-realty" required data-on-change="realty-city">
+                  <option value="">Wybierz...</option>
+                </select>
+                <input type="text" id="f-city-realty-other" style="display:none;margin-top:8px" placeholder="Wpisz miejscowość..." maxlength="80" data-on-input="realty-title">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_district">Dzielnica / osiedle</label>
+                <input type="text" id="f-district" placeholder="np. Mokotów" maxlength="60">
+              </div>
+            </div>
+            <div class="form-row" id="realty-abroad-fields" style="display:none">
+              <div class="form-group">
+                <label data-i18n="form_country">Kraj <span class="required">*</span></label>
+                <select id="f-country" data-on-change="realty-country">
+                  <option value="">Wybierz kraj...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_city_abroad">Miasto / miejscowość <span class="required">*</span></label>
+                <input type="text" id="f-city-abroad" data-on-input="realty-title" placeholder="np. Barcelona" maxlength="80">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_area">Powierzchnia (m²) <span class="required">*</span></label>
+                <input type="number" id="f-area" min="1" step="0.1" required placeholder="68" data-on-input="realty-title">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_rooms">Liczba pokoi</label>
+                <input type="number" id="f-rooms" min="1" max="20" placeholder="3" data-on-input="realty-title">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_floor">Piętro</label>
+                <input type="text" id="f-floor" placeholder="4/8">
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_deal">Typ transakcji</label>
+                <select id="f-deal" data-on-change="realty-title">
+                  <option value="" data-i18n="form_choose">Wybierz...</option>
+                  <option value="sale" data-i18n="deal_sale">Sprzedaż</option>
+                  <option value="rent" data-i18n="deal_rent">Wynajem</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_prop_type">Rodzaj nieruchomości</label>
+              <select id="f-prop-type" data-on-change="realty-title">
+                <option value="" data-i18n="form_choose">Wybierz...</option>
+                <option value="apartment" data-i18n="prop_apartment">Mieszkanie</option>
+                <option value="house" data-i18n="prop_house">Dom</option>
+                <option value="plot" data-i18n="prop_plot">Działka</option>
+                <option value="commercial" data-i18n="prop_commercial">Lokal użytkowy</option>
+              </select>
+            </div>
+          </div>
+
+
+            <div class="form-section" id="form-section-realty">
+              <h4 class="form-section-title">📐 Parametry nieruchomości</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Rok budowy</label>
+                  <input type="number" id="f-build-year" min="1800" max="2030" placeholder="2015">
+                </div>
+                <div class="form-group">
+                  <label>Rynek</label>
+                  <select id="f-market-type">
+                    <option value="">Wybierz...</option>
+                    <option value="primary" data-i18n="market_primary">Pierwotny</option>
+                    <option value="secondary" data-i18n="market_secondary">Wtórny</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Ogrzewanie</label>
+                  <select id="f-heating">
+                    <option value="">Wybierz...</option>
+                    <option value="gas" data-i18n="heat_gas">Gazowe</option>
+                    <option value="district" data-i18n="heat_district">Miejskie</option>
+                    <option value="electric" data-i18n="heat_electric">Elektryczne</option>
+                    <option value="solid" data-i18n="heat_solid">Stałopalne</option>
+                    <option value="heat_pump" data-i18n="heat_pump">Pompa ciepła</option>
+                    <option value="other">Inne</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Stan wykończenia</label>
+                  <select id="f-condition-type">
+                    <option value="">Wybierz...</option>
+                    <option value="ready" data-i18n="cond_ready">Do zamieszkania</option>
+                    <option value="good">Dobry</option>
+                    <option value="to_renovate" data-i18n="cond_renovate">Do remontu</option>
+                    <option value="developer" data-i18n="cond_developer">Stan deweloperski</option>
+                    <option value="raw" data-i18n="cond_raw">Surowy</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Umeblowanie</label>
+                  <select id="f-furnished">
+                    <option value="">Wybierz...</option>
+                    <option value="yes">Tak</option>
+                    <option value="partial" data-i18n="furn_partial">Częściowo</option>
+                    <option value="no">Nie</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Parking</label>
+                  <select id="f-parking">
+                    <option value="">Wybierz...</option>
+                    <option value="none">Brak</option>
+                    <option value="street" data-i18n="park_street">Ulica</option>
+                    <option value="place" data-i18n="park_place">Miejsce postojowe</option>
+                    <option value="garage" data-i18n="park_garage">Garaż</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Winda</label>
+                  <select id="f-elevator">
+                    <option value="">Wybierz...</option>
+                    <option value="yes">Tak</option>
+                    <option value="no">Nie</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Balkon / taras</label>
+                  <select id="f-balcony">
+                    <option value="">Wybierz...</option>
+                    <option value="none">Brak</option>
+                    <option value="balcony" data-i18n="balc_balcony">Balkon</option>
+                    <option value="loggia" data-i18n="balc_loggia">Loggia</option>
+                    <option value="terrace" data-i18n="balc_terrace">Taras</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-section" id="abroad-specs-acc">
+              <h4 class="form-section-title">🌍 Parametry zagraniczne</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label data-i18n="spec_energy">Klasa energetyczna</label>
+                  <select id="f-energy-class">
+                    <option value="" data-i18n="form_choose">Wybierz...</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label data-i18n="spec_beach">Odległość od plaży (m)</label>
+                  <input type="number" id="f-beach-distance" min="0" max="50000" placeholder="500">
+                </div>
+              </div>
+              <div class="form-group">
+                <label data-i18n="spec_rental_yield">Rentowność najmu (% / rok)</label>
+                <input type="number" id="f-rental-yield" min="0" max="50" step="0.1" placeholder="5.5">
+              </div>
+            </div>
+          <!-- Common fields -->
+          <div class="form-group">
+            <label data-i18n="form_desc">Opis <span class="required">*</span></label>
+            <textarea id="f-desc" required maxlength="2000" data-i18n-placeholder="ph_desc" placeholder="Dodatkowe informacje..."></textarea>
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_image">Zdjęcia</label>
+            <div class="photo-upload">
+              <input type="file" id="f-photos" accept="image/*" multiple data-on-change="photo-select">
+              <div class="photo-hint" data-i18n="form_image_hint">Możesz dodać do 8 zdjęć (jpg, png). Zostaną automatycznie zmniejszone.</div>
+              <div class="photo-previews" id="photo-previews"></div>
+            </div>
+            <input type="hidden" id="f-image" value="">
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_phone">Telefon kontaktowy <span class="required">*</span></label>
+            <input type="tel" id="f-phone" required placeholder="+48 123 456 789" minlength="6">
+          </div>
+          <div class="form-actions">
+            <div class="form-group" style="margin-top:8px">
+              <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500;cursor:pointer">
+                <input type="checkbox" id="f-accept-rules" required style="margin-top:4px;width:auto">
+                <span data-i18n="form_accept_rules">Oświadczam, że zapoznałem/am się z <a href="#top" role="button" data-action="nav" data-page="rules" style="color:var(--primary)">Regulaminem</a> i akceptuję zasady publikacji ogłoszeń. Podane dane są prawdziwe.</span>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" data-i18n="btn_publish">Opublikuj</button>
+            <button type="button" class="btn btn-outline" data-action="nav" data-page="home" data-i18n="btn_cancel">Anuluj</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+<div id="page-rules" class="page">
+      <h1 data-i18n="rules_title">Regulamin i zasady publikacji ogłoszeń</h1>
+      <p class="subtitle" data-i18n="rules_subtitle">Zasady zgodne z prawem Rzeczypospolitej Polskiej</p>
+      <div class="rules-content">
+        <div class="rules-note" data-i18n="rules_demo_note">
+          To wersja demonstracyjna serwisu. Poniższy regulamin opisuje zasady, które będą obowiązywać w pełnej wersji Handlio. Publikując ogłoszenie, akceptujesz te zasady.
+        </div>
+
+        <h2 data-i18n="rules_h1">1. Postanowienia ogólne</h2>
+        <p data-i18n="rules_p1">Serwis Handlio umożliwia publikację ogłoszeń dotyczących samochodów, motocykli oraz nieruchomości. Administratorem serwisu jest podmiot prowadzący Handlio (dane zostaną uzupełnione przed uruchomieniem pełnej wersji). Korzystanie z serwisu oznacza akceptację niniejszego regulaminu.</p>
+
+        <h2 data-i18n="rules_h2">2. Podstawy prawne</h2>
+        <ul>
+          <li data-i18n="rules_l2a">Ustawa z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną</li>
+          <li data-i18n="rules_l2b">Rozporządzenie RODO (UE) 2016/679 — ochrona danych osobowych</li>
+          <li data-i18n="rules_l2c">Ustawa o prawach konsumenta</li>
+          <li data-i18n="rules_l2d">Kodeks cywilny (m.in. przepisy o sprzedaży i najmie)</li>
+          <li data-i18n="rules_l2e">Przepisy dotyczące przeciwdziałania praniu pieniędzy (w zakresie obowiązującym pośredników, jeśli dotyczy)</li>
+        </ul>
+
+        <h2 data-i18n="rules_h3">3. Zasady publikacji ogłoszeń</h2>
+        <ul>
+          <li data-i18n="rules_l3a">Ogłoszeniodawca musi mieć ukończone 18 lat lub działać za zgodą opiekuna prawnego w granicach prawa.</li>
+          <li data-i18n="rules_l3b">Treść ogłoszenia musi być prawdziwa, rzetelna i nie wprowadzać w błąd co do ceny, stanu, lokalizacji ani parametrów przedmiotu.</li>
+          <li data-i18n="rules_l3c">Zabronione jest publikowanie ogłoszeń dotyczących przedmiotów pochodzących z przestępstwa lub których obrót jest nielegalny.</li>
+          <li data-i18n="rules_l3d">Jedno ogłoszenie = jeden przedmiot / jedna nieruchomość (bez łączenia wielu ofert w jednym wpisie w sposób wprowadzający w błąd).</li>
+          <li data-i18n="rules_l3e">Zdjęcia muszą przedstawiać oferowany przedmiot i nie naruszać praw osób trzecich (w tym praw autorskich).</li>
+          <li data-i18n="rules_l3f">Ogłoszeniodawca ponosi pełną odpowiedzialność za treść ogłoszenia i treść kontaktu z innymi użytkownikami.</li>
+        </ul>
+
+        <h2 data-i18n="rules_h4">4. Treści zabronione</h2>
+        <ul>
+          <li data-i18n="rules_l4a">Treści bezprawne, zniesławiające, nawołujące do nienawiści lub przemocy</li>
+          <li data-i18n="rules_l4b">Spam, oszustwa, phishing, próby wyłudzenia danych lub środków</li>
+          <li data-i18n="rules_l4c">Ogłoszenia wymagające kontaktu wyłącznie poza serwisem w sposób uniemożliwiający weryfikację (w pełnej wersji — zgodnie z polityką bezpieczeństwa)</li>
+          <li data-i18n="rules_l4d">Powielanie tego samego ogłoszenia w celu sztucznego zwiększenia widoczności (multiaccounting)</li>
+          <li data-i18n="rules_l4e">Naruszenie dóbr osobistych, tajemnicy przedsiębiorstwa lub własności intelektualnej</li>
+        </ul>
+
+        <h2 data-i18n="rules_h5">5. Moderacja</h2>
+        <p data-i18n="rules_p5">Administrator ma prawo odmówić publikacji, ukryć lub usunąć ogłoszenie naruszające regulamin lub prawo, a także ograniczyć dostęp do konta. W pełnej wersji serwisu ogłoszenia mogą podlegać weryfikacji przed publikacją.</p>
+
+        <h2 data-i18n="rules_h6">6. Płatności</h2>
+        <p data-i18n="rules_p6">Opłaty za publikację i usługi dodatkowe (np. podbicie) wynikają z aktualnego cennika. W wersji demonstracyjnej płatności są symulowane i nie powodują obciążenia karty ani konta bankowego.</p>
+
+        <h2 data-i18n="rules_h7">7. Dane osobowe (RODO)</h2>
+        <p data-i18n="rules_p7">Dane podane przy rejestracji i w ogłoszeniu są przetwarzane w celu świadczenia usługi ogłoszeniowej. Użytkownik ma prawo dostępu do danych, ich sprostowania, usunięcia oraz ograniczenia przetwarzania — zgodnie z RODO. W wersji demo dane zapisują się wyłącznie lokalnie w przeglądarce użytkownika.</p>
+
+        <h2 data-i18n="rules_h8">8. Odpowiedzialność</h2>
+        <p data-i18n="rules_p8">Serwis nie jest stroną umów zawieranych między użytkownikami. Transakcje (sprzedaż, najem) użytkownicy zawierają we własnym zakresie. Zalecamy ostrożność, weryfikację tożsamości drugiej strony oraz unikanie przedpłat na rzecz nieznanych osób.</p>
+
+        <h2 data-i18n="rules_h9">9. Nieruchomości</h2>
+        <p data-i18n="rules_p9">Przy ogłoszeniach nieruchomości obowiązują dodatkowe wymogi rzetelności opisu (lokalizacja, powierzchnia, cena, typ transakcji). Ogłoszeniodawca oświadcza, że jest uprawniony do dysponowania nieruchomością lub działa w imieniu uprawnionego. Oferty zagraniczne należy oznaczać poprzez wybór kraju.</p>
+
+        <h2 data-i18n="rules_h10">10. Kontakt i reklamacje</h2>
+        <p data-i18n="rules_p10">W sprawach regulaminu i naruszeń: kontakt@handlio.pl (adres docelowy po uruchomieniu pełnej wersji). Reklamacje rozpatrywane będą zgodnie z obowiązującym prawem polskim.</p>
+      </div>
+    </div>
+  </main>
+
+    <aside class="side-banner" id="side-banner-right" aria-label="Reklama">
+      <div class="banner-box banner-self" id="banner-right" style="cursor:pointer" data-action="go-add">
+        <div class="banner-label">Reklama</div>
+        <div class="banner-logo">Hand<span>lio</span></div>
+        <div class="banner-tagline">Tanie ogłoszenia dla wszystkich</div>
+        <div class="banner-cta">Dodaj ogłoszenie</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Model Selector Modal -->
+  <div class="modal-overlay model-modal" id="model-modal" data-action="close-model-modal">
+    <div class="modal" data-action="stop">
+      <button class="modal-close" data-action="close-model-modal">&times;</button>
+      <div class="modal-body">
+        <h2 id="model-modal-title">Wybierz modele</h2>
+        <p class="subtitle" id="model-modal-subtitle">Zaznacz modele, które chcesz wyświetlić</p>
+        <div class="search-input" style="margin-bottom:12px;">
+          <input type="text" id="model-search" placeholder="Szukaj modelu..." data-on-input="filter-models">
+        </div>
+        <div class="model-list" id="model-list"></div>
+        <div class="form-actions modal-actions">
+          <button class="btn btn-outline btn-sm" data-action="models-all">Zaznacz wszystkie</button>
+          <button class="btn btn-outline btn-sm" data-action="models-none">Odznacz wszystkie</button>
+          <button class="btn btn-primary" data-action="models-apply">Zastosuj</button>
+          <button class="btn btn-outline" data-action="close-model-modal">Anuluj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal" data-action="close-modal">
+    <div class="modal" data-action="stop">
+      <button class="modal-close" data-action="close-modal">&times;</button>
+      <div class="modal-image" id="modal-image"></div>
+      <div class="modal-body">
+        <div class="modal-price" id="modal-price"></div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-desc" id="modal-desc"></div>
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay pay-modal" id="pay-modal" data-action="close-pay">
+    <div class="modal" data-action="stop">
+      <button class="modal-close" data-action="close-pay">&times;</button>
+      <div class="modal-body" id="pay-body">
+        <h2 data-i18n="pay_title">Opłać ogłoszenie</h2>
+        <p class="subtitle" style="margin-bottom:8px" data-i18n="pay_subtitle">Wybierz metodę płatności (symulacja)</p>
+        <div class="pay-plan" id="pay-plan-info"></div>
+        <div class="pay-methods">
+          <div class="pay-method active" data-method="blik" data-action="pay-method">BLIK</div>
+          <div class="pay-method" data-method="transfer" data-action="pay-method">Przelew</div>
+          <div class="pay-method" data-method="card" data-action="pay-method">Karta</div>
+          <div class="pay-method" data-method="promo" data-action="pay-method">Kod</div>
+        </div>
+        <div id="pay-promo-box" style="margin:12px 0;display:none">
+          <label for="pay-promo" style="font-size:0.85rem;color:var(--muted)">Kod promocyjny</label>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <input type="text" id="pay-promo" placeholder="np. HANDLIO100" style="flex:1;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);text-transform:uppercase" autocomplete="off">
+            <button type="button" class="btn btn-outline" data-action="promo-preview">Sprawdź</button>
+          </div>
+          <p id="pay-promo-msg" style="font-size:0.8rem;margin-top:6px;color:var(--muted)"></p>
+        </div>
+        <button class="btn btn-primary" style="width:100%" data-action="pay" data-i18n="btn_pay">Zapłać</button>
+        <p style="text-align:center;margin-top:12px;font-size:0.8rem;color:var(--muted)" data-i18n="pay_demo_note">To tylko demonstracja — pieniądze nie są pobierane.</p>
+      </div>
+      <div class="pay-processing" id="pay-processing">
+        <div class="pay-spinner"></div>
+        <p data-i18n="pay_processing">Przetwarzanie płatności...</p>
+      </div>
+    </div>
+  </div>
+
+
+    <div id="page-privacy" class="page">
+      <h1 data-i18n="privacy_title">Polityka prywatności</h1>
+      <p class="subtitle" data-i18n="privacy_subtitle">Ochrona danych osobowych (RODO)</p>
+      <div class="legal-content rules-content">
+        <p data-i18n="privacy_p1">Niniejsza Polityka prywatności opisuje zasady przetwarzania danych osobowych w serwisie Handlio zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO) oraz polskim prawem.</p>
+        <h2 data-i18n="privacy_h1">1. Administrator danych</h2>
+        <p data-i18n="privacy_p2">Administratorem danych jest podmiot prowadzący serwis Handlio (dane firmowe zostaną uzupełnione przed uruchomieniem wersji produkcyjnej). Kontakt w sprawach danych: admin@handlio.pl</p>
+        <h2 data-i18n="privacy_h2">2. Jakie dane zbieramy</h2>
+        <ul>
+          <li data-i18n="privacy_l1">Dane konta: imię/nazwa firmy, e-mail, telefon, hasło (przechowywane lokalnie w wersji demo)</li>
+          <li data-i18n="privacy_l2">Treść ogłoszeń: tytuł, opis, cena, lokalizacja, zdjęcia, dane kontaktowe w ogłoszeniu</li>
+          <li data-i18n="privacy_l3">Dane techniczne przeglądarki w zakresie niezbędnym do działania serwisu (np. localStorage)</li>
+        </ul>
+        <h2 data-i18n="privacy_h3">3. Cele przetwarzania</h2>
+        <ul>
+          <li data-i18n="privacy_l4">Świadczenie usług serwisu (konto, ogłoszenia, ulubione)</li>
+          <li data-i18n="privacy_l5">Bezpieczeństwo, moderacja i zapobieganie nadużyciom</li>
+          <li data-i18n="privacy_l6">Kontakt w sprawie ogłoszeń i obsługi użytkownika</li>
+        </ul>
+        <h2 data-i18n="privacy_h4">4. Podstawa prawna</h2>
+        <p data-i18n="privacy_p3">Art. 6 ust. 1 lit. b RODO (wykonanie umowy / regulaminu), lit. f (prawnie uzasadniony interes — bezpieczeństwo serwisu) oraz lit. a (zgoda, gdy jest wymagana).</p>
+        <h2 data-i18n="privacy_h5">5. Prawa użytkownika</h2>
+        <p data-i18n="privacy_p4">Przysługuje Ci prawo dostępu, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz sprzeciwu. W wersji demo dane są w Twojej przeglądarce — możesz je usunąć czyszcząc localStorage.</p>
+        <h2 data-i18n="privacy_h6">6. Okres przechowywania</h2>
+        <p data-i18n="privacy_p5">Dane konta i ogłoszeń — przez czas korzystania z serwisu oraz okres wymagany przepisami. W wersji demo: do usunięcia danych w przeglądarce.</p>
+      </div>
+    </div>
+
+    <div id="page-cookies" class="page">
+      <h1 data-i18n="cookies_title">Polityka cookies</h1>
+      <p class="subtitle" data-i18n="cookies_subtitle">Pliki cookie i lokalne przechowywanie danych</p>
+      <div class="legal-content rules-content">
+        <p data-i18n="cookies_p1">Handlio w wersji demonstracyjnej korzysta głównie z pamięci lokalnej przeglądarki (localStorage), a nie z klasycznych plików cookie marketingowych.</p>
+        <h2 data-i18n="cookies_h1">1. Co zapisujemy lokalnie</h2>
+        <ul>
+          <li data-i18n="cookies_l1">Sesja użytkownika i dane konta (po zalogowaniu)</li>
+          <li data-i18n="cookies_l2">Ogłoszenia, ulubione, ustawienia języka</li>
+          <li data-i18n="cookies_l3">Tymczasowe kody odzyskiwania hasła (demo)</li>
+        </ul>
+        <h2 data-i18n="cookies_h2">2. Po co to jest potrzebne</h2>
+        <p data-i18n="cookies_p2">Aby serwis działał (logowanie, Twoje ogłoszenia, filtry). Bez localStorage aplikacja demo nie zapamięta stanu.</p>
+        <h2 data-i18n="cookies_h3">3. Twoja kontrola</h2>
+        <p data-i18n="cookies_p3">Możesz wyczyścić dane witryny w ustawieniach przeglądarki. W wersji produkcyjnej dodamy baner zgody, jeśli pojawią się cookie analityczne lub marketingowe.</p>
+        <h2 data-i18n="cookies_h4">4. Cookie stron trzecich</h2>
+        <p data-i18n="cookies_p4">Obecnie nie wdrażamy Google Analytics ani pikseli reklamowych. W razie ich dodania zaktualizujemy tę politykę i poprosimy o zgodę.</p>
+      </div>
+    </div>
+
+    <div id="page-help" class="page">
+      <h1 data-i18n="help_title">Pomoc</h1>
+      <p class="subtitle" data-i18n="help_subtitle">Najczęstsze pytania i kontakt</p>
+      <div class="legal-content rules-content">
+        <h2 data-i18n="help_h1">Jak dodać ogłoszenie?</h2>
+        <p data-i18n="help_p1">Zarejestruj się lub zaloguj, kliknij „+ Dodaj”, wybierz kategorię, uzupełnij dane i zdjęcia, wyślij. Ogłoszenie może trafić do moderacji.</p>
+        <h2 data-i18n="help_h2">Ile kosztuje publikacja?</h2>
+        <p data-i18n="help_p2">Szczegóły są w zakładce Cennik. W demo opłaty są symulowane.</p>
+        <h2 data-i18n="help_h3">Jak edytować lub usunąć ogłoszenie?</h2>
+        <p data-i18n="help_p3">Po zalogowaniu otwórz menu przy swoim imieniu → Moje. Stamtąd edytujesz, podbijasz lub usuwasz swoje ogłoszenia.</p>
+        <h2 data-i18n="help_h4">Nie pamiętam hasła</h2>
+        <p data-i18n="help_p4">Na ekranie logowania wybierz „Nie pamiętasz hasła?” i postępuj zgodnie z instrukcją (w demo kod resetu jest pokazywany lokalnie).</p>
+        <h2 data-i18n="help_h5">Kontakt</h2>
+        <p data-i18n="help_p5">E-mail: admin@handlio.pl · W sprawach moderacji i bezpieczeństwa możesz też użyć tego adresu.</p>
+      </div>
+    </div>
+
+    <div id="page-safety" class="page">
+      <h1 data-i18n="safety_title">Zasady bezpieczeństwa</h1>
+      <p class="subtitle" data-i18n="safety_subtitle">Bezpieczne transakcje na Handlio</p>
+      <div class="legal-content rules-content">
+        <h2 data-i18n="safety_h1">1. Spotkania i oględziny</h2>
+        <p data-i18n="safety_p1">Oglądaj samochody, motocykle i nieruchomości w bezpiecznych, publicznych miejscach. Najlepiej w dzień i z osobą towarzyszącą.</p>
+        <h2 data-i18n="safety_h2">2. Płatności</h2>
+        <p data-i18n="safety_p2">Unikaj przedpłat na obce konta „na rezerwację”. Przy drogich przedmiotach korzystaj ze sprawdzonych form płatności i umów. Handlio nie przechowuje Twoich środków w wersji demo.</p>
+        <h2 data-i18n="safety_h3">3. Dokumenty</h2>
+        <p data-i18n="safety_p3">Sprawdzaj dowód rejestracyjny, historię pojazdu, akt notarialny / księgę wieczystą przy nieruchomościach. Nie ufaj wyłącznie zdjęciom z internetu.</p>
+        <h2 data-i18n="safety_h4">4. Podejrzane ogłoszenia</h2>
+        <p data-i18n="safety_p4">Cena wyraźnie poniżej rynku, presja czasu, prośba o komunikację poza serwisem i płatność z góry — to sygnały ostrzegawcze. Zgłoś takie ogłoszenie do moderacji (admin@handlio.pl).</p>
+        <h2 data-i18n="safety_h5">5. Dane osobowe</h2>
+        <p data-i18n="safety_p5">Nie publikuj w ogłoszeniu numeru PESEL, skanów dokumentów ani danych wrażliwych. Telefon i e-mail kontaktowy wystarczą.</p>
+      </div>
+    </div>
+
+
+  
+
+  
+
+  <!-- Change password modal -->
+  <div class="modal-overlay" id="modal-change-password" data-action="overlay-close" data-id="modal-change-password">
+    <div class="modal pay-modal" data-action="stop">
+      <div class="modal-header">
+        <h2 data-i18n="pwd_change_title">Zmiana hasła</h2>
+        <button type="button" class="modal-close" data-action="close-modal-id" data-id="modal-change-password">×</button>
+      </div>
+      <div class="modal-body">
+        <form data-on-submit="change-password">
+          <div class="form-group">
+            <label data-i18n="pwd_current">Obecne hasło</label>
+            <div class="pwd-wrap"><input type="password" id="pwd-current" required minlength="4" autocomplete="current-password"><button type="button" class="pwd-toggle" data-action="pwd-toggle" data-target="pwd-current">👁</button></div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="pwd_new">Nowe hasło</label>
+            <div class="pwd-wrap">
+              <input type="password" id="pwd-new" required minlength="4" autocomplete="new-password">
+              <button type="button" class="pwd-toggle" data-action="pwd-toggle" data-target="pwd-new">👁</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="pwd_confirm">Powtórz nowe hasło</label>
+            <div class="pwd-wrap">
+              <input type="password" id="pwd-confirm" required minlength="4" autocomplete="new-password">
+              <button type="button" class="pwd-toggle" data-action="pwd-toggle" data-target="pwd-confirm">👁</button>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" data-i18n="pwd_save">Zapisz hasło</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot / reset password modal -->
+  <div class="modal-overlay" id="modal-forgot-password" data-action="overlay-close" data-id="modal-forgot-password">
+    <div class="modal pay-modal" data-action="stop">
+      <div class="modal-header">
+        <h2 id="forgot-modal-title" data-i18n="pwd_forgot_title">Odzyskiwanie hasła</h2>
+        <button type="button" class="modal-close" data-action="close-modal-id" data-id="modal-forgot-password">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="forgot-step-email">
+          <p style="color:var(--muted);font-size:0.9rem;margin-bottom:14px" data-i18n="pwd_forgot_hint">Podaj e-mail konta — wyślemy kod resetujący.</p>
+          <div class="form-group">
+            <label data-i18n="form_email">E-mail</label>
+            <input type="email" id="forgot-email" required placeholder="jan@email.com">
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" data-action="send-reset" data-i18n="pwd_send_code">Wyślij kod</button>
+          </div>
+        </div>
+        <div id="forgot-step-reset" style="display:none">
+          <p style="color:var(--muted);font-size:0.9rem;margin-bottom:14px" id="forgot-sent-msg"></p>
+          <div class="form-group">
+            <label data-i18n="pwd_code">Kod z e-maila</label>
+            <input type="text" id="forgot-code" required maxlength="8" placeholder="123456" autocomplete="one-time-code">
+          </div>
+          <div class="form-group">
+            <label data-i18n="pwd_new">Nowe hasło</label>
+            <div class="pwd-wrap">
+              <input type="password" id="forgot-new" required minlength="4" autocomplete="new-password">
+              <button type="button" class="pwd-toggle" data-action="pwd-toggle" data-target="forgot-new">👁</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="pwd_confirm">Powtórz nowe hasło</label>
+            <div class="pwd-wrap">
+              <input type="password" id="forgot-confirm" required minlength="4" autocomplete="new-password">
+              <button type="button" class="pwd-toggle" data-action="pwd-toggle" data-target="forgot-confirm">👁</button>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" data-action="submit-reset" data-i18n="pwd_reset_btn">Ustaw nowe hasło</button>
+          </div>
+          <p style="text-align:center;margin-top:12px;font-size:0.85rem">
+            <a href="#top" role="button" data-action="forgot" style="color:var(--primary)" data-i18n="pwd_resend">Wyślij kod ponownie</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<footer style="display: block !important; visibility: visible !important; opacity: 1 !important; padding: 20px; text-align: center; font-size: 14px; color: #6b7280;">
+  Handlio — dane są przechowywane na serwerze zgodnie z Polityką prywatności.
+</footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
