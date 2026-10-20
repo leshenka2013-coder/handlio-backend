@@ -659,8 +659,8 @@ app.delete('/api/auth/me', async (req, res) => {
   }
 }); 
 
-// ========== КОНЕЦ AUTH API ==========//
- Шаг 15: смена / сброс пароля
+// ========== КОНЕЦ AUTH API ==========
+ //Шаг 15: смена / сброс пароля
 const resetCodes = new Map(); // email -> { code, expires }
 
 app.post('/api/auth/change-password', requireAuth, rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 20 }), async (req, res) => {
