@@ -593,7 +593,7 @@ app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, 
     console.error('[POST /api/auth/register]', error);
     res.status(500).json({ error: 'Nie udało się zarejestrować' });
   }
-}); 
+});
 
 app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 30 }), async (req, res) => {
   try {
@@ -621,80 +621,37 @@ app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max
   } catch (error) {
     console.error('[POST /api/auth/login]', error);
     res.status(500).json({ error: 'Błąd logowania' });
-  }
-});
-
-app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 20 }), async (req, res) => {
+app.delete('/api/auth/me', async (req, res) => {
   try {
-    const body = req.body || {};
-    const email = String(body.email || '').trim().toLowerCase();
-    const password = String(body.password || '');
-    const type = body.type === 'business' ? 'business' : 'private';
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({ error: 'Nieprawidłowy e-mail' });
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Brak autoryzacji' });
     }
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Hasło min. 6 znaków' });
-    }
-
-    const exists = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
-    if (exists.rows.length) {
-      return res.status(409).json({ error: 'E-mail już zarejestrowany' });
+    const token = authHeader.split(' ')[1];
+    
+    // Проверяем, кто это
+    const payload = verifyAccessToken(token); 
+    if (!payload || !payload.sub) {
+      return res.status(401).json({ error: 'Nieprawidłowy token' });
     }
 
-    const id = generateId();
-    const password_hash = await bcrypt.hash(password, 10);
-    const created = Date.now();
+    const userId = payload.sub;
 
-    const name = type === 'private' ? String(body.name || '').trim() : null;
-    const company = type === 'business' ? String(body.company || '').trim() : null;
-    const nip = type === 'business' ? String(body.nip || '').trim() : null;
-    const contact = type === 'business' ? String(body.contact || '').trim() : null;
-    const phone = String(body.phone || '').trim() || null;
+    // Удаляем сообщения, объявления и самого юзера
+    await pool.query('DELETE FROM messages WHERE sender_id = $1 OR receiver_id = $1', [userId]);
+    await pool.query('DELETE FROM ads WHERE user_id = $1', [userId]);
+    await pool.query('DELETE FROM users WHERE id = $1', [userId]);
 
-    if (type === 'private' && !name) {
-      return res.status(400).json({ error: 'Brak imienia' });
-    }
-    if (type === 'business' && (!company || !nip || !contact)) {
-      return res.status(400).json({ error: 'Uzupełnij dane firmy' });
-    }
-
-    const result = await pool.query(
-      `INSERT INTO users (id, email, password_hash, type, name, phone, company, nip, contact, role, created)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'user',$10) RETURNING *`,
-      [id, email, password_hash, type, name, phone, company, nip, contact, created]
-    );
-
-    const user = publicUser(result.rows[0]);
-
-    // --- ОТПРАВКА ПРИВЕТСТВЕННОГО ПИСЬМА ---
-    try {
-      await resend.emails.send({
-        from: 'Handlio <noreply@handlio.pl>',
-        to: email,
-        subject: 'Witaj w Handlio!',
-        html: `
-          <h2>Witaj w Handlio!</h2>
-          <p>Cieszymy się, że do nas dołączyłeś. Twój e-mail został pomyślnie zarejestrowany.</p>
-          <p>Możesz już dodawać swoje ogłoszenia i korzystać z serwisu.</p>
-          <a href="https://handlio.pl">Przejdź do Handlio</a>
-        `
-      });
-      console.log('Письмо успешно отправлено на', email);
-    } catch (mailError) {
-      console.error('Błąd wysyłki e-maila powitalnego:', mailError);
-    }
-    // --- КОНЕЦ ОТПРАВКИ ---
-
-    const tokens = await issueTokens(user);
-    res.status(201).json({ ...tokens, user });
+    res.json({ ok: true, message: 'Konto zostało usunięte' });
   } catch (error) {
-    console.error('[POST /api/auth/register]', error);
-    res.status(500).json({ error: 'Nie udało się zarejestrować' });
+    console.error('[DELETE /api/auth/me]', error);
+    res.status(500).json({ error: 'Nie udało się usunąć konta' });
   }
 });
+  }
 
+
+// ========== КОНЕЦ AUTH API ==========
 // Шаг 15: смена / сброс пароля
 const resetCodes = new Map(); // email -> { code, expires }
 
