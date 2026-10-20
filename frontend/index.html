@@ -558,7 +558,16 @@
 
     <div id="page-messages" class="page"><div class="page-head"><h1>💬 Chat</h1><p class="subtitle">Rozmowy z kupującymi i sprzedającymi</p></div><div id="h23-chat-list" class="h23-list"></div></div>
     <div id="page-notifications" class="page"><div class="page-head h23-head-row"><div><h1>🔔 Powiadomienia</h1><p class="subtitle">Ważne informacje dotyczące Twojego konta</p></div><button class="btn btn-outline" data-action="h23-mark-all">Oznacz wszystkie jako przeczytane</button></div><div id="h23-notifications" class="h23-list"></div></div>
-    <div id="page-seller" class="page"><div id="h23-seller-dashboard"></div></div>
+        <div id="page-seller" class="page">
+      <div id="h23-seller-dashboard"></div>
+      
+      <!-- Красная зона удаления аккаунта -->
+      <div style="margin-top: 40px; padding: 20px; border: 2px solid #ff4d4f; border-radius: 8px; background: #fff1f0;">
+        <h3 style="color: #ff4d4f; margin-top: 0;">Usuwanie konta</h3>
+        <p style="font-size: 0.9rem; color: #555;">Ta operacja jest nieodwracalna. Wszystkie Twoje ogłoszenia i wiadomości zostaną trwale usunięte.</p>
+        <button class="btn btn-outline" style="border-color: #ff4d4f; color: #ff4d4f;" data-action="delete-account">Usuń konto</button>
+      </div>
+    </div>
     <div id="page-reports" class="page"><div class="page-head h23-head-row"><div><h1>🚨 Жалобы / Reports</h1><p class="subtitle">Moderation queue</p></div><div id="h23-report-stats"></div></div><div id="h23-reports" class="h23-list"></div></div>
 
     <div id="page-pricing" class="page">
