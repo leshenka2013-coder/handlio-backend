@@ -572,6 +572,32 @@ app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, 
   } catch (error) {
     console.error('[POST /api/auth/register]', error);
     res.status(500).json({ error: 'Nie udało się zarejestrować' });
+app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 30 }), async (req, res) => {
+  try {
+    const email = String((req.body && req.body.email) || '').trim().toLowerCase();
+    const password = String((req.body && req.body.password) || '');
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Podaj e-mail i hasło' });
+    }
+
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (!result.rows.length) {
+      return res.status(401).json({ error: 'Nieprawidłowy e-mail lub hasło' });
+    }
+
+    const row = result.rows[0];
+    const ok = await bcrypt.compare(password, row.password_hash);
+    if (!ok) {
+      return res.status(401).json({ error: 'Nieprawidłowy e-mail lub hasło' });
+    }
+
+    const user = publicUser(row);
+    const tokens = await issueTokens(user);
+    res.json({ ...tokens, user });
+  } catch (error) {
+    console.error('[POST /api/auth/login]', error);
+    res.status(500).json({ error: 'Błąd logowania' });
   }
 });
 
