@@ -567,11 +567,34 @@ app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, 
     );
 
     const user = publicUser(result.rows[0]);
+
+    // --- ОТПРАВКА ПРИВЕТСТВЕННОГО ПИСЬМА ---
+    try {
+      await resend.emails.send({
+        from: 'Handlio <noreply@handlio.pl>',
+        to: email,
+        subject: 'Witaj w Handlio!',
+        html: `
+          <h2>Witaj w Handlio!</h2>
+          <p>Cieszymy się, że do nas dołączyłeś. Twój e-mail został pomyślnie zarejestrowany.</p>
+          <p>Możesz już dodawać swoje ogłoszenia i korzystać z serwisu.</p>
+          <a href="https://handlio.pl">Przejdź do Handlio</a>
+        `
+      });
+      console.log('Письмо успешно отправлено на', email);
+    } catch (mailError) {
+      console.error('Błąd wysyłki e-maila powitalnego:', mailError);
+    }
+    // --- КОНЕЦ ОТПРАВКИ ---
+
     const tokens = await issueTokens(user);
     res.status(201).json({ ...tokens, user });
   } catch (error) {
     console.error('[POST /api/auth/register]', error);
     res.status(500).json({ error: 'Nie udało się zarejestrować' });
+  }
+}); 
+
 app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 30 }), async (req, res) => {
   try {
     const email = String((req.body && req.body.email) || '').trim().toLowerCase();
