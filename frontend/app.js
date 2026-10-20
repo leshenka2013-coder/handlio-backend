@@ -6060,9 +6060,8 @@ Object.assign(window, {
 
   const isAccepted = localStorage.getItem('handlio_cookie_consent');
 
-  // Показываем баннер, если согласия еще не было
   if (!isAccepted) {
-    setTimeout(() => { banner.style.display = 'flex'; }, 1000); // Показываем через 1 сек
+    setTimeout(() => { banner.style.display = 'flex'; }, 1000);
   }
 
   const acceptBtn = document.getElementById('cookie-accept-btn');
