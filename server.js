@@ -6,6 +6,8 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -573,32 +575,74 @@ app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, 
   }
 });
 
-app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 30 }), async (req, res) => {
+app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 20 }), async (req, res) => {
   try {
-    const email = String((req.body && req.body.email) || '').trim().toLowerCase();
-    const password = String((req.body && req.body.password) || '');
+    const body = req.body || {};
+    const email = String(body.email || '').trim().toLowerCase();
+    const password = String(body.password || '');
+    const type = body.type === 'business' ? 'business' : 'private';
 
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Podaj e-mail i hasło' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Nieprawidłowy e-mail' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Hasło min. 6 znaków' });
     }
 
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (!result.rows.length) {
-      return res.status(401).json({ error: 'Nieprawidłowy e-mail lub hasło' });
+    const exists = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (exists.rows.length) {
+      return res.status(409).json({ error: 'E-mail już zarejestrowany' });
     }
 
-    const row = result.rows[0];
-    const ok = await bcrypt.compare(password, row.password_hash);
-    if (!ok) {
-      return res.status(401).json({ error: 'Nieprawidłowy e-mail lub hasło' });
+    const id = generateId();
+    const password_hash = await bcrypt.hash(password, 10);
+    const created = Date.now();
+
+    const name = type === 'private' ? String(body.name || '').trim() : null;
+    const company = type === 'business' ? String(body.company || '').trim() : null;
+    const nip = type === 'business' ? String(body.nip || '').trim() : null;
+    const contact = type === 'business' ? String(body.contact || '').trim() : null;
+    const phone = String(body.phone || '').trim() || null;
+
+    if (type === 'private' && !name) {
+      return res.status(400).json({ error: 'Brak imienia' });
+    }
+    if (type === 'business' && (!company || !nip || !contact)) {
+      return res.status(400).json({ error: 'Uzupełnij dane firmy' });
     }
 
-    const user = publicUser(row);
+    const result = await pool.query(
+      `INSERT INTO users (id, email, password_hash, type, name, phone, company, nip, contact, role, created)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'user',$10) RETURNING *`,
+      [id, email, password_hash, type, name, phone, company, nip, contact, created]
+    );
+
+    const user = publicUser(result.rows[0]);
+
+    // --- ОТПРАВКА ПРИВЕТСТВЕННОГО ПИСЬМА ---
+    try {
+      await resend.emails.send({
+        from: 'Handlio <noreply@handlio.pl>',
+        to: email,
+        subject: 'Witaj w Handlio!',
+        html: `
+          <h2>Witaj w Handlio!</h2>
+          <p>Cieszymy się, że do nas dołączyłeś. Twój e-mail został pomyślnie zarejestrowany.</p>
+          <p>Możesz już dodawać swoje ogłoszenia i korzystać z serwisu.</p>
+          <a href="https://handlio.pl">Przejdź do Handlio</a>
+        `
+      });
+      console.log('Письмо успешно отправлено на', email);
+    } catch (mailError) {
+      console.error('Błąd wysyłki e-maila powitalnego:', mailError);
+    }
+    // --- КОНЕЦ ОТПРАВКИ ---
+
     const tokens = await issueTokens(user);
-    res.json({ ...tokens, user });
+    res.status(201).json({ ...tokens, user });
   } catch (error) {
-    console.error('[POST /api/auth/login]', error);
-    res.status(500).json({ error: 'Błąd logowania' });
+    console.error('[POST /api/auth/register]', error);
+    res.status(500).json({ error: 'Nie udało się zarejestrować' });
   }
 });
 
@@ -650,7 +694,7 @@ app.post('/api/auth/forgot', rateLimit({ name: 'auth', windowMs: 15 * 60_000, ma
     // Отправляем через Resend
     try {
       await resend.emails.send({
-        from: 'Handlio <onboarding@resend.dev>',
+        from: 'Handlio <noreply@handlio.pl>',
         to: email,
         subject: 'Odzyskiwanie hasła w Handlio',
         html: `
