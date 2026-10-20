@@ -621,6 +621,10 @@ app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max
   } catch (error) {
     console.error('[POST /api/auth/login]', error);
     res.status(500).json({ error: 'Błąd logowania' });
+  }
+}); // <--- ВОТ ЗДЕСЬ ФУНКЦИЯ ЛОГИНА ЗАКРЫВАЕТСЯ
+
+// А ТЕПЕРЬ ИДЕТ УДАЛЕНИЕ
 app.delete('/api/auth/me', async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
@@ -629,8 +633,14 @@ app.delete('/api/auth/me', async (req, res) => {
     }
     const token = authHeader.split(' ')[1];
     
-    // Проверяем, кто это
-    const payload = verifyAccessToken(token); 
+    // Проверяем, кто это (используем стандартный jwt.verify, так как функции verifyAccessToken у тебя нет)
+    let payload;
+    try {
+      payload = jwt.verify(token, JWT_SECRET);
+    } catch (e) {
+      return res.status(401).json({ error: 'Nieprawidłowy token' });
+    }
+
     if (!payload || !payload.sub) {
       return res.status(401).json({ error: 'Nieprawidłowy token' });
     }
@@ -638,7 +648,7 @@ app.delete('/api/auth/me', async (req, res) => {
     const userId = payload.sub;
 
     // Удаляем сообщения, объявления и самого юзера
-    await pool.query('DELETE FROM messages WHERE sender_id = $1 OR receiver_id = $1', [userId]);
+    await pool.query('DELETE FROM messages WHERE from_id = $1 OR to_id = $1', [userId]);
     await pool.query('DELETE FROM ads WHERE user_id = $1', [userId]);
     await pool.query('DELETE FROM users WHERE id = $1', [userId]);
 
@@ -647,12 +657,10 @@ app.delete('/api/auth/me', async (req, res) => {
     console.error('[DELETE /api/auth/me]', error);
     res.status(500).json({ error: 'Nie udało się usunąć konta' });
   }
-});
-  }
+}); 
 
-
-// ========== КОНЕЦ AUTH API ==========
-// Шаг 15: смена / сброс пароля
+// ========== КОНЕЦ AUTH API ==========//
+ Шаг 15: смена / сброс пароля
 const resetCodes = new Map(); // email -> { code, expires }
 
 app.post('/api/auth/change-password', requireAuth, rateLimit({ name: 'auth', windowMs: 15 * 60_000, max: 20 }), async (req, res) => {
