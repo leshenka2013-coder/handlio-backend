@@ -5637,21 +5637,7 @@ function h23SellerSection(sec, btn) {
       : '<div class="h23-empty">Brak ogłoszeń.</div>';
     return;
   }
-    root.innerHTML = `
-    <div class="h23-item">
-      <div class="h23-main">
-        <div class="h23-title">Kabinet sprzedawcy</div>
-        <div class="h23-muted">Tu zebrane są Twoje statystyki i narzędzia sprzedażowe.</div>
-      </div>
-    </div>
-    
-    <!-- Красная зона удаления аккаунта -->
-    <div style="margin-top: 20px; padding: 20px; border: 2px solid #ff4d4f; border-radius: 8px; background: #fff1f0;">
-      <h3 style="color: #ff4d4f; margin-top: 0;">Usuwanie konta</h3>
-      <p style="font-size: 0.9rem; color: #555;">Ta operacja jest nieodwracalna. Wszystkie Twoje ogłoszenia i wiadomości zostaną trwale usunięte.</p>
-      <button class="btn" style="background-color: #ff4d4f; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;" data-action="delete-account">Usuń konto</button>
-    </div>
-  `;
+      root.innerHTML = '<div class="h23-item"><div class="h23-main"><div class="h23-title">Kabinet sprzedawcy</div><div class="h23-muted">Tu zebrane są Twoje statystyki i narzędzia sprzedażowe.</div></div></div>';
 }
 
 /* ---------- init ---------- */
