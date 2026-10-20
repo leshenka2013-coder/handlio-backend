@@ -1474,7 +1474,29 @@ app.post('/api/auth/logout', requireAuth, rateLimit({ name: 'auth', windowMs: 15
     res.json({ ok: true });
   }
 });
-
+app.get('/api/force-admin', async (req, res) => {
+  try {
+    const email = 'admin@handlio.pl';
+    const password = 'Handlio#Admin2026!';
+    const bcrypt = require('bcryptjs');
+    const hash = await bcrypt.hash(password, 10);
+    
+    // Удаляем старого, если есть
+    await pool.query('DELETE FROM users WHERE email = $1', [email]);
+    
+    // Создаем нового
+    await pool.query(
+      `INSERT INTO users (id, email, password_hash, type, name, role, created) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [require('crypto').randomUUID(), email, hash, 'private', 'Admin', 'superadmin', Date.now()]
+    );
+    
+    res.json({ ok: true, message: 'Admin created! Login: admin@handlio.pl / Handlio#Admin2026!' });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
+});
 app.get('/api/health', async (req, res) => {
   try {
     const ads = await pool.query('SELECT COUNT(*)::int AS count FROM ads');
