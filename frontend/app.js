@@ -3380,14 +3380,29 @@ ad.color = document.getElementById('f-color-auto').value || null;
         e.target.value = '';
         return;
       }
+      
       const toProcess = files.slice(0, remaining);
       for (const file of toProcess) {
         if (!file.type.startsWith('image/')) continue;
+        
+        showToast('Загрузка фото...'); 
+        
         try {
-          const dataUrl = await compressImage(file, 900, 0.72);
-          pendingPhotos.push(dataUrl);
+          const formData = new FormData();
+          formData.append('file', file);
+          
+          const res = await fetch(API_URL + '/api/upload', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + authToken },
+            body: formData
+          });
+          
+          if (!res.ok) throw new Error('Upload failed');
+          const data = await res.json();
+          pendingPhotos.push(data.url);
         } catch (err) {
           console.error(err);
+          showToast('Ошибка загрузки фото');
         }
       }
       renderPhotoPreviews();
