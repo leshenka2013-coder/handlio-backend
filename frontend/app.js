@@ -4906,8 +4906,6 @@ async function moderateAd(id, status) {
   try {
     const updatedAd = await API.updateAd(id, {
       status: status,
-      moderatedAt: Date.now(),
-      moderatedBy: currentUser.email
     });
 
     // Обновляем объявление в памяти
