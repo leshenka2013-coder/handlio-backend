@@ -1571,7 +1571,14 @@ app.use((err, req, res, next) => {
   console.error('[error]', err);
   res.status(500).json({ error: 'Internal server error' });
 });
-
+// Все остальные GET-запросы отдают index.html (для SPA)
+app.get('*', (req, res) => {
+  // Если это API или файл с расширением (css, js, png) — пропускаем
+  if (req.path.startsWith('/api') || req.path.includes('.')) {
+    return res.status(404).send('Not found');
+  }
+  res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
+});
 app.listen(PORT, () => {
   console.log('=================================');
   console.log('Сервер: http://localhost:' + PORT);
