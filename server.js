@@ -1,4 +1,7 @@
 require('dotenv').config();
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } }); // до 5 МБ
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -8,7 +11,14 @@ const jwt = require('jsonwebtoken');
 const pool = require('./db');
 const { Resend } = require('resend');
 const resend = new Resend(process.env.RESEND_API_KEY);
-
+const r2 = new S3Client({
+  region: 'auto',
+  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+});
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -766,6 +776,30 @@ app.get('/api/auth/me', requireAuth, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+// ========== UPLOAD API ==========
+app.post('/api/upload', requireAuth, upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const key = `uploads/${uniqueSuffix}-${req.file.originalname.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+    
+    await r2.send(new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: key,
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype,
+    }));
+    
+    const publicUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
+    res.json({ url: publicUrl });
+  } catch (error) {
+    console.error('[POST /api/upload]', error);
+    res.status(500).json({ error: 'Upload failed' });
+  }
+});
+
+// ========== ADS API ==========
 
 // ========== ADS API ==========
 
