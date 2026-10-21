@@ -1572,7 +1572,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 // Все остальные GET-запросы отдают index.html (для SPA)
-app.get('*', (req, res) => {
+app.get('/*splat', (req, res) => {
   // Если это API или файл с расширением (css, js, png) — пропускаем
   if (req.path.startsWith('/api') || req.path.includes('.')) {
     return res.status(404).send('Not found');
