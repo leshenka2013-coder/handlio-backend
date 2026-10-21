@@ -3132,8 +3132,10 @@ ad.color = document.getElementById('f-color-auto').value || null;
       }
       pendingAd = ad;
       openPayModal();
+      if (typeof pollModerationPending === 'function') {
+        pollModerationPending();
+      }
     }
-
     function openPayModal() {
       const plan = getAdPrice();
       const info = document.getElementById('pay-plan-info');
@@ -3326,8 +3328,6 @@ ad.color = document.getElementById('f-color-auto').value || null;
           document.getElementById('pay-modal').classList.remove('open');
           showToast(t('toast_paid'));
           showPage('my');
-if (typeof pollModerationPending === 'function') {
-            pollModerationPending();
         }
       }, 1800);
     }
