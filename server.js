@@ -127,6 +127,46 @@ function resolveFrontendDir() {
   return path.resolve(__dirname);
 }
 const FRONTEND_DIR = resolveFrontendDir();
+// ========== OPEN GRAPH / SEO ДЛЯ БОТОВ ==========
+app.get('/ad/:id', async (req, res, next) => {
+  const userAgent = req.headers['user-agent'] || '';
+  const isBot = /facebookexternalhit|twitterbot|telegrambot|whatsapp|discordbot|linkedinbot/i.test(userAgent);
+
+  if (!isBot) return next(); // Если это обычный браузер, идем дальше (отдаем SPA)
+
+  try {
+    const ad = await getAdById(req.params.id);
+    if (!ad) return next();
+
+    const title = `${ad.title} — ${ad.price} zł`;
+    const description = ad.desc ? ad.desc.substring(0, 160) : 'Zobacz to ogłoszenie na Handlio';
+    const imageUrl = ad.image || 'https://handlio.pl/favicon.ico'; // Заглушка, если нет фото
+
+    // Отдаем минимальный HTML с мета-тегами
+    res.send(`
+      <!DOCTYPE html>
+      <html lang="pl">
+      <head>
+        <meta charset="UTF-8">
+        <title>${title}</title>
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${imageUrl}">
+        <meta property="og:url" content="https://handlio.pl/ad/${ad.id}">
+        <meta property="og:type" content="website">
+        <meta name="twitter:card" content="summary_large_image">
+      </head>
+      <body>
+        <h1>${title}</h1>
+        <p>${description}</p>
+        <img src="${imageUrl}" alt="${ad.title}">
+      </body>
+      </html>
+    `);
+  } catch (e) {
+    next();
+  }
+});
 app.use(express.static(FRONTEND_DIR));
 console.log('[static] serving:', FRONTEND_DIR);
 
