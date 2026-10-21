@@ -4699,9 +4699,13 @@ if (__activePage && __activePage.id === 'page-my') renderMy();
 
 
     function openAdFromHash() {
-      const m = location.hash.match(/ad=([\w-]+)/);
-      if (m) openAd(m[1]);
-    }
+  // Проверяем и старый формат (#ad=...), и новый (/ad/...)
+  const mHash = location.hash.match(/ad=([\w-]+)/);
+  if (mHash) { openAd(mHash[1]); return; }
+  
+  const mPath = location.pathname.match(/\/ad\/([\w-]+)/);
+  if (mPath) { openAd(mPath[1]); }
+}
     window.addEventListener('load', () => {
       setTimeout(openAdFromHash, 300);
     });
