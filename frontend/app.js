@@ -4657,14 +4657,20 @@ if (__activePage && __activePage.id === 'page-my') renderMy();
     function shareAd(id) {
       const ad = ads.find(a => a.id === id);
       if (!ad) return;
-      const text = ad.title + ' — ' + formatPrice(ad.price) + (ad.city ? ' · ' + ad.city : '');
-      const url = location.href.split('#')[0] + '#ad=' + id;
-      if (navigator.share) {
-        navigator.share({ title: ad.title, text, url }).catch(() => {});
-      } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text + '\n' + url).then(() => showToast(t('toast_link_copied') || 'Link skopiowany')).catch(() => showToast(url));
+      
+      
+      const url = location.origin + '/ad/' + id;
+                  if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(() => {
+            showToast(t('toast_link_copied') || 'Link skopiowany');
+          })
+          .catch(() => {
+            // Если буфер обмена не доступен (например, нет HTTPS), показываем окно
+            prompt('Skopiuj link:', url);
+          });
       } else {
-        prompt(t('btn_share') || 'Share', url);
+        prompt('Skopiuj link:', url);
       }
     }
     window.shareAd = shareAd;
