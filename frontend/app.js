@@ -2438,6 +2438,7 @@ if (ad.damaged) parts.push(chip('🔧', damagedLabels[ad.damaged] || ad.damaged)
     function openAd(id) {
 const ad = ads.find(a => a.id === id);
 if (!ad) return;
+window.history.pushState({}, '', '/ad/' + id);
 try {
         const viewedKey = 'handlio_viewed_' + id;
         if (!sessionStorage.getItem(viewedKey)) {
