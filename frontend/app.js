@@ -3326,6 +3326,8 @@ ad.color = document.getElementById('f-color-auto').value || null;
           document.getElementById('pay-modal').classList.remove('open');
           showToast(t('toast_paid'));
           showPage('my');
+if (typeof pollModerationPending === 'function') {
+            pollModerationPending();
         }
       }, 1800);
     }
@@ -4258,7 +4260,7 @@ ad.color = document.getElementById('f-color-auto').value || null;
 
 
     // ========== MODERATION POLLING ==========
-const MODERATION_POLL_MS = 15_000;
+const MODERATION_POLL_MS = 10_000;
 
 let __moderationPollTimer = null;
 let __moderationFirstRun = true;
