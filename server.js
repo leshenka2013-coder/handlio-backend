@@ -1571,12 +1571,13 @@ app.use((err, req, res, next) => {
   console.error('[error]', err);
   res.status(500).json({ error: 'Internal server error' });
 });
-// Все остальные GET-запросы отдают index.html (для SPA)
-app.get('/*splat', (req, res) => {
-  // Если это API или файл с расширением (css, js, png) — пропускаем
+// Обработка всех остальных GET-запросов (SPA-роутинг)
+app.use((req, res, next) => {
+  // Если запрос начинается с /api или содержит точку (файл с расширением) — пропускаем
   if (req.path.startsWith('/api') || req.path.includes('.')) {
-    return res.status(404).send('Not found');
+    return next();
   }
+  // Отдаём index.html для всех остальных путей (например, /ad/123)
   res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 app.listen(PORT, () => {
