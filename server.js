@@ -580,6 +580,9 @@ app.post('/api/auth/register', rateLimit({ name: 'auth', windowMs: 15 * 60_000, 
     const email = String(body.email || '').trim().toLowerCase();
     const password = String(body.password || '');
     const type = body.type === 'business' ? 'business' : 'private';
+    if (!body.acceptedTerms) {
+      return res.status(400).json({ error: 'Wymagana akceptacja Regulaminu i Polityki prywatności' });
+    }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ error: 'Nieprawidłowy e-mail' });
