@@ -1355,20 +1355,22 @@ app.get('/api/users/public', requireAuth, async (req, res) => {
 
 // ========== PAYMENTS (demo) — шаг 5 ==========
 const DEMO_PLANS = {
-  basic:    { days: 15, amount: 1.99 },
-  business: { days: 15, amount: 14.99 },
-  extend:   { days: 15, amount: 0.99 },
-  boost:    { days: 1,  amount: 4.99 },
+  basic:    { days: 30, amount: 4.99 },
+  business: { days: 30, amount: 29.99 },
+  extend:   { days: 30, amount: 2.99 },
+  boost:    { days: 1,  amount: 9.99 },
   standard: { days: 30, amount: 19.99 },
   premium:  { days: 60, amount: 34.99 }
 };
 
-/** Промокоды: percent 0–100, optional fixedDays overrides plan days */
 const PROMO_CODES = {
   HANDLIO100: { percent: 100, label: '100% zniżki' },
   HANDLIO50: { percent: 50, label: '50% zniżki' },
-  HANDLIO15: { percent: 100, days: 15, label: '15 dni gratis' },
-  START: { percent: 100, days: 7, label: 'Start 7 dni' }
+  HANDLIO30: { percent: 100, days: 30, label: '30 dni gratis' },
+  START: { percent: 100, days: 7, label: 'Start 7 dni' },
+  // Промокоды для бизнеса
+  BIZNES100: { percent: 100, label: '100% dla firm', onlyBusiness: true },
+  BIZNES50: { percent: 50, label: '50% dla firm', onlyBusiness: true }
 };
 // доп. коды из env: PROMO_EXTRA=CODE1:100,CODE2:50
 (function loadExtraPromos() {
@@ -1409,10 +1411,17 @@ app.post('/api/payments/demo', requireAuth, rateLimit({ name: 'pay', windowMs: 6
     const planKey = body.plan && DEMO_PLANS[body.plan] ? body.plan : 'basic';
     let plan = { ...DEMO_PLANS[planKey] };
 
-    const promoRaw = body.promoCode ? String(body.promoCode) : '';
+        const promoRaw = body.promoCode ? String(body.promoCode) : '';
     const promo = resolvePromo(promoRaw);
     if (promoRaw && !promo) {
       return res.status(400).json({ error: 'Nieprawidłowy kod promocyjny' });
+    }
+    // Проверка, что код только для бизнеса
+    if (promo && promo.onlyBusiness) {
+      const userRow = await pool.query('SELECT type FROM users WHERE id = $1', [req.user.id]);
+      if (!userRow.rows.length || userRow.rows[0].type !== 'business') {
+        return res.status(400).json({ error: 'Ten kod jest tylko dla firm' });
+      }
     }
 
     let amount = Number(plan.amount);
