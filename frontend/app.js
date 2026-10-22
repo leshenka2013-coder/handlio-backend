@@ -4618,11 +4618,6 @@ if (!termsCheckbox || !termsCheckbox.checked) {
         return;
       }
 
-            const termsCheckbox = document.getElementById('auth-accept-terms');
-      if (!termsCheckbox || !termsCheckbox.checked) {
-        showToast('Musisz zaakceptować Regulamin i Politykę prywatności.');
-        return;
-      }
 
       const payload = {
         email,
