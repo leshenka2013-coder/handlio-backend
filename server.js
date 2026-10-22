@@ -686,7 +686,6 @@ app.delete('/api/auth/me', async (req, res) => {
     }
     const token = authHeader.split(' ')[1];
     
-    // Проверяем, кто это (используем стандартный jwt.verify, так как функции verifyAccessToken у тебя нет)
     let payload;
     try {
       payload = jwt.verify(token, JWT_SECRET);
@@ -700,7 +699,7 @@ app.delete('/api/auth/me', async (req, res) => {
 
     const userId = payload.sub;
 
-            // Полное удаление всех следов пользователя (RODO)
+    // Полное удаление всех следов пользователя (RODO)
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -709,7 +708,6 @@ app.delete('/api/auth/me', async (req, res) => {
       await client.query('DELETE FROM notifications WHERE user_id = $1', [userId]);
       await client.query('DELETE FROM reports WHERE reporter_id = $1 OR seller_id = $1', [userId]);
       await client.query('DELETE FROM refresh_tokens WHERE user_id = $1', [userId]);
-      // (audit_logs оставляем для безопасности)
       await client.query('DELETE FROM users WHERE id = $1', [userId]);
       await client.query('COMMIT');
     } catch (dbErr) {
@@ -718,6 +716,12 @@ app.delete('/api/auth/me', async (req, res) => {
     } finally {
       client.release();
     }
+
+    res.json({ ok: true, message: 'Konto zostało usunięte' });
+  } catch (error) {
+    console.error('[DELETE /api/auth/me]', error);
+    res.status(500).json({ error: 'Nie udało się usunąć konta' });
+  }
 }); 
 
 // ========== КОНЕЦ AUTH API ==========
