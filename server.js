@@ -700,20 +700,24 @@ app.delete('/api/auth/me', async (req, res) => {
 
     const userId = payload.sub;
 
-        // Полное удаление всех следов пользователя (RODO)
- await pool.query('DELETE FROM messages WHERE from_id = $1 OR to_id = $1', [userId]);
- await pool.query('DELETE FROM ads WHERE user_id = $1', [userId]);
- await pool.query('DELETE FROM notifications WHERE user_id = $1', [userId]);
- await pool.query('DELETE FROM reports WHERE reporter_id = $1 OR seller_id = $1', [userId]);
- await pool.query('DELETE FROM refresh_tokens WHERE user_id = $1', [userId]);
- // (audit_logs оставляем для безопасности, но можно обезличить, если нужно)
- await pool.query('DELETE FROM users WHERE id = $1', [userId]);
-
-    res.json({ ok: true, message: 'Konto zostało usunięte' });
-  } catch (error) {
-    console.error('[DELETE /api/auth/me]', error);
-    res.status(500).json({ error: 'Nie udało się usunąć konta' });
-  }
+            // Полное удаление всех следов пользователя (RODO)
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      await client.query('DELETE FROM messages WHERE from_id = $1 OR to_id = $1', [userId]);
+      await client.query('DELETE FROM ads WHERE user_id = $1', [userId]);
+      await client.query('DELETE FROM notifications WHERE user_id = $1', [userId]);
+      await client.query('DELETE FROM reports WHERE reporter_id = $1 OR seller_id = $1', [userId]);
+      await client.query('DELETE FROM refresh_tokens WHERE user_id = $1', [userId]);
+      // (audit_logs оставляем для безопасности)
+      await client.query('DELETE FROM users WHERE id = $1', [userId]);
+      await client.query('COMMIT');
+    } catch (dbErr) {
+      await client.query('ROLLBACK');
+      throw dbErr;
+    } finally {
+      client.release();
+    }
 }); 
 
 // ========== КОНЕЦ AUTH API ==========
@@ -754,13 +758,11 @@ app.post('/api/auth/forgot', rateLimit({ name: 'auth', windowMs: 15 * 60_000, ma
       return res.json(generic);
     }
     
-    const code = String(Math.floor(100000 + Math.random() * 900000));
+        const code = String(crypto.randomInt(100000, 999999));
     resetCodes.set(email, { code, expires: Date.now() + 15 * 60 * 1000 });
 
-    // ВСЕГДА выводим код в терминал (даже в production), чтобы можно было проверить
-    console.log('=================================');
-    console.log('КОД ДЛЯ ВОССТАНОВЛЕНИЯ:', code);
-    console.log('=================================');
+    // В лог выводим только факт отправки, БЕЗ самого кода (безопасность!)
+    console.log(`[AUTH] Wygenerowano kod resetowania dla: ${email}`);
 
     // Отправляем через Resend
     try {
