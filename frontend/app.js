@@ -4581,6 +4581,11 @@ if (__activePage && __activePage.id === 'page-my') renderMy();
 
     async function submitAuth(e) {
       e.preventDefault();
+const termsCheckbox = document.getElementById('auth-accept-terms');
+if (!termsCheckbox || !termsCheckbox.checked) {
+  showToast('Musisz zaakceptować Regulamin i Politykę prywatności.');
+  return;
+}
       const email = document.getElementById('a-email').value.trim().toLowerCase();
       const phone = document.getElementById('a-phone').value.trim();
       const password = document.getElementById('a-password').value;
