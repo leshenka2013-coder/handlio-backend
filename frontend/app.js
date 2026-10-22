@@ -4613,11 +4613,19 @@ if (__activePage && __activePage.id === 'page-my') renderMy();
         return;
       }
 
+            const termsCheckbox = document.getElementById('auth-accept-terms');
+      if (!termsCheckbox || !termsCheckbox.checked) {
+        showToast('Musisz zaakceptować Regulamin i Politykę prywatności.');
+        return;
+      }
+
       const payload = {
         email,
         password,
         phone,
-        type: userType
+        type: userType,
+        acceptedTerms: true,
+        acceptedAt: Date.now()
       };
       if (userType === 'private') {
         payload.name = document.getElementById('a-name').value.trim();
