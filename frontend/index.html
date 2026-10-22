@@ -1468,21 +1468,25 @@
     <div id="page-cookies" class="page">
       <h1 data-i18n="cookies_title">Polityka cookies</h1>
       <p class="subtitle" data-i18n="cookies_subtitle">Pliki cookie i lokalne przechowywanie danych</p>
-      <div class="legal-content rules-content">
-        <p data-i18n="cookies_p1">Handlio w wersji demonstracyjnej korzysta głównie z pamięci lokalnej przeglądarki (localStorage), a nie z klasycznych plików cookie marketingowych.</p>
-        <h2 data-i18n="cookies_h1">1. Co zapisujemy lokalnie</h2>
-        <ul>
-          <li data-i18n="cookies_l1">Sesja użytkownika i dane konta (po zalogowaniu)</li>
-          <li data-i18n="cookies_l2">Ogłoszenia, ulubione, ustawienia języka</li>
-          <li data-i18n="cookies_l3">Tymczasowe kody odzyskiwania hasła (demo)</li>
-        </ul>
-        <h2 data-i18n="cookies_h2">2. Po co to jest potrzebne</h2>
-        <p data-i18n="cookies_p2">Aby serwis działał (logowanie, Twoje ogłoszenia, filtry). Bez localStorage aplikacja demo nie zapamięta stanu.</p>
-        <h2 data-i18n="cookies_h3">3. Twoja kontrola</h2>
-        <p data-i18n="cookies_p3">Możesz wyczyścić dane witryny w ustawieniach przeglądarki. W wersji produkcyjnej dodamy baner zgody, jeśli pojawią się cookie analityczne lub marketingowe.</p>
-        <h2 data-i18n="cookies_h4">4. Cookie stron trzecich</h2>
-        <p data-i18n="cookies_p4">Obecnie nie wdrażamy Google Analytics ani pikseli reklamowych. W razie ich dodania zaktualizujemy tę politykę i poprosimy o zgodę.</p>
-      </div>
+         <div class="legal-content rules-content">
+     <p>Handlio w wersji demonstracyjnej korzysta wyłącznie z pamięci lokalnej przeglądarki (localStorage) w celach niezbędnych do działania serwisu. <strong>Nie stosujemy plików cookie w celach analitycznych ani marketingowych.</strong></p>
+     
+     <h2>1. Co zapisujemy lokalnie</h2>
+     <ul>
+       <li>Sesja użytkownika i dane konta (po zalogowaniu) — abyś nie musiał logować się na każdej podstronie.</li>
+       <li>Ogłoszenia, ulubione, ustawienia języka i motywu (jasny/ciemny).</li>
+       <li>Stan zaakceptowania tego banera (aby nie pokazywać go przy każdej wizycie).</li>
+     </ul>
+
+     <h2>2. Po co to jest potrzebne</h2>
+     <p>Aby serwis działał (logowanie, Twoje ogłoszenia, filtry, zapamiętanie wybranego języka). Bez localStorage aplikacja nie zapamięta stanu.</p>
+
+     <h2>3. Twoja kontrola</h2>
+     <p>Możesz w każdej chwili wyczyścić dane witryny w ustawieniach swojej przeglądarki. Spowoduje to wylogowanie i zresetowanie ustawień.</p>
+
+     <h2>4. Zewnętrzni dostawcy</h2>
+     <p>Przy korzystaniu z funkcji geolokalizacji (wyszukiwanie po lokalizacji) serwis wysyła zapytanie do zewnętrznego dostawcy map (OpenStreetMap / Nominatim), przekazując jedynie współrzędne geograficzne. Nie stosujemy pikseli reklamowych (np. Facebook Pixel) ani Google Analytics.</p>
+   </div>
     </div>
 
     <div id="page-help" class="page">
@@ -1613,7 +1617,7 @@
   <div id="cookie-banner" class="cookie-banner" style="display: none;">
     <div class="cookie-text">
       <span>🍪</span>
-      <p><strong>Dbamy o Twoją prywatność.</strong> Nasz serwis wykorzystuje pliki cookies w celu zapewnienia prawidłowego działania strony oraz analizy ruchu. Korzystając z serwisu, zgadzasz się na ich użycie zgodnie z naszą <a href="#top" data-action="nav" data-page="cookies">Polityką cookies</a>.</p>
+      <p><strong>Dbamy o Twoją prywatność.</strong> Nasz serwis wykorzystuje wyłącznie niezbędne pliki lokalne (localStorage) do zapamiętania Twojego logowania i ustawień (np. języka). Nie stosujemy analityki ani reklam. Szczegóły znajdziesz w naszej <a href="#top" data-action="nav" data-page="cookies">Polityce cookies</a>.</p>
     </div>
     <div class="cookie-actions">
       <button class="btn btn-primary btn-sm" id="cookie-accept-btn">Akceptuję wszystkie</button>
