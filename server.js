@@ -700,10 +700,14 @@ app.delete('/api/auth/me', async (req, res) => {
 
     const userId = payload.sub;
 
-    // Удаляем сообщения, объявления и самого юзера
-    await pool.query('DELETE FROM messages WHERE from_id = $1 OR to_id = $1', [userId]);
-    await pool.query('DELETE FROM ads WHERE user_id = $1', [userId]);
-    await pool.query('DELETE FROM users WHERE id = $1', [userId]);
+        // Полное удаление всех следов пользователя (RODO)
+ await pool.query('DELETE FROM messages WHERE from_id = $1 OR to_id = $1', [userId]);
+ await pool.query('DELETE FROM ads WHERE user_id = $1', [userId]);
+ await pool.query('DELETE FROM notifications WHERE user_id = $1', [userId]);
+ await pool.query('DELETE FROM reports WHERE reporter_id = $1 OR seller_id = $1', [userId]);
+ await pool.query('DELETE FROM refresh_tokens WHERE user_id = $1', [userId]);
+ // (audit_logs оставляем для безопасности, но можно обезличить, если нужно)
+ await pool.query('DELETE FROM users WHERE id = $1', [userId]);
 
     res.json({ ok: true, message: 'Konto zostało usunięte' });
   } catch (error) {
