@@ -55,11 +55,11 @@ nav_seller: "Kabinet sprzedawcy",
         plan_extend_desc: "Przedłuż aktywne ogłoszenie o kolejne 15 dni.",
         plan_boost: "Podbicie",
         plan_boost_desc: "Wypchnij ogłoszenie na górę listy na 24 godziny.",
-        per_15: "/ 15 dni",
-        feat_15: "✓ 15 dni publikacji",
+        per_30: "/ 30 dni",
+        feat_30: "✓ 30 dni publikacji",
         feat_photos: "✓ Do 15 zdjęć",
         feat_edit: "✓ Edycja ogłoszenia",
-        feat_extend: "✓ +15 dni do ogłoszenia",
+        feat_extend: "✓ +30 dni do ogłoszenia",
         feat_keep: "✓ Zachowujesz pozycję",
         feat_top: "✓ Na górze listy",
         feat_24h: "✓ Działa 24 godziny",
@@ -2880,11 +2880,11 @@ if (cat === 'realty_abroad') {
     let pendingAd = null;
     let selectedPayMethod = 'blik';
 
-    function getAdPrice() {
+        function getAdPrice() {
       if (currentUser && currentUser.type === 'business') {
-        return { plan: 'business', amount: 14.99, days: 15, labelKey: 'biz_single' };
+        return { plan: 'business', amount: 29.99, days: 30, labelKey: 'biz_single' };
       }
-      return { plan: 'basic', amount: 1.99, days: 15, labelKey: 'plan_basic' };
+      return { plan: 'basic', amount: 4.99, days: 30, labelKey: 'plan_basic' };
     }
 
     
