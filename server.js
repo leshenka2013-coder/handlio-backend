@@ -675,7 +675,7 @@ app.post('/api/auth/login', rateLimit({ name: 'auth', windowMs: 15 * 60_000, max
     console.error('[POST /api/auth/login]', error);
     res.status(500).json({ error: 'Błąd logowania' });
   }
-}); // <--- ВОТ ЗДЕСЬ ФУНКЦИЯ ЛОГИНА ЗАКРЫВАЕТСЯ
+}); 
 
 // А ТЕПЕРЬ ИДЕТ УДАЛЕНИЕ
 app.delete('/api/auth/me', async (req, res) => {
@@ -1088,6 +1088,45 @@ app.delete('/api/ads/:id', requireAuth, rateLimit({ name: 'ads-write', windowMs:
     }
 
     const result = await pool.query(
+// Собрать все URL фото пользователя
+const userAds = await client.query(
+  'SELECT image, images FROM ads WHERE user_id = $1', [userId]
+);
+
+const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const keysToDelete = [];
+
+for (const row of userAds.rows) {
+  const imgs = [];
+  if (row.image) imgs.push(row.image);
+  if (row.images) {
+    try {
+      const parsed = JSON.parse(row.images);
+      if (Array.isArray(parsed)) imgs.push(...parsed);
+    } catch (e) {}
+  }
+  for (const url of imgs) {
+    if (typeof url === 'string' && url.includes(process.env.R2_PUBLIC_URL)) {
+      const key = url.split(process.env.R2_PUBLIC_URL + '/')[1];
+      if (key) keysToDelete.push(key);
+    }
+  }
+}
+
+// Удалить файлы из R2 (по одному)
+for (const key of keysToDelete) {
+  try {
+    await r2.send(new DeleteObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: key
+    }));
+  } catch (e) {
+    console.warn('[R2 delete]', key, e.message);
+  }
+}
+
+// Теперь можно удалять из БД
+await client.query('DELETE FROM ads WHERE user_id = $1', [userId]);
       'DELETE FROM ads WHERE id = $1 RETURNING id',
       [req.params.id]
     );
