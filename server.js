@@ -703,6 +703,45 @@ app.delete('/api/auth/me', async (req, res) => {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
+
+      // 1. Собрать все URL фото пользователя ДО удаления из БД
+      const userAds = await client.query(
+        'SELECT image, images FROM ads WHERE user_id = $1', [userId]
+      );
+
+      const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+      const keysToDelete = [];
+
+      for (const row of userAds.rows) {
+        const imgs = [];
+        if (row.image) imgs.push(row.image);
+        if (row.images) {
+          try {
+            const parsed = JSON.parse(row.images);
+            if (Array.isArray(parsed)) imgs.push(...parsed);
+          } catch (e) {}
+        }
+        for (const url of imgs) {
+          if (typeof url === 'string' && url.includes(process.env.R2_PUBLIC_URL)) {
+            const key = url.split(process.env.R2_PUBLIC_URL + '/')[1];
+            if (key) keysToDelete.push(key);
+          }
+        }
+      }
+
+      // 2. Удалить файлы из R2
+      for (const key of keysToDelete) {
+        try {
+          await r2.send(new DeleteObjectCommand({
+            Bucket: process.env.R2_BUCKET_NAME,
+            Key: key
+          }));
+        } catch (e) {
+          console.warn('[R2 delete]', key, e.message);
+        }
+      }
+
+      // 3. Удалить все записи из БД
       await client.query('DELETE FROM messages WHERE from_id = $1 OR to_id = $1', [userId]);
       await client.query('DELETE FROM ads WHERE user_id = $1', [userId]);
       await client.query('DELETE FROM notifications WHERE user_id = $1', [userId]);
@@ -1088,45 +1127,6 @@ app.delete('/api/ads/:id', requireAuth, rateLimit({ name: 'ads-write', windowMs:
     }
 
     const result = await pool.query(
-// Собрать все URL фото пользователя
-const userAds = await client.query(
-  'SELECT image, images FROM ads WHERE user_id = $1', [userId]
-);
-
-const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
-const keysToDelete = [];
-
-for (const row of userAds.rows) {
-  const imgs = [];
-  if (row.image) imgs.push(row.image);
-  if (row.images) {
-    try {
-      const parsed = JSON.parse(row.images);
-      if (Array.isArray(parsed)) imgs.push(...parsed);
-    } catch (e) {}
-  }
-  for (const url of imgs) {
-    if (typeof url === 'string' && url.includes(process.env.R2_PUBLIC_URL)) {
-      const key = url.split(process.env.R2_PUBLIC_URL + '/')[1];
-      if (key) keysToDelete.push(key);
-    }
-  }
-}
-
-// Удалить файлы из R2 (по одному)
-for (const key of keysToDelete) {
-  try {
-    await r2.send(new DeleteObjectCommand({
-      Bucket: process.env.R2_BUCKET_NAME,
-      Key: key
-    }));
-  } catch (e) {
-    console.warn('[R2 delete]', key, e.message);
-  }
-}
-
-// Теперь можно удалять из БД
-await client.query('DELETE FROM ads WHERE user_id = $1', [userId]);
       'DELETE FROM ads WHERE id = $1 RETURNING id',
       [req.params.id]
     );
@@ -1140,7 +1140,6 @@ await client.query('DELETE FROM ads WHERE user_id = $1', [userId]);
     res.status(500).json({ error: 'Не удалось удалить' });
   }
 });
-
 // ========== MODERATION COUNTER (лёгкий polling) ==========
 app.get('/api/moderation/pending-count', requireAuth, async (req, res) => {
   try {
