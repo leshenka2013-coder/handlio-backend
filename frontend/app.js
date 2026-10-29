@@ -4800,14 +4800,9 @@ if (!termsCheckbox || !termsCheckbox.checked) {
         document.getElementById('forgot-step-email').style.display = 'none';
         document.getElementById('forgot-step-reset').style.display = '';
         const msg = document.getElementById('forgot-sent-msg');
-        if (data && data.demo && data.code) {
-          msg.innerHTML = (t('pwd_sent_demo') ||
-            'Kod (tryb demo — w produkcji tylko e-mail):') +
-            ' <strong style="letter-spacing:2px;font-size:1.1rem">' + escapeHtml(data.code) + '</strong>';
-        } else {
-          msg.textContent = t('pwd_sent_generic') ||
-            'Jeśli konto istnieje, kod został wysłany na e-mail. Sprawdź skrzynkę.';
-        }
+        const msg = document.getElementById('forgot-sent-msg');
+msg.textContent = t('pwd_sent_generic') ||
+  'Jeśli konto istnieje, kod został wysłany na e-mail. Sprawdź skrzynkę.';
         showToast(t('pwd_code_sent') || 'Kod resetujący wygenerowany');
       } catch (err) {
         showToast((err.data && err.data.error) || err.message || 'Błąd');
