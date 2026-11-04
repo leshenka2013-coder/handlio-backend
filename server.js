@@ -1230,7 +1230,50 @@ app.post('/api/messages', requireAuth, rateLimit({ name: 'msg', windowMs: 60_000
        VALUES ($1,$2,$3,$4,$5,$6,false,$7) RETURNING *`,
       [id, conv, adId, req.user.id, to, text, created]
     );
+// ========== SUPPORT CHAT (Чат с админом) ==========
+app.post('/api/support', requireAuth, rateLimit({ name: 'support', windowMs: 60_000, max: 20 }), async (req, res) => {
+  try {
+    const text = String((req.body && req.body.text) || '').trim().slice(0, 2000);
+    if (!text) {
+      return res.status(400).json({ error: 'Wiadomość nie może być pusta' });
+    }
 
+    // Формируем уникальный ID диалога для этого пользователя
+    const conv = 'support|' + req.user.id;
+    const id = generateId();
+    const created = Date.now();
+
+    // Находим всех staff-пользователей (админов и модераторов)
+    const staff = await pool.query(
+      `SELECT id FROM users WHERE role IN ('superadmin', 'admin', 'moderator')`
+    );
+
+    if (!staff.rows.length) {
+      return res.status(500).json({ error: 'Brak administratorów w systemie' });
+    }
+
+    // Отправляем сообщение каждому staff-пользователю, чтобы все видели обращение
+    for (const row of staff.rows) {
+      await pool.query(
+        `INSERT INTO messages (id, conv, ad_id, from_id, to_id, text, read, created)
+         VALUES ($1, $2, NULL, $3, $4, $5, false, $6)`,
+        [generateId(), conv, req.user.id, row.id, text, created]
+      );
+
+      // Создаём уведомление для каждого админа
+      await pool.query(
+        `INSERT INTO notifications (id, user_id, title, text, type, meta, read, created)
+         VALUES ($1, $2, $3, $4, 'support', $5, false, $6)`,
+        [generateId(), row.id, 'Nowa wiadomość od użytkownika', text.slice(0, 100), JSON.stringify({ userId: req.user.id }), created]
+      );
+    }
+
+    res.status(201).json({ ok: true });
+  } catch (e) {
+    console.error('[POST /api/support]', e);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
     // уведомление получателю
     const adRow = adId ? await pool.query('SELECT title FROM ads WHERE id = $1', [adId]) : { rows: [] };
     const adTitle = adRow.rows[0]?.title || 'ogłoszenia';
