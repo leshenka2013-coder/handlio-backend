@@ -26,7 +26,7 @@
     "multer": "^2.4.0",
     "pg": "^8.23.0",
     "resend": "^6.34.1",
-"@aws-sdk/client-s3": "^3.500.0",
+"@aws-sdk/client-s3": "^3.997.48",
 "multer": "^1.4.5-lts.1"
   }
 }
