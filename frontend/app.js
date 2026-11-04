@@ -1549,6 +1549,7 @@ nav_reports: "Жалобы",
           locLabel.textContent = t('all_poland');
         }
       });
+}
 
     function setLang(lang) {
       currentLang = lang;
@@ -6211,4 +6212,3 @@ async function sendSupportMessage(e, conv) {
 })();
 
 
-})();
