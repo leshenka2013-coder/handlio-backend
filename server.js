@@ -128,6 +128,12 @@ function resolveFrontendDir() {
 }
 const FRONTEND_DIR = resolveFrontendDir();
 // ========== OPEN GRAPH / SEO ДЛЯ БОТОВ ==========
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 app.get('/ad/:id', async (req, res, next) => {
   const userAgent = req.headers['user-agent'] || '';
   const isBot = /facebookexternalhit|twitterbot|telegrambot|whatsapp|discordbot|linkedinbot/i.test(userAgent);
@@ -138,9 +144,9 @@ app.get('/ad/:id', async (req, res, next) => {
     const ad = await getAdById(req.params.id);
     if (!ad) return next();
 
-    const title = `${ad.title} — ${ad.price} zł`;
-    const description = ad.desc ? ad.desc.substring(0, 160) : 'Zobacz to ogłoszenie na Handlio';
-    const imageUrl = ad.image || 'https://handlio.pl/favicon.ico'; // Заглушка, если нет фото
+        const title = `${esc(ad.title)} — ${esc(ad.price)} zł`;
+    const description = esc(ad.desc ? ad.desc.substring(0, 160) : 'Zobacz to ogłoszenie na Handlio');
+    const imageUrl = esc(ad.image || 'https://handlio.pl/favicon.ico');
 
     // Отдаем минимальный HTML с мета-тегами
     res.send(`
@@ -1225,48 +1231,10 @@ app.post('/api/messages', requireAuth, rateLimit({ name: 'msg', windowMs: 60_000
     const id = generateId();
     const created = Date.now();
 
-    const ins = await pool.query(
+        const ins = await pool.query(
       `INSERT INTO messages (id, conv, ad_id, from_id, to_id, text, read, created)
        VALUES ($1,$2,$3,$4,$5,$6,false,$7) RETURNING *`,
       [id, conv, adId, req.user.id, to, text, created]
-    );
-// ========== SUPPORT CHAT (Чат с админом) ==========
-app.post('/api/messages', requireAuth, rateLimit({ name: 'msg', windowMs: 60_000, max: 60 }), async (req, res) => {
-  try {
-    const b = req.body || {};
-    const to = String(b.to || '').trim();
-    const text = String(b.text || '').trim().slice(0, H23_TEXT_MAX);
-    const adId = b.adId ? String(b.adId) : null;
-
-    if (!to || !text) return res.status(400).json({ error: 'Brak to/text' });
-    if (to === req.user.id) return res.status(400).json({ error: 'Nie możesz pisać do siebie' });
-
-    const target = await pool.query('SELECT id FROM users WHERE id = $1', [to]);
-    if (!target.rows.length) return res.status(404).json({ error: 'Odbiorca nie istnieje' });
-
-    const conv = [req.user.id, to].sort().join('|') + '|' + (adId || '');
-    const id = generateId();
-    const created = Date.now();
-
-    const ins = await pool.query(
-      `INSERT INTO messages (id, conv, ad_id, from_id, to_id, text, read, created)
-       VALUES ($1,$2,$3,$4,$5,$6,false,$7) RETURNING *`,
-      [id, conv, adId, req.user.id, to, text, created]
-    );
-
-    // уведомление получателю
-    const adRow = adId ? await pool.query('SELECT title FROM ads WHERE id = $1', [adId]) : { rows: [] };
-    const adTitle = adRow.rows[0]?.title || 'ogłoszenia';
-    const me = await pool.query('SELECT name, company, email FROM users WHERE id = $1', [req.user.id]);
-    const meRow = me.rows[0] || {};
-    const fromName = meRow.company || meRow.name || meRow.email || 'Użytkownik';
-
-    const ntId = generateId();
-    await pool.query(
-      `INSERT INTO notifications (id, user_id, title, text, type, meta, read, created)
-       VALUES ($1,$2,$3,$4,$5,$6,false,$7)`,
-      [ntId, to, 'Nowe wiadomości', `${fromName} napisał(a) w sprawie „${adTitle}”`, 'message',
-       JSON.stringify({ conv, adId }), created]
     );
 
     res.status(201).json(mapMessage(ins.rows[0]));
