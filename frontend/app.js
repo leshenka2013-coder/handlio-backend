@@ -1531,19 +1531,24 @@ nav_reports: "Жалобы",
     function applyDynamicI18n() {
       const setText = (selector, key) => { const el=document.querySelector(selector); if(el) el.textContent=t(key); };
       const setPlaceholder = (selector, key) => { const el=document.querySelector(selector); if(el) el.placeholder=t(key); };
-      ['auto','moto'].forEach(cat => {
-        setText(`#${cat}-brand-label`, 'all_brands');
-        setText(`#${cat}-model-label`, 'all_models');
+            ['auto','moto'].forEach(cat => {
+        const brand = getSelectedBrand(cat);
+        const models = getSelectedModels(cat);
+        const brandLabel = document.getElementById(cat + '-brand-label');
+        const modelLabel = document.getElementById(cat + '-model-label');
+        if (brandLabel) {
+          brandLabel.textContent = (!brand || brand === 'Wszystkie') ? t('all_brands') : brand;
+        }
+        if (modelLabel) {
+          modelLabel.textContent = (models && models.size) ? [...models].join(', ') : t('all_models');
+        }
         setPlaceholder(`#${cat}-brand-search`, 'ph_brand');
         setPlaceholder(`#${cat}-loc-search`, 'ph_search_generic');
-        setText(`#${cat}-loc-label`, 'all_poland');
+        const locLabel = document.getElementById(cat + '-loc-label');
+        if (locLabel && (!locFilter[cat] || (!locFilter[cat].region && !locFilter[cat].city))) {
+          locLabel.textContent = t('all_poland');
+        }
       });
-      document.querySelectorAll('#filters-auto [data-i18n], #filters-moto [data-i18n], #filters-realty [data-i18n]').forEach(el=>{
-        const key=el.getAttribute('data-i18n'); if(key) el.textContent=t(key);
-      });
-      const popular=document.querySelectorAll('option[data-i18n="sort_popular"]'); popular.forEach(el=>el.textContent=t('sort_popular'));
-      const adv=document.querySelectorAll('[data-i18n="btn_advanced"]'); adv.forEach(el=>el.textContent=t('btn_advanced'));
-    }
 
     function setLang(lang) {
       currentLang = lang;
@@ -5435,10 +5440,10 @@ async function h23RenderMessages() {
           <div class="h23-time">${escapeHtml(formatDate(x.last.created))}</div>
         </button>`;
       }).join('')
-    : '<div class="h23-empty">💬 Brak rozmów.</div>';
+        : '<div class="h23-empty">💬 Brak rozmów.</div>';
 
-     h23RefreshBadges();
-  window.__h23OpeningChat = false;   
+  h23RefreshBadges();
+  window.__h23OpeningChat = false;
 }
 
 
@@ -5689,7 +5694,10 @@ async function openSupportChat() {
     showToast('Zaloguj się, aby napisać do administratora.');
     return;
   }
-  window.__h23OpeningChat = true;
+  window.__h23OpeningChat = true;async function h23RenderMessages() {
+  if (!h23Req()) return;
+  let ms = [];
+  try {
   showPage('messages');
     const root = document.getElementById('h23-chat-list');
   if (!root) return;
