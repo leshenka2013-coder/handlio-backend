@@ -5694,12 +5694,10 @@ async function openSupportChat() {
     showToast('Zaloguj się, aby napisać do administratora.');
     return;
   }
-  window.__h23OpeningChat = true;async function h23RenderMessages() {
-  if (!h23Req()) return;
-  let ms = [];
-  try {
+    window.__h23OpeningChat = true;
+
   showPage('messages');
-    const root = document.getElementById('h23-chat-list');
+  const root = document.getElementById('h23-chat-list');
   if (!root) return;
 
   const conv = 'support|' + currentUser.id;
@@ -5721,6 +5719,7 @@ async function openSupportChat() {
 
   await loadSupportThread(conv);
 }
+  
 
 async function loadSupportThread(conv) {
   const box = document.getElementById('h23-thread');
