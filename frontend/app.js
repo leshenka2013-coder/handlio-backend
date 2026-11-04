@@ -5719,13 +5719,13 @@ async function loadSupportThread(conv) {
   const box = document.getElementById('h23-thread');
   if (!box) return;
   try {
-    const msgs = await API.getMessages();
-    const ms = (msgs || [])
+        const allMsgs = await API.getMessages();
+    const supportMsgs = (allMsgs || [])
       .filter(m => m.conv === conv)
       .sort((a, b) => a.created - b.created);
 
-    box.innerHTML = ms.length
-      ? ms.map(x => {
+        box.innerHTML = supportMsgs.length
+      ? supportMsgs.map(x => {
           const mine = String(x.from) === String(currentUser.id);
           return `<div class="h23-bubble ${mine ? 'mine' : 'theirs'}">
             ${escapeHtml(x.text)}
