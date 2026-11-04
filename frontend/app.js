@@ -4800,8 +4800,7 @@ if (!termsCheckbox || !termsCheckbox.checked) {
         document.getElementById('forgot-step-email').style.display = 'none';
         document.getElementById('forgot-step-reset').style.display = '';
         const msg = document.getElementById('forgot-sent-msg');
-        const msg = document.getElementById('forgot-sent-msg');
-msg.textContent = t('pwd_sent_generic') ||
+        msg.textContent = t('pwd_sent_generic') ||
   'Jeśli konto istnieje, kod został wysłany na e-mail. Sprawdź skrzynkę.';
         showToast(t('pwd_code_sent') || 'Kod resetujący wygenerowany');
       } catch (err) {
