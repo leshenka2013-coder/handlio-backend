@@ -5682,7 +5682,82 @@ Object.assign(window, {
   h23RenderSeller, h23SellerSection,
   h23RefreshBadges, h23Badges
 });
+// ========== SUPPORT CHAT (чат с админом) ==========
+async function openSupportChat() {
+  if (!currentUser) {
+    showPage('auth');
+    setAuthMode('login');
+    showToast('Zaloguj się, aby napisać do administratora.');
+    return;
+  }
 
+  showPage('messages');
+  const root = document.getElementById('h23-chat-list');
+  if (!root) return;
+
+  const conv = 'support|' + currentUser.id;
+
+  root.innerHTML = `<div class="h23-chat-window">
+    <div class="h23-head-row">
+      <div>
+        <h2>🆘 Wsparcie Handlio</h2>
+        <div class="h23-muted">Napisz do administratora — odpowiemy w ciągu 24h</div>
+      </div>
+      <button class="btn btn-outline" data-action="h23-messages">← Wszystkie rozmowy</button>
+    </div>
+    <div id="h23-thread" class="h23-messages"></div>
+    <form class="h23-compose" data-on-submit="support-send" data-conv="${escapeHtml(conv)}">
+      <input id="support-input" maxlength="2000" placeholder="Napisz wiadomość do administratora..." required>
+      <button class="btn btn-primary">Wyślij</button>
+    </form>
+  </div>`;
+
+  await loadSupportThread(conv);
+}
+
+async function loadSupportThread(conv) {
+  const box = document.getElementById('h23-thread');
+  if (!box) return;
+  try {
+    const msgs = await API.getMessages();
+    const ms = (msgs || [])
+      .filter(m => m.conv === conv)
+      .sort((a, b) => a.created - b.created);
+
+    box.innerHTML = ms.length
+      ? ms.map(x => {
+          const mine = String(x.from) === String(currentUser.id);
+          return `<div class="h23-bubble ${mine ? 'mine' : 'theirs'}">
+            ${escapeHtml(x.text)}
+            <div><small>${escapeHtml(formatDate(x.created))}</small></div>
+          </div>`;
+        }).join('')
+      : '<div class="h23-empty">Napisz pierwszą wiadomość — chętnie pomożemy.</div>';
+    box.scrollTop = box.scrollHeight;
+  } catch (e) {
+    box.innerHTML = '<div class="h23-empty">Błąd ładowania wiadomości.</div>';
+  }
+}
+
+async function sendSupportMessage(e, conv) {
+  e.preventDefault();
+  if (!currentUser) return;
+  const input = document.getElementById('support-input');
+  const text = (input?.value || '').trim();
+  if (!text) return;
+
+  try {
+    await API.request('/api/support', {
+      method: 'POST',
+      body: JSON.stringify({ text })
+    });
+    input.value = '';
+    await loadSupportThread(conv);
+    showToast('Wiadomość wysłana do administratora');
+  } catch (err) {
+    showToast((err.data && err.data.error) || err.message || 'Błąd wysyłania');
+  }
+}
 
 /* ========== Stage 2: data-action event delegation ========== */
 (function initDataActionDelegation() {
@@ -5713,6 +5788,9 @@ Object.assign(window, {
       switch (action) {
         case 'nav':
           if (typeof showPage === 'function') showPage(d.page);
+          break;
+        case 'support-open':
+          if (typeof openSupportChat === 'function') openSupportChat();
           break;
         case 'go-add':
           if (typeof goAdd === 'function') goAdd();
@@ -6093,6 +6171,7 @@ Object.assign(window, {
     const d = el.dataset;
     try {
       if (a === 'auth' && typeof submitAuth === 'function') submitAuth(e);
+      else if (a === 'support-send' && typeof sendSupportMessage === 'function') sendSupportMessage(e, d.conv);
       else if (a === 'ad' && typeof submitAd === 'function') submitAd(e);
       else if (a === 'change-password' && typeof submitChangePassword === 'function') submitChangePassword(e);
       else if (a === 'h23-send' && typeof h23Send === 'function') h23Send(e, d.conv, d.ad, d.other);
