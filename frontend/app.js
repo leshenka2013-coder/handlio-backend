@@ -6209,3 +6209,6 @@ async function sendSupportMessage(e, conv) {
   if (acceptBtn) acceptBtn.addEventListener('click', () => hideBanner('all'));
   if (declineBtn) declineBtn.addEventListener('click', () => hideBanner('essential'));
 })();
+
+
+})();
