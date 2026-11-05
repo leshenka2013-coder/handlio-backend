@@ -1665,23 +1665,26 @@ app.use((err, req, res, next) => {
 });
 // Обработка всех остальных GET-запросов (SPA-роутинг)
 app.use((req, res, next) => {
+  // 1. Если это API — не трогаем
   if (req.path.startsWith('/api')) {
     return next();
   }
-  
-  // Если браузер просит файл (есть точка), 
-  // отдаём его из корня FRONTEND_DIR, даже если он запрашивается с /ad/...
+
+  // 2. Если это запрос файла (есть точка) — ищем его в КОРНЕ сайта
   if (req.path.includes('.')) {
-    const filePath = path.join(FRONTEND_DIR, req.path);
+    // Берём только имя файла (например, 'app.js' из '/ad/app.js')
+    const fileName = path.basename(req.path); 
+    const filePath = path.join(FRONTEND_DIR, fileName);
+    
     // Если файл существует — отправляем его
     if (fs.existsSync(filePath)) {
       return res.sendFile(filePath);
     }
-    // Если нет — 404
-    return next();
+    // Если нет — отдаём 404
+    return res.status(404).send('File not found');
   }
-  
-  // Всё остальное (например, /ad/123) — отдаём SPA (index.html)
+
+  // 3. Всё остальное — отдаём SPA (index.html)
   res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 app.listen(PORT, () => {
