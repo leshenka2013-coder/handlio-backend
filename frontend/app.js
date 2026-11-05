@@ -20,9 +20,9 @@
         ph_search_abroad: "Kraj, miasto, opis...",
         stat_abroad: "Nieruchomości zagraniczne",
         nav_my: "Moje",
-        nav_chat: "💬 Chat",
-        nav_notifications: "🔔 Powiadomienia",
-        nav_seller: "👤 Kabinet",
+        nav_chat: "Chat",
+        nav_notifications: "Powiadomienia",
+        nav_seller: "Kabinet",
         nav_fav: "Ulubione",
         fav_title: "Ulubione",
         fav_subtitle: "Ogłoszenia, które zapisałeś",
@@ -470,9 +470,9 @@
         ph_search_abroad: "Country, city, description...",
         stat_abroad: "Foreign real estate",
         nav_my: "My ads",
-        nav_chat: "💬 Chat",
-        nav_notifications: "🔔 Notifications",
-        nav_seller: "👤 Seller",
+        nav_chat: "Chat",
+        nav_notifications: "Notifications",
+        nav_seller: "Seller",
         nav_fav: "Favorites",
         fav_title: "Favorites",
         fav_subtitle: "Listings you saved",
@@ -920,9 +920,9 @@
         ph_search_abroad: "Страна, город, описание...",
         stat_abroad: "Зарубежная недвижимость",
         nav_my: "Мои объявления",
-        nav_chat: "💬 Чат",
-        nav_notifications: "🔔 Уведомления",
-        nav_seller: "👤 Кабинет",
+        nav_chat: "Чат",
+        nav_notifications: "Уведомления",
+        nav_seller: "Кабинет",
         nav_fav: "Избранное",
         fav_title: "Избранное",
         fav_subtitle: "Сохранённые объявления",
@@ -5735,8 +5735,7 @@ async function h23RefreshBadges() {
 
     h23BadgesRender(unreadMsgs, unreadNotifs);
   } catch (e) {
-    // тихо
-  }
+      }
 }
 
 function h23BadgesRender(chatCount, notifCount) {
@@ -5744,7 +5743,7 @@ function h23BadgesRender(chatCount, notifCount) {
     // находим ВСЕ элементы с нужным data-badge (в nav и в user-menu)
     document.querySelectorAll(`.h23-badge[data-badge="${badgeName}"]`).forEach(el => {
       el.textContent = value;
-      el.hidden = !value; // если 0 — скрываем, если >0 — показываем
+      el.style.display = value > 0 ? 'inline-flex' : 'none'; // если 0 — скрываем, если >0 — показываем
     });
   };
   apply('chat', chatCount);
