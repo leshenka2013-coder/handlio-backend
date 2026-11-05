@@ -1665,15 +1665,20 @@ app.use((err, req, res, next) => {
 });
 // Обработка всех остальных GET-запросов (SPA-роутинг)
 app.use((req, res, next) => {
-  // Если это API — не трогаем
   if (req.path.startsWith('/api')) {
     return next();
   }
   
-  // Если это запрос файла (стили, скрипт, картинка), 
-  // но сервер его не нашёл — отдаём 404 (чтобы не ломать MIME)
+  // Если браузер просит файл (есть точка), 
+  // отдаём его из корня FRONTEND_DIR, даже если он запрашивается с /ad/...
   if (req.path.includes('.')) {
-    return next(); // express сам отдаст 404, если файла нет
+    const filePath = path.join(FRONTEND_DIR, req.path);
+    // Если файл существует — отправляем его
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    }
+    // Если нет — 404
+    return next();
   }
   
   // Всё остальное (например, /ad/123) — отдаём SPA (index.html)
