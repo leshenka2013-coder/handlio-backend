@@ -2816,8 +2816,7 @@ function buildSpecsHTML(ad) {
   
   const chip = (icon, text) => icon + ' ' + escapeHtml(text == null ? '' : text);
   
-  const bodyLabels = {
-  const bodyLabels = {
+   const bodyLabels = {
     sedan: t('body_sedan') || 'Sedan',
     hatchback: t('body_hatchback') || 'Hatchback',
     kombi: t('body_kombi') || 'Kombi',
