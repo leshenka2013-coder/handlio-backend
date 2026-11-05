@@ -6106,7 +6106,7 @@ async function sendSupportMessage(e, conv) {
     }
   }
 
-  function runInput(el) {
+    function runInput(el) {
     const a = el.getAttribute('data-on-input');
     if (!a) return;
     const d = el.dataset;
@@ -6170,7 +6170,7 @@ async function sendSupportMessage(e, conv) {
     }
   });
 
-    document.addEventListener('submit', function (e) {
+  document.addEventListener('submit', function (e) {
     const el = e.target && e.target.closest ? e.target.closest('[data-on-submit]') : null;
     if (!el) return;
     e.preventDefault();
