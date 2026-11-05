@@ -1665,11 +1665,18 @@ app.use((err, req, res, next) => {
 });
 // Обработка всех остальных GET-запросов (SPA-роутинг)
 app.use((req, res, next) => {
-  // Если запрос начинается с /api или содержит точку (файл с расширением) — пропускаем
-  if (req.path.startsWith('/api') || req.path.includes('.')) {
+  // Если это API — не трогаем
+  if (req.path.startsWith('/api')) {
     return next();
   }
-  // Отдаём index.html для всех остальных путей (например, /ad/123)
+  
+  // Если это запрос файла (стили, скрипт, картинка), 
+  // но сервер его не нашёл — отдаём 404 (чтобы не ломать MIME)
+  if (req.path.includes('.')) {
+    return next(); // express сам отдаст 404, если файла нет
+  }
+  
+  // Всё остальное (например, /ad/123) — отдаём SPA (index.html)
   res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 app.listen(PORT, () => {
