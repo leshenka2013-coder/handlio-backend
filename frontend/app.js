@@ -2813,26 +2813,10 @@ function isPolandRealty(a) {
 
 function buildSpecsHTML(ad) {
   const parts = [];
-      // Иконка двигателя (SVG) 
-  const engineIcon = `<svg xmlns="http://www.w3.org/2000/svg"
-     width="24" height="24"
-     viewBox="0 0 24 24"
-     fill="none"
-     stroke="currentColor"
-     stroke-width="1.8"
-     stroke-linecap="round"
-     stroke-linejoin="round">
-  <path d="M3 10h2l2-3h8l2 3h3a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-3l-2 2H8l-2-2H3a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/>
-  <path d="M9 7V4h5v3"/>
-  <path d="M11 12v4M8 12v4M17 10v2M2 12H1"/>
-</svg>`;
   
-  const chip = (icon, text) => {
-    if (icon === 'ENGINE') {
-      return `${engineIcon} ${escapeHtml(text == null ? '' : text)}`;
-    }
-    return icon + ' ' + escapeHtml(text == null ? '' : text);
-  };
+  const chip = (icon, text) => icon + ' ' + escapeHtml(text == null ? '' : text);
+  
+  const bodyLabels = {
   const bodyLabels = {
     sedan: t('body_sedan') || 'Sedan',
     hatchback: t('body_hatchback') || 'Hatchback',
@@ -2883,7 +2867,7 @@ function buildSpecsHTML(ad) {
   if (ad.category === 'moto') {
     if (ad.brand) parts.push(chip('🏍️', ad.brand));
     if (ad.model) parts.push(chip('🏷️', ad.model));
-    if (ad.engine) parts.push(chip('ENGINE', ad.engine + ' cm³'));
+    if (ad.engine) parts.push(chip('⚙️', ad.engine + ' cm³'));
   }
 
   if (ad.condition) parts.push(chip('✓', getSpecLabel('condition', ad.condition)));
@@ -2904,7 +2888,7 @@ function buildSpecsHTML(ad) {
   }
 
   if (ad.power) parts.push(chip('⚡', ad.power + ' KM'));
-  if (ad.engineCapacity) parts.push(chip('ENGINE', ad.engineCapacity + ' cm³'));
+  if (ad.engineCapacity) parts.push(chip('⚙️', ad.engineCapacity + ' cm³'));
 if (ad.bodyType) parts.push(chip('🚗', bodyLabels[ad.bodyType] || ad.bodyType));
 if (ad.driveType) parts.push(chip('⚙️', driveLabels[ad.driveType] || ad.driveType));
   if (ad.doors) parts.push(chip('🚪', ad.doors + ' drz.'));
