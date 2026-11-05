@@ -3,9 +3,9 @@
 // ========== I18N ==========
     const translations = {
       pl: {
-nav_reports: "Skargi",
-btn_write_seller: "Napisz do sprzedawcy",
-btn_report: "Zgłoś",
+        nav_reports: "Skargi",
+        btn_write_seller: "Napisz do sprzedawcy",
+        btn_report: "Zgłoś",
         nav_home: "Główna",
         btn_share: "Udostępnij",
         btn_load_more: "Pokaż więcej",
@@ -14,15 +14,15 @@ btn_report: "Zgłoś",
         nav_moto: "Motocykle",
         nav_realty: "Nieruchomości",
         nav_abroad: "Nieruchomości zagraniczne",
-cat_name_realty_abroad: "Nieruchomości zagraniczne",
+        cat_name_realty_abroad: "Nieruchomości zagraniczne",
         abroad_title: "Nieruchomości zagraniczne",
         abroad_subtitle: "Apartamenty, domy i inwestycje poza Polską",
         ph_search_abroad: "Kraj, miasto, opis...",
         stat_abroad: "Nieruchomości zagraniczne",
         nav_my: "Moje",
-nav_chat: "Chat",
-nav_notifications: "Powiadomienia",
-nav_seller: "Kabinet sprzedawcy",
+        nav_chat: "💬 Chat",
+        nav_notifications: "🔔 Powiadomienia",
+        nav_seller: "👤 Kabinet",
         nav_fav: "Ulubione",
         fav_title: "Ulubione",
         fav_subtitle: "Ogłoszenia, które zapisałeś",
@@ -56,7 +56,7 @@ nav_seller: "Kabinet sprzedawcy",
         plan_boost: "Podbicie",
         plan_boost_desc: "Wypchnij ogłoszenie na górę listy na 24 godziny.",
         per_30: "/ 30 dni",
-        feat_30: "✓ 30 dni publikacji",
+        feat_30: "✓ 30 dni",
         feat_photos: "✓ Do 15 zdjęć",
         feat_edit: "✓ Edycja ogłoszenia",
         feat_extend: "✓ +30 dni do ogłoszenia",
@@ -64,7 +64,6 @@ nav_seller: "Kabinet sprzedawcy",
         feat_top: "✓ Na górze listy",
         feat_24h: "✓ Działa 24 godziny",
         feat_20photos: "✓ Do 20 zdjęć",
-        feat_30: "✓ 30 dni",
         feat_stats: "✓ Statystyki",
         feat_1boost: "✓ 1 podbicie gratis",
         feat_3boost: "✓ 3 podbicia gratis",
@@ -84,7 +83,6 @@ nav_seller: "Kabinet sprzedawcy",
         pay_demo_note: "To tylko demonstracja — pieniądze nie są pobierane.",
         pay_processing: "Przetwarzanie płatności...",
         nav_admin: "Moderacja",
-nav_reports: "Skargi",
         admin_title: "Panel moderacji",
         admin_subtitle: "Zarządzaj ogłoszeniami i użytkownikami",
         mod_pending: "Oczekujące",
@@ -232,7 +230,6 @@ nav_reports: "Skargi",
         toast_published: "Ogłoszenie opublikowane!",
         toast_deleted: "Ogłoszenie usunięte",
         confirm_delete: "Usunąć to ogłoszenie?",
-
         nav_rules: "Regulamin",
         nav_privacy: "Polityka prywatności",
         nav_cookies: "Polityka cookies",
@@ -294,7 +291,7 @@ nav_reports: "Skargi",
         filter_country: "Kraj",
         city_other: "Inna miejscowość (wpisz)",
         form_accept_rules: "Oświadczam, że zapoznałem/am się z Regulaminem i akceptuję zasady publikacji ogłoszeń. Podane dane są prawdziwe.",
-                footer: "Handlio — dane są przechowywane na serwerze zgodnie z Polityką prywatności.",
+        footer: "Handlio — dane są przechowywane na serwerze zgodnie z Polityką prywatności.",
         stat_auto: "Samochody",
         stat_moto: "Motocykle",
         stat_realty: "Nieruchomości",
@@ -304,12 +301,162 @@ nav_reports: "Skargi",
         yesterday: "Wczoraj",
         cat_name_auto: "Samochody",
         cat_name_moto: "Motocykle",
-        cat_name_realty: "Nieruchomości"
+        cat_name_realty: "Nieruchomości",
+        privacy_intro: "Niniejsza Polityka prywatności opisuje zasady przetwarzania danych osobowych w serwisie Handlio zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).",
+        privacy_h1: "1. Administrator danych",
+        privacy_p1: "Administratorem danych jest podmiot prowadzący serwis Handlio. Kontakt w sprawach danych: admin@handlio.pl",
+        privacy_h2: "2. Jakie dane zbieramy",
+        privacy_l2a: "Dane konta: imię/nazwa firmy, e-mail, telefon, hasło (przechowywane w formie zaszyfrowanej).",
+        privacy_l2b: "Treść ogłoszeń: tytuł, opis, cena, lokalizacja, zdjęcia, dane kontaktowe.",
+        privacy_l2c: "Treść wiadomości: wiadomości przesyłane między użytkownikami w ramach czatu (przechowywane na serwerze).",
+        privacy_l2d: "Dane techniczne: adres IP, dane przeglądarki (niezbędne do bezpieczeństwa).",
+        privacy_h3: "3. Cele i podstawy przetwarzania",
+        privacy_l3a: "Świadczenie usług serwisu (konto, ogłoszenia, czat) — art. 6 ust. 1 lit. b RODO.",
+        privacy_l3b: "Bezpieczeństwo, moderacja i zapobieganie nadużyciom — art. 6 ust. 1 lit. f RODO.",
+        privacy_l3c: "Wysyłka e-maili (powiadomienia, reset hasła) — realizowana przez zewnętrznego dostawcę (Resend).",
+        privacy_h4: "4. Odbiorcy danych (Komu przekazujemy dane)",
+        privacy_p4a: "Twoje dane mogą być przekazywane zaufanym podmiotom trzecim (procesorom), które pomagają nam prowadzić serwis:",
+        privacy_l4a: "Neon (baza danych) — serwery w Irlandii (UE).",
+        privacy_l4b: "Cloudflare R2 (przechowywanie zdjęć) — serwery w UE.",
+        privacy_l4c: "Resend (wysyłka e-maili) — serwery w USA (przekazywanie na podstawie standardowych klauzul umownych zatwierdzonych przez Komisję Europejską).",
+        privacy_p4b: "Nie sprzedajemy ani nie udostępniamy danych osobowych podmiotom trzecim w celach marketingowych.",
+        privacy_h5: "5. Prawa użytkownika",
+        privacy_p5a: "Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia (poprzez przycisk „Usuń konto” w panelu sprzedawcy), ograniczenia przetwarzania oraz przenoszenia danych.",
+        privacy_p5b: "Masz również prawo wniesienia skargi do organu nadzorczego — Prezesa Urzędu Ochrony Danych Osobowych (UODO), ul. Stawki 2, 00-193 Warszawa.",
+        privacy_h6: "6. Okres przechowywania",
+        privacy_p6: "Dane konta i ogłoszeń przechowujemy przez czas korzystania z serwisu. Po usunięciu konta dane są trwale usuwane z bazy. Wiadomości na czacie są przechowywane do momentu usunięcia konta. Dane transakcyjne (jeśli dotyczą płatności) przechowywane są przez 5 lat zgodnie z przepisami podatkowymi.",
+        privacy_h7: "7. Płatności",
+        privacy_p7: "W przypadku dokonywania płatności za pośrednictwem serwisu, dane niezbędne do realizacji transakcji (np. adres e-mail, kwota, identyfikator transakcji) mogą być przekazywane operatorowi płatności. Handlio nie przechowuje numerów kart płatniczych. Dane transakcyjne przechowujemy przez 5 lat zgodnie z przepisami podatkowymi.",
+        cookies_intro: "Handlio w wersji demonstracyjnej korzysta wyłącznie z pamięci lokalnej przeglądarki (localStorage) w celach niezbędnych do działania serwisu. Nie stosujemy plików cookie w celach analitycznych ani marketingowych.",
+        cookies_h1: "1. Co zapisujemy lokalnie",
+        cookies_l1a: "Sesja użytkownika i dane konta (po zalogowaniu) — abyś nie musiał logować się na każdej podstronie.",
+        cookies_l1b: "Ogłoszenia, ulubione, ustawienia języka i motywu (jasny/ciemny).",
+        cookies_l1c: "Stan zaakceptowania tego banera (aby nie pokazywać go przy każdej wizycie).",
+        cookies_h2: "2. Po co to jest potrzebne",
+        cookies_p2: "Aby serwis działał (logowanie, Twoje ogłoszenia, filtry, zapamiętanie wybranego języka). Bez localStorage aplikacja nie zapamięta stanu.",
+        cookies_h3: "3. Twoja kontrola",
+        cookies_p3: "Możesz w każdej chwili wyczyścić dane witryny w ustawieniach swojej przeglądarki. Spowoduje to wylogowanie i zresetowanie ustawień.",
+        cookies_h4: "4. Zewnętrzni dostawcy",
+        cookies_p4: "Przy korzystaniu z funkcji geolokalizacji (wyszukiwanie po lokalizacji) serwis wysyła zapytanie do zewnętrznego dostawcy map (OpenStreetMap / Nominatim), przekazując jedynie współrzędne geograficzne. Nie stosujemy pikseli reklamowych (np. Facebook Pixel) ani Google Analytics.",
+        cookie_banner_text: "Dbamy o Twoją prywatność. Nasz serwis wykorzystuje wyłącznie niezbędne pliki lokalne (localStorage) do zapamiętania Twojego logowania i ustawień (np. języka). Nie stosujemy analityki ani reklam. Szczegóły znajdziesz w naszej Polityce cookies.",
+        cookie_accept: "Akceptuję wszystkie",
+        cookie_decline: "Tylko niezbędne",
+        help_h1: "Jak dodać ogłoszenie?",
+        help_p1: "Zarejestruj się lub zaloguj, kliknij „+ Dodaj”, wybierz kategorię, uzupełnij dane i zdjęcia, wyślij. Ogłoszenie może trafić do moderacji.",
+        help_h2: "Ile kosztuje publikacja?",
+        help_p2: "Szczegóły są w zakładce Cennik. W demo opłaty są symulowane.",
+        help_h3: "Jak edytować lub usunąć ogłoszenie?",
+        help_p3: "Po zalogowaniu otwórz menu przy swoim imieniu → Moje. Stamtąd edytujesz, podbijasz lub usuwasz swoje ogłoszenia.",
+        help_h4: "Nie pamiętam hasła",
+        help_p4: "Na ekranie logowania wybierz „Nie pamiętasz hasła?” i postępuj zgodnie z instrukcją (w demo kod resetu jest pokazywany lokalnie).",
+        help_h5: "Kontakt",
+        help_p5: "E-mail: admin@handlio.pl · W sprawach moderacji i bezpieczeństwa możesz też użyć tego adresu.",
+        safety_h1: "1. Spotkania i oględziny",
+        safety_p1: "Oglądaj samochody, motocykle i nieruchomości w bezpiecznych, publicznych miejscach. Najlepiej w dzień i z osobą towarzyszącą.",
+        safety_h2: "2. Płatności",
+        safety_p2: "Unikaj przedpłat na obce konta „na rezerwację”. Przy drogich przedmiotach korzystaj ze sprawdzonych form płatności i umów. Handlio nie przechowuje Twoich środków w wersji demo.",
+        safety_h3: "3. Dokumenty",
+        safety_p3: "Sprawdzaj dowód rejestracyjny, historię pojazdu, akt notarialny / księgę wieczystą przy nieruchomościach. Nie ufaj wyłącznie zdjęciom z internetu.",
+        safety_h4: "4. Podejrzane ogłoszenia",
+        safety_p4: "Cena wyraźnie poniżej rynku, presja czasu, prośba o komunikację poza serwisem i płatność z góry — to sygnały ostrzegawcze. Zgłoś takie ogłoszenie do moderacji (admin@handlio.pl).",
+        safety_h5: "5. Dane osobowe",
+        safety_p5: "Nie publikuj w ogłoszeniu numeru PESEL, skanów dokumentów ani danych wrażliwych. Telefon i e-mail kontaktowy wystarczą.",
+        feat_8photos: "✓ Do 8 zdjęć",
+        chat_title: "💬 Chat",
+        chat_subtitle: "Rozmowy z kupującymi i sprzedającymi",
+        notifications_title: "🔔 Powiadomienia",
+        notifications_subtitle: "Ważne informacje dotyczące Twojego konta",
+        btn_mark_all_read: "Oznacz wszystkie jako przeczytane",
+        empty_chats: "Brak rozmów.",
+        empty_notifications: "Brak powiadomień.",
+        badge_new: "NOWE",
+        label_listing: "Ogłoszenie",
+        label_user: "Użytkownik",
+        support_title: "Wsparcie Handlio",
+        support_subtitle: "Napisz do administratora — odpowiemy w ciągu 24h",
+        support_back: "← Wszystkie rozmowy",
+        support_placeholder: "Napisz wiadomość do administratora...",
+        support_empty: "Napisz pierwszą wiadomość — chętnie pomożemy.",
+        support_sent: "Wiadomość wysłana do administratora",
+        support_need_login: "Zaloguj się, aby napisać do administratora.",
+        support_help_title: "Potrzebujesz pomocy?",
+        support_help_text: "Masz pytanie lub problem? Napisz do nas bezpośrednio — odpowiemy najszybciej jak to możliwe.",
+        support_btn: "Napisz do administratora",
+        delete_account_title: "Usuwanie konta",
+        delete_account_text: "Ta operacja jest nieodwracalna. Wszystkie Twoje ogłoszenia i wiadomości zostaną trwale usunięte.",
+        seller_profile: "Profil sprzedawcy",
+        seller_active: "Aktywne",
+        seller_moderation: "Moderacja",
+        seller_rejected: "Odrzucone",
+        seller_views: "Wyświetlenia",
+        seller_new_messages: "Nowe wiadomości",
+        seller_new_notifications: "Nowe powiadomienia",
+        seller_in_fav: "W ulubionych",
+        seller_reports: "Zgłoszenia",
+        seller_overview: "Przegląd",
+        seller_listings: "Moje ogłoszenia",
+        seller_settings: "Ustawienia",
+        seller_empty: "Brak ogłoszeń.",
+        seller_cabinet_hint: "Tu zebrane są Twoje statystyki i narzędzia sprzedażowe.",
+        toast_choose_category: "Wybierz kategorię",
+        toast_choose_brand: "Wybierz markę",
+        toast_choose_model: "Wybierz model",
+        toast_enter_year: "Wpisz rok",
+        toast_enter_mileage: "Wypełnij przebieg!",
+        toast_enter_title: "Wypełnij tytuł!",
+        toast_enter_area: "Wypełnij powierzchnię!",
+        toast_phone_required: "Podaj numer telefonu kontaktowego",
+        toast_pay_error: "Błąd płatności",
+        toast_delete_error: "Błąd usuwania",
+        toast_save_error: "Błąd zapisu",
+        toast_pay_failed: "Płatność nie powiodła się — spróbuj ponownie",
+        toast_send_error: "Błąd wysyłania",
+        toast_report_error: "Błąd zgłoszenia",
+        toast_generic_error: "Błąd",
+        toast_report_ok: "Zgłoszenie wysłane.",
+        toast_no_permission: "Brak uprawnień.",
+        toast_photo_uploading: "Przesyłanie zdjęć...",
+        toast_photo_error: "Błąd przesyłania zdjęcia",
+        empty_models: "Brak modeli dla tej marki",
+        choose_brand: "Wybierz markę...",
+        choose_model: "Wybierz model",
+        just_now: "przed chwilą",
+        reports_empty: "Brak zgłoszeń.",
+        report_closed: "Zamknięte",
+        report_no_comment: "Brak komentarza",
+        btn_open: "Otwórz",
+        btn_close_report: "Zamknij",
+        btn_hide_report: "Ukryj",
+        deleted_listing: "Usunięte ogłoszenie",
+        btn_send: "Wyślij",
+        toast_no_search_history: "Brak historii wyszukiwania",
+        toast_no_voice: "Twoja przeglądarka nie obsługuje wyszukiwania głosowego",
+        toast_voice_heard: "Szukano: ",
+        toast_voice_listen: "Powiedz frazę...",
+        toast_accept_rules: "Musisz zaakceptować Regulamin i Politykę prywatności.",
+        toast_register_error: "Błąd rejestracji",
+        toast_no_ads_extend: "Nie masz aktywnych ogłoszeń do przedłużenia.",
+        toast_extend_error: "Błąd przedłużenia",
+        toast_extended: "Przedłużono o 30 dni!",
+        toast_invalid_number: "Nieprawidłowy numer.",
+        toast_no_ads_boost: "Nie masz aktywnych ogłoszeń do podbicia.",
+        toast_boosted_ok: "Podbito na 24h!",
+        toast_login_required_feature: "Zaloguj się, aby skorzystać z tej funkcji.",
+        toast_account_deleted: "Konto zostało usunięte",
+        toast_geoloc_unsupported: "Geolokalizacja nie jest obsługiwana",
+        toast_geoloc_detecting: "Wykrywanie lokalizacji…",
+        toast_geoloc_prefix: "Lokalizacja: ",
+        toast_geoloc_fail: "Nie udało się ustalić miasta",
+        placeholder_message: "Napisz wiadomość...",
+        no_title: "Bez tytułu",
+        choose_model_option: "Wybierz model...",
+        toast_voice_fail: "Nie udało się rozpoznać mowy. Spróbuj ponownie.",
+        toast_no_self_chat: "Nie możesz pisać do siebie.",
       },
       en: {
-nav_reports: "Reports",
-btn_write_seller: "Message the seller",
-btn_report: "Report",
+        nav_reports: "Reports",
+        btn_write_seller: "Message the seller",
+        btn_report: "Report",
         nav_home: "Home",
         btn_share: "Share",
         btn_load_more: "Show more",
@@ -323,9 +470,9 @@ btn_report: "Report",
         ph_search_abroad: "Country, city, description...",
         stat_abroad: "Foreign real estate",
         nav_my: "My ads",
-nav_chat: "Chat",
-nav_notifications: "Notifications",
-nav_seller: "Seller dashboard",
+        nav_chat: "💬 Chat",
+        nav_notifications: "🔔 Notifications",
+        nav_seller: "👤 Seller",
         nav_fav: "Favorites",
         fav_title: "Favorites",
         fav_subtitle: "Listings you saved",
@@ -387,7 +534,6 @@ nav_seller: "Seller dashboard",
         pay_demo_note: "Demo only — no real charge.",
         pay_processing: "Processing payment...",
         nav_admin: "Moderation",
-nav_reports: "Reports",
         admin_title: "Moderation panel",
         admin_subtitle: "Manage listings and users",
         mod_pending: "Pending",
@@ -535,7 +681,6 @@ nav_reports: "Reports",
         toast_published: "Listing published!",
         toast_deleted: "Listing deleted",
         confirm_delete: "Delete this listing?",
-
         nav_rules: "Rules",
         nav_privacy: "Privacy policy",
         nav_cookies: "Cookie policy",
@@ -597,7 +742,7 @@ nav_reports: "Reports",
         filter_country: "Country",
         city_other: "Other locality (type in)",
         form_accept_rules: "I confirm that I have read the Rules and accept the posting terms. The information provided is true.",
-                footer: "Handlio — data is stored on the server in accordance with the Privacy Policy.",
+        footer: "Handlio — data is stored on the server in accordance with the Privacy Policy.",
         stat_auto: "Cars",
         stat_moto: "Motorcycles",
         stat_realty: "Real Estate",
@@ -607,12 +752,164 @@ nav_reports: "Reports",
         yesterday: "Yesterday",
         cat_name_auto: "Cars",
         cat_name_moto: "Motorcycles",
-        cat_name_realty: "Real Estate"
+        cat_name_realty: "Real Estate",
+        privacy_intro: "This Privacy Policy describes how personal data is processed on Handlio in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR).",
+        privacy_h1: "1. Data controller",
+        privacy_p1: "The data controller is the entity operating the Handlio service. Contact for data matters: admin@handlio.pl",
+        privacy_h2: "2. What data we collect",
+        privacy_l2a: "Account data: name/company name, email, phone, password (stored in encrypted form).",
+        privacy_l2b: "Listing content: title, description, price, location, photos, contact details.",
+        privacy_l2c: "Message content: messages exchanged between users in chat (stored on the server).",
+        privacy_l2d: "Technical data: IP address, browser data (required for security).",
+        privacy_h3: "3. Purposes and legal bases",
+        privacy_l3a: "Providing the service (account, listings, chat) — Art. 6(1)(b) GDPR.",
+        privacy_l3b: "Security, moderation and abuse prevention — Art. 6(1)(f) GDPR.",
+        privacy_l3c: "Sending emails (notifications, password reset) — via an external provider (Resend).",
+        privacy_h4: "4. Data recipients (who we share data with)",
+        privacy_p4a: "Your data may be shared with trusted third parties (processors) that help us run the service:",
+        privacy_l4a: "Neon (database) — servers in Ireland (EU).",
+        privacy_l4b: "Cloudflare R2 (photo storage) — servers in the EU.",
+        privacy_l4c: "Resend (email delivery) — servers in the USA (transfers based on Standard Contractual Clauses approved by the European Commission).",
+        privacy_p4b: "We do not sell or share personal data with third parties for marketing purposes.",
+        privacy_h5: "5. Your rights",
+        privacy_p5a: "You have the right to access your data, rectify it, erase it (via the “Delete account” button in the seller panel), restrict processing and data portability.",
+        privacy_p5b: "You also have the right to lodge a complaint with the supervisory authority — the President of the Personal Data Protection Office (UODO), ul. Stawki 2, 00-193 Warsaw, Poland.",
+        privacy_h6: "6. Retention period",
+        privacy_p6: "Account and listing data are kept for as long as you use the service. After account deletion, data is permanently removed from the database. Chat messages are kept until the account is deleted. Transaction data (if related to payments) is kept for 5 years in accordance with tax rules.",
+        privacy_h7: "7. Payments",
+        privacy_p7: "When you make a payment through the service, data needed to process the transaction (e.g. email, amount, transaction ID) may be shared with the payment operator. Handlio does not store payment card numbers. Transaction data is kept for 5 years in accordance with tax rules.",
+        cookies_intro: "In the demo version, Handlio uses only browser local storage (localStorage) for purposes essential to the service. We do not use cookies for analytics or marketing.",
+        cookies_h1: "1. What we store locally",
+        cookies_l1a: "User session and account data (after login) — so you do not have to log in on every page.",
+        cookies_l1b: "Listings, favorites, language and theme settings (light/dark).",
+        cookies_l1c: "Consent state for this banner (so it is not shown on every visit).",
+        cookies_h2: "2. Why this is needed",
+        cookies_p2: "So the service works (login, your listings, filters, remembering the chosen language). Without localStorage the app cannot remember state.",
+        cookies_h3: "3. Your control",
+        cookies_p3: "You can clear site data at any time in your browser settings. This will log you out and reset settings.",
+        cookies_h4: "4. Third-party providers",
+        cookies_p4: "When using geolocation (location-based search), the service queries an external map provider (OpenStreetMap / Nominatim), sending only geographic coordinates. We do not use advertising pixels (e.g. Facebook Pixel) or Google Analytics.",
+        cookie_banner_text: "We care about your privacy. Our service uses only essential local storage (localStorage) to remember your login and settings (e.g. language). We do not use analytics or ads. Details are in our Cookie policy.",
+        cookie_accept: "Accept all",
+        cookie_decline: "Essential only",
+        help_h1: "How do I post a listing?",
+        help_p1: "Sign up or log in, click “+ Post ad”, choose a category, fill in the details and photos, then submit. The listing may go to moderation.",
+        help_h2: "How much does posting cost?",
+        help_p2: "Details are on the Pricing page. In the demo, fees are simulated.",
+        help_h3: "How do I edit or delete a listing?",
+        help_p3: "After logging in, open the menu next to your name → My ads. From there you can edit, boost or delete your listings.",
+        help_h4: "I forgot my password",
+        help_p4: "On the login screen choose “Forgot password?” and follow the instructions (in the demo the reset code is shown locally).",
+        help_h5: "Contact",
+        help_p5: "Email: admin@handlio.pl · For moderation and safety matters you can use the same address.",
+        safety_h1: "1. Meetings and viewings",
+        safety_p1: "View cars, motorcycles and properties in safe, public places. Preferably during the day and with someone accompanying you.",
+        safety_h2: "2. Payments",
+        safety_p2: "Avoid advance payments to unknown accounts “for a reservation”. For expensive items use proven payment methods and contracts. Handlio does not hold your funds in the demo version.",
+        safety_h3: "3. Documents",
+        safety_p3: "Check the registration certificate, vehicle history, notarial deed / land register for property. Do not rely only on photos from the internet.",
+        safety_h4: "4. Suspicious listings",
+        safety_p4: "A price far below market, time pressure, a request to communicate outside the service and pay in advance — these are warning signs. Report such a listing to moderation (admin@handlio.pl).",
+        safety_h5: "5. Personal data",
+        safety_p5: "Do not publish PESEL numbers, document scans or sensitive data in a listing. A contact phone and email are enough.",
+        feat_8photos: "✓ Up to 8 photos",
+        chat_title: "💬 Chat",
+        chat_subtitle: "Conversations with buyers and sellers",
+        notifications_title: "🔔 Notifications",
+        notifications_subtitle: "Important updates about your account",
+        btn_mark_all_read: "Mark all as read",
+        empty_chats: "No conversations yet.",
+        empty_notifications: "No notifications.",
+        badge_new: "NEW",
+        label_listing: "Listing",
+        label_user: "User",
+        support_title: "Handlio Support",
+        support_subtitle: "Message the admin — we reply within 24h",
+        support_back: "← All conversations",
+        support_placeholder: "Write a message to the administrator...",
+        support_empty: "Send the first message — we are happy to help.",
+        support_sent: "Message sent to the administrator",
+        support_need_login: "Log in to message the administrator.",
+        support_help_title: "Need help?",
+        support_help_text: "Have a question or issue? Message us directly — we will reply as soon as possible.",
+        support_btn: "Message the administrator",
+        delete_account_title: "Delete account",
+        delete_account_text: "This action is permanent. All your listings and messages will be deleted.",
+        seller_profile: "Seller profile",
+        seller_active: "Active",
+        seller_moderation: "Moderation",
+        seller_rejected: "Rejected",
+        seller_views: "Views",
+        seller_new_messages: "New messages",
+        seller_new_notifications: "New notifications",
+        seller_in_fav: "In favorites",
+        seller_reports: "Reports",
+        seller_overview: "Overview",
+        seller_listings: "My listings",
+        seller_settings: "Settings",
+        seller_empty: "No listings.",
+        seller_cabinet_hint: "Your stats and selling tools are collected here.",
+        toast_choose_category: "Choose a category",
+        toast_choose_brand: "Choose a brand",
+        toast_choose_model: "Choose a model",
+        toast_enter_year: "Enter the year",
+        toast_enter_mileage: "Enter mileage!",
+        toast_enter_title: "Enter a title!",
+        toast_enter_area: "Enter the area!",
+        toast_phone_required: "Enter a contact phone number",
+        toast_pay_error: "Payment error",
+        toast_delete_error: "Delete error",
+        toast_save_error: "Save error",
+        toast_pay_failed: "Payment failed — please try again",
+        toast_send_error: "Send error",
+        toast_report_error: "Report error",
+        toast_generic_error: "Error",
+        toast_report_ok: "Report submitted.",
+        toast_no_permission: "No permission.",
+        toast_photo_uploading: "Uploading photos...",
+        toast_photo_error: "Photo upload error",
+        empty_models: "No models for this brand",
+        choose_brand: "Choose brand...",
+        choose_model: "Choose model",
+        just_now: "just now",
+        reports_empty: "No reports.",
+        report_closed: "Closed",
+        report_no_comment: "No comment",
+        btn_open: "Open",
+        btn_close_report: "Close",
+        btn_hide_report: "Hide",
+        deleted_listing: "Deleted listing",
+        btn_send: "Send",
+        cat_name_realty_abroad: "Foreign real estate",
+        per_30: "/ 30 days",
+        toast_no_search_history: "No search history",
+        toast_no_voice: "Your browser does not support voice search",
+        toast_voice_heard: "Searched: ",
+        toast_voice_listen: "Say a phrase...",
+        toast_accept_rules: "You must accept the Terms and Privacy Policy.",
+        toast_register_error: "Registration error",
+        toast_no_ads_extend: "You have no active listings to extend.",
+        toast_extend_error: "Extension error",
+        toast_extended: "Extended by 30 days!",
+        toast_invalid_number: "Invalid number.",
+        toast_no_ads_boost: "You have no active listings to boost.",
+        toast_boosted_ok: "Boosted for 24h!",
+        toast_login_required_feature: "Log in to use this feature.",
+        toast_account_deleted: "Account has been deleted",
+        toast_geoloc_unsupported: "Geolocation is not supported",
+        toast_geoloc_detecting: "Detecting location…",
+        toast_geoloc_prefix: "Location: ",
+        toast_geoloc_fail: "Could not determine city",
+        placeholder_message: "Write a message...",
+        no_title: "Untitled",
+        choose_model_option: "Choose model...",
+        toast_voice_fail: "Could not recognize speech. Try again.",
+        toast_no_self_chat: "You cannot message yourself.",
       },
       ru: {
-nav_reports: "Жалобы",
-btn_write_seller: "Написать продавцу",
-btn_report: "Пожаловаться",
+        nav_reports: "Жалобы",
+        btn_write_seller: "Написать продавцу",
+        btn_report: "Пожаловаться",
         nav_home: "Главная",
         nav_auto: "Авто",
         nav_moto: "Мото",
@@ -623,9 +920,9 @@ btn_report: "Пожаловаться",
         ph_search_abroad: "Страна, город, описание...",
         stat_abroad: "Зарубежная недвижимость",
         nav_my: "Мои объявления",
-nav_chat: "Чат",
-nav_notifications: "Уведомления",
-nav_seller: "Кабинет продавца",
+        nav_chat: "💬 Чат",
+        nav_notifications: "🔔 Уведомления",
+        nav_seller: "👤 Кабинет",
         nav_fav: "Избранное",
         fav_title: "Избранное",
         fav_subtitle: "Сохранённые объявления",
@@ -690,7 +987,6 @@ nav_seller: "Кабинет продавца",
         pay_demo_note: "Это демо — реальные деньги не списываются.",
         pay_processing: "Обработка платежа...",
         nav_admin: "Модерация",
-nav_reports: "Жалобы",
         admin_title: "Панель модерации",
         admin_subtitle: "Управление объявлениями",
         mod_pending: "На проверке",
@@ -838,7 +1134,6 @@ nav_reports: "Жалобы",
         toast_published: "Объявление опубликовано!",
         toast_deleted: "Объявление удалено",
         confirm_delete: "Удалить это объявление?",
-
         nav_rules: "Правила",
         nav_privacy: "Политика конфиденциальности",
         nav_cookies: "Политика cookies",
@@ -900,7 +1195,7 @@ nav_reports: "Жалобы",
         filter_country: "Страна",
         city_other: "Другой населённый пункт",
         form_accept_rules: "Подтверждаю, что ознакомился(ась) с Правилами и принимаю условия публикации. Указанные данные достоверны.",
-                footer: "Handlio — данные хранятся на сервере в соответствии с Политикой конфиденциальности.",
+        footer: "Handlio — данные хранятся на сервере в соответствии с Политикой конфиденциальности.",
         stat_auto: "Авто",
         stat_moto: "Мото",
         stat_realty: "Недвижимость",
@@ -910,7 +1205,159 @@ nav_reports: "Жалобы",
         yesterday: "Вчера",
         cat_name_auto: "Автомобили",
         cat_name_moto: "Мотоциклы",
-        cat_name_realty: "Недвижимость"
+        cat_name_realty: "Недвижимость",
+        privacy_intro: "Настоящая Политика конфиденциальности описывает правила обработки персональных данных в сервисе Handlio в соответствии с Регламентом (ЕС) 2016/679 Европейского парламента и Совета (GDPR/RODO).",
+        privacy_h1: "1. Администратор данных",
+        privacy_p1: "Администратором данных является субъект, управляющий сервисом Handlio. Контакт по вопросам данных: admin@handlio.pl",
+        privacy_h2: "2. Какие данные мы собираем",
+        privacy_l2a: "Данные аккаунта: имя/название компании, e-mail, телефон, пароль (хранится в зашифрованном виде).",
+        privacy_l2b: "Содержание объявлений: заголовок, описание, цена, локация, фото, контакты.",
+        privacy_l2c: "Содержание сообщений: переписка между пользователями в чате (хранится на сервере).",
+        privacy_l2d: "Технические данные: IP-адрес, данные браузера (необходимы для безопасности).",
+        privacy_h3: "3. Цели и основания обработки",
+        privacy_l3a: "Предоставление услуг сервиса (аккаунт, объявления, чат) — ст. 6(1)(b) GDPR.",
+        privacy_l3b: "Безопасность, модерация и предотвращение злоупотреблений — ст. 6(1)(f) GDPR.",
+        privacy_l3c: "Отправка e-mail (уведомления, сброс пароля) — через внешнего провайдера (Resend).",
+        privacy_h4: "4. Получатели данных (кому мы передаём данные)",
+        privacy_p4a: "Ваши данные могут передаваться доверенным третьим лицам (обработчикам), которые помогают нам вести сервис:",
+        privacy_l4a: "Neon (база данных) — серверы в Ирландии (ЕС).",
+        privacy_l4b: "Cloudflare R2 (хранение фото) — серверы в ЕС.",
+        privacy_l4c: "Resend (отправка e-mail) — серверы в США (передача на основании стандартных договорных условий, одобренных Европейской комиссией).",
+        privacy_p4b: "Мы не продаём и не передаём персональные данные третьим лицам в маркетинговых целях.",
+        privacy_h5: "5. Права пользователя",
+        privacy_p5a: "Вы имеете право на доступ к своим данным, их исправление, удаление (через кнопку «Удалить аккаунт» в кабинете продавца), ограничение обработки и переносимость данных.",
+        privacy_p5b: "Вы также имеете право подать жалобу в надзорный орган — Президенту Управления по защите персональных данных (UODO), ul. Stawki 2, 00-193 Варшава, Польша.",
+        privacy_h6: "6. Срок хранения",
+        privacy_p6: "Данные аккаунта и объявлений хранятся, пока вы пользуетесь сервисом. После удаления аккаунта данные безвозвратно удаляются из базы. Сообщения чата хранятся до удаления аккаунта. Транзакционные данные (если связаны с платежами) хранятся 5 лет в соответствии с налоговыми правилами.",
+        privacy_h7: "7. Платежи",
+        privacy_p7: "При оплате через сервис данные, необходимые для транзакции (например e-mail, сумма, ID транзакции), могут передаваться платёжному оператору. Handlio не хранит номера платёжных карт. Транзакционные данные хранятся 5 лет в соответствии с налоговыми правилами.",
+        cookies_intro: "В демонстрационной версии Handlio использует только локальное хранилище браузера (localStorage) для целей, необходимых для работы сервиса. Мы не используем cookie для аналитики или маркетинга.",
+        cookies_h1: "1. Что сохраняем локально",
+        cookies_l1a: "Сессия пользователя и данные аккаунта (после входа) — чтобы не входить на каждой странице.",
+        cookies_l1b: "Объявления, избранное, настройки языка и темы (светлая/тёмная).",
+        cookies_l1c: "Состояние согласия с этим баннером (чтобы не показывать его при каждом визите).",
+        cookies_h2: "2. Зачем это нужно",
+        cookies_p2: "Чтобы сервис работал (вход, ваши объявления, фильтры, запоминание языка). Без localStorage приложение не сохранит состояние.",
+        cookies_h3: "3. Ваш контроль",
+        cookies_p3: "Вы можете в любой момент очистить данные сайта в настройках браузера. Это приведёт к выходу из аккаунта и сбросу настроек.",
+        cookies_h4: "4. Внешние провайдеры",
+        cookies_p4: "При использовании геолокации (поиск по месту) сервис отправляет запрос внешнему картографическому провайдеру (OpenStreetMap / Nominatim), передавая только географические координаты. Мы не используем рекламные пиксели (например Facebook Pixel) и Google Analytics.",
+        cookie_banner_text: "Мы заботимся о вашей конфиденциальности. Сервис использует только необходимые локальные данные (localStorage) для запоминания входа и настроек (например языка). Мы не используем аналитику и рекламу. Подробности — в Политике cookies.",
+        cookie_accept: "Принять все",
+        cookie_decline: "Только необходимые",
+        help_h1: "Как подать объявление?",
+        help_p1: "Зарегистрируйтесь или войдите, нажмите «+ Подать», выберите категорию, заполните данные и фото, отправьте. Объявление может попасть на модерацию.",
+        help_h2: "Сколько стоит публикация?",
+        help_p2: "Подробности во вкладке Тарифы. В демо платежи симулируются.",
+        help_h3: "Как редактировать или удалить объявление?",
+        help_p3: "После входа откройте меню у своего имени → Мои. Там можно редактировать, поднимать или удалять объявления.",
+        help_h4: "Не помню пароль",
+        help_p4: "На экране входа выберите «Забыли пароль?» и следуйте инструкции (в демо код сброса показывается локально).",
+        help_h5: "Контакт",
+        help_p5: "E-mail: admin@handlio.pl · По вопросам модерации и безопасности можно использовать тот же адрес.",
+        safety_h1: "1. Встречи и осмотр",
+        safety_p1: "Осматривайте автомобили, мото и недвижимость в безопасных общественных местах. Лучше днём и с сопровождающим.",
+        safety_h2: "2. Платежи",
+        safety_p2: "Избегайте предоплат на чужие счета «для брони». Для дорогих объектов используйте проверенные формы оплаты и договоры. Handlio в демо не хранит ваши средства.",
+        safety_h3: "3. Документы",
+        safety_p3: "Проверяйте свидетельство о регистрации, историю ТС, нотариальный акт / земельную книгу для недвижимости. Не полагайтесь только на фото из интернета.",
+        safety_h4: "4. Подозрительные объявления",
+        safety_p4: "Цена заметно ниже рынка, давление по срокам, просьба общаться вне сервиса и платить вперёд — признаки риска. Сообщите о таком объявлении в модерацию (admin@handlio.pl).",
+        safety_h5: "5. Персональные данные",
+        safety_p5: "Не публикуйте в объявлении PESEL, сканы документов и чувствительные данные. Достаточно телефона и e-mail для связи.",
+        feat_8photos: "✓ До 8 фото",
+        chat_title: "💬 Чат",
+        chat_subtitle: "Переписка с покупателями и продавцами",
+        notifications_title: "🔔 Уведомления",
+        notifications_subtitle: "Важные сообщения по вашему аккаунту",
+        btn_mark_all_read: "Отметить все как прочитанные",
+        empty_chats: "Нет переписок.",
+        empty_notifications: "Нет уведомлений.",
+        badge_new: "НОВОЕ",
+        label_listing: "Объявление",
+        label_user: "Пользователь",
+        support_title: "Поддержка Handlio",
+        support_subtitle: "Напишите администратору — ответим в течение 24ч",
+        support_back: "← Все переписки",
+        support_placeholder: "Сообщение администратору...",
+        support_empty: "Напишите первое сообщение — мы поможем.",
+        support_sent: "Сообщение отправлено администратору",
+        support_need_login: "Войдите, чтобы написать администратору.",
+        support_help_title: "Нужна помощь?",
+        support_help_text: "Есть вопрос или проблема? Напишите нам напрямую — ответим как можно скорее.",
+        support_btn: "Написать администратору",
+        delete_account_title: "Удаление аккаунта",
+        delete_account_text: "Это действие необратимо. Все ваши объявления и сообщения будут удалены.",
+        seller_profile: "Профиль продавца",
+        seller_active: "Активные",
+        seller_moderation: "Модерация",
+        seller_rejected: "Отклонённые",
+        seller_views: "Просмотры",
+        seller_new_messages: "Новые сообщения",
+        seller_new_notifications: "Новые уведомления",
+        seller_in_fav: "В избранном",
+        seller_reports: "Жалобы",
+        seller_overview: "Обзор",
+        seller_listings: "Мои объявления",
+        seller_settings: "Настройки",
+        seller_empty: "Нет объявлений.",
+        seller_cabinet_hint: "Здесь собраны ваша статистика и инструменты продаж.",
+        toast_choose_category: "Выберите категорию",
+        toast_choose_brand: "Выберите марку",
+        toast_choose_model: "Выберите модель",
+        toast_enter_year: "Укажите год",
+        toast_enter_mileage: "Укажите пробег!",
+        toast_enter_title: "Укажите заголовок!",
+        toast_enter_area: "Укажите площадь!",
+        toast_phone_required: "Укажите контактный телефон",
+        toast_pay_error: "Ошибка оплаты",
+        toast_delete_error: "Ошибка удаления",
+        toast_save_error: "Ошибка сохранения",
+        toast_pay_failed: "Оплата не удалась — попробуйте снова",
+        toast_send_error: "Ошибка отправки",
+        toast_report_error: "Ошибка жалобы",
+        toast_generic_error: "Ошибка",
+        toast_report_ok: "Жалоба отправлена.",
+        toast_no_permission: "Нет прав.",
+        toast_photo_uploading: "Загрузка фото...",
+        toast_photo_error: "Ошибка загрузки фото",
+        empty_models: "Нет моделей для этой марки",
+        choose_brand: "Выберите марку...",
+        choose_model: "Выберите модель",
+        just_now: "только что",
+        reports_empty: "Нет жалоб.",
+        report_closed: "Закрыто",
+        report_no_comment: "Без комментария",
+        btn_open: "Открыть",
+        btn_close_report: "Закрыть",
+        btn_hide_report: "Скрыть",
+        deleted_listing: "Удалённое объявление",
+        btn_send: "Отправить",
+        cat_name_realty_abroad: "Зарубежная недвижимость",
+        per_30: "/ 30 дней",
+        toast_no_search_history: "Нет истории поиска",
+        toast_no_voice: "Ваш браузер не поддерживает голосовой поиск",
+        toast_voice_heard: "Искали: ",
+        toast_voice_listen: "Произнесите фразу...",
+        toast_accept_rules: "Нужно принять Правила и Политику конфиденциальности.",
+        toast_register_error: "Ошибка регистрации",
+        toast_no_ads_extend: "Нет активных объявлений для продления.",
+        toast_extend_error: "Ошибка продления",
+        toast_extended: "Продлено на 30 дней!",
+        toast_invalid_number: "Неверный номер.",
+        toast_no_ads_boost: "Нет активных объявлений для поднятия.",
+        toast_boosted_ok: "Поднято на 24ч!",
+        toast_login_required_feature: "Войдите, чтобы воспользоваться этой функцией.",
+        toast_account_deleted: "Аккаунт удалён",
+        toast_geoloc_unsupported: "Геолокация не поддерживается",
+        toast_geoloc_detecting: "Определяем локацию…",
+        toast_geoloc_prefix: "Локация: ",
+        toast_geoloc_fail: "Не удалось определить город",
+        placeholder_message: "Напишите сообщение...",
+        no_title: "Без названия",
+        choose_model_option: "Выберите модель...",
+        toast_voice_fail: "Не удалось распознать речь. Попробуйте снова.",
+        toast_no_self_chat: "Нельзя писать самому себе.",
       }
     };
 
@@ -1179,7 +1626,7 @@ nav_reports: "Жалобы",
         'auto': 'auto-brand-label',
         'moto': 'moto-brand-label'
       };
-      document.getElementById(labelMap[category]).textContent = brand === 'Wszystkie' ? 'Wszystkie marki' : brand;
+      document.getElementById(labelMap[category]).textContent = brand === 'Wszystkie' ? t('all_brands') : brand;
       
       document.getElementById(category + '-brand-dropdown').classList.remove('open');
       
@@ -1191,7 +1638,7 @@ nav_reports: "Жалобы",
         'auto': 'auto-model-label',
         'moto': 'moto-model-label'
       };
-      document.getElementById(modelLabelMap[category]).textContent = models.length > 0 ? 'Wybierz model' : 'Wszystkie modele';
+      document.getElementById(modelLabelMap[category]).textContent = models.length > 0 ? t('choose_model') : t('all_models');
       
       renderCategory(category);
     }
@@ -1227,7 +1674,7 @@ nav_reports: "Жалобы",
       const filtered = models.filter(m => m.toLowerCase().includes(search));
       
       if (filtered.length === 0) {
-        list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">Brak modeli dla tej marki</div>';
+        list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">' + t('empty_models') + '</div>';
         return;
       }
       
@@ -1289,9 +1736,9 @@ nav_reports: "Жалобы",
       };
       
       if (selected.size === 0) {
-        document.getElementById(modelLabelMap[category]).textContent = 'Wszystkie modele';
+        document.getElementById(modelLabelMap[category]).textContent = t('all_models');
       } else if (selected.size === models.length) {
-        document.getElementById(modelLabelMap[category]).textContent = 'Wszystkie modele';
+        document.getElementById(modelLabelMap[category]).textContent = t('all_models');
       } else if (selected.size === 1) {
         document.getElementById(modelLabelMap[category]).textContent = selected.values().next().value;
       } else {
@@ -1322,7 +1769,7 @@ nav_reports: "Жалобы",
     function populateAutoBrands() {
       const select = document.getElementById('f-auto-brand');
       const brands = Object.keys(CAR_BRANDS).filter(b => b !== 'Wszystkie').sort();
-      select.innerHTML = '<option value="">Wybierz markę...</option>';
+      select.innerHTML = '<option value="">' + t('choose_brand') + '</option>';
       brands.forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
@@ -1334,7 +1781,7 @@ nav_reports: "Жалобы",
     function updateAutoModels() {
       const brand = document.getElementById('f-auto-brand').value;
       const modelSelect = document.getElementById('f-auto-model');
-      modelSelect.innerHTML = '<option value="">Wybierz model...</option>';
+      modelSelect.innerHTML = '<option value="">' + t('choose_model_option') + '</option>';
       
       if (brand && CAR_BRANDS[brand]) {
         const models = CAR_BRANDS[brand];
@@ -1374,7 +1821,7 @@ nav_reports: "Жалобы",
     function populateMotoBrands() {
       const select = document.getElementById('f-moto-brand');
       const brands = Object.keys(MOTO_BRANDS).filter(b => b !== 'Wszystkie').sort();
-      select.innerHTML = '<option value="">Wybierz markę...</option>';
+      select.innerHTML = '<option value="">' + t('choose_brand') + '</option>';
       brands.forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
@@ -1386,7 +1833,7 @@ nav_reports: "Жалобы",
     function updateMotoModels() {
       const brand = document.getElementById('f-moto-brand').value;
       const modelSelect = document.getElementById('f-moto-model');
-      modelSelect.innerHTML = '<option value="">Wybierz model...</option>';
+      modelSelect.innerHTML = '<option value="">' + t('choose_model_option') + '</option>';
       
       if (brand && MOTO_BRANDS[brand]) {
         const models = MOTO_BRANDS[brand];
@@ -1549,6 +1996,12 @@ nav_reports: "Жалобы",
           locLabel.textContent = t('all_poland');
         }
       });
+      ['realty'].forEach(cat => {
+        const locLabel = document.getElementById(cat + '-loc-label');
+        if (locLabel && (!locFilter[cat] || (!locFilter[cat].region && !locFilter[cat].city))) {
+          locLabel.textContent = t('all_poland');
+        }
+      });
 }
 
     function setLang(lang) {
@@ -1557,7 +2010,14 @@ nav_reports: "Жалобы",
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        el.textContent = t(key);
+        if (!key) return;
+        const badge = el.querySelector('.h23-badge');
+        if (badge) {
+          const badgeHtml = badge.outerHTML;
+          el.innerHTML = t(key) + ' ' + badgeHtml;
+        } else {
+          el.textContent = t(key);
+        }
       });
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
@@ -1570,10 +2030,15 @@ nav_reports: "Жалобы",
       if (activePage) {
         const pageId = activePage.id.replace('page-', '');
         if (pageId === 'home') renderHome();
-        else if (['auto','moto','realty'].includes(pageId)) renderCategory(pageId);
+        else if (['auto','moto','realty','abroad'].includes(pageId)) renderCategory(pageId);
         else if (pageId === 'my') renderMy();
         else if (pageId === 'fav') renderFav();
         else if (pageId === 'auth') setAuthMode(authMode);
+        else if (pageId === 'messages' && typeof h23RenderMessages === 'function') h23RenderMessages();
+        else if (pageId === 'notifications' && typeof h23RenderNotifications === 'function') h23RenderNotifications();
+        else if (pageId === 'seller' && typeof h23RenderSeller === 'function') h23RenderSeller();
+        else if (pageId === 'reports' && typeof h23RenderReports === 'function') h23RenderReports();
+        else if (pageId === 'admin' && typeof renderAdmin === 'function') renderAdmin();
       }
       renderAuthNav();
       applyDynamicI18n();
@@ -2757,7 +3222,7 @@ async function boostAd(id) {
       ad.boostedAt = Date.now();
     }
   } catch (e) {
-    showToast((e && e.message) || 'Błąd płatności');
+    showToast((e && e.message) || t('toast_pay_error'));
     return;
   }
 
@@ -2792,12 +3257,12 @@ async function boostAd(id) {
         try {
           await API.deleteAd(id);
         } catch (e) {
-          showToast(e.message || 'Błąd usuwania');
+          showToast(e.message || t('toast_delete_error'));
           return;
         }
       } catch (e) {
         console.error('DELETE error:', e);
-        showToast('Błąd usuwania');
+        showToast(t('toast_delete_error'));
         return;
       }
       ads = ads.filter(a => a.id !== id);
@@ -2954,7 +3419,7 @@ function submitAd(e) {
       
       const category = document.getElementById('f-category').value;
       if (!category) {
-        showToast('Wybierz kategorię');
+        showToast(t('toast_choose_category'));
         return;
       }
       const phoneVal = (document.getElementById('f-phone')?.value || '').trim();
@@ -2977,19 +3442,19 @@ function submitAd(e) {
         const yearInput = document.getElementById('f-year-auto');
         
         if (!brandSelect.value) {
-          showToast('Wybierz markę');
+          showToast(t('toast_choose_brand'));
           return;
         }
         if (!modelSelect.value) {
-          showToast('Wybierz model');
+          showToast(t('toast_choose_model'));
           return;
         }
         if (!yearInput.value) {
-          showToast('Wpisz rok');
+          showToast(t('toast_enter_year'));
           return;
         }
         if (!document.getElementById('f-mileage-auto').value) {
-          showToast('Wypełnij przebieg!');
+          showToast(t('toast_enter_mileage'));
           return;
         }
         
@@ -3005,19 +3470,19 @@ function submitAd(e) {
         const yearInput = document.getElementById('f-year-moto');
         
         if (!brandSelect.value) {
-          showToast('Wybierz markę');
+          showToast(t('toast_choose_brand'));
           return;
         }
         if (!modelSelect.value) {
-          showToast('Wybierz model');
+          showToast(t('toast_choose_model'));
           return;
         }
         if (!yearInput.value) {
-          showToast('Wpisz rok');
+          showToast(t('toast_enter_year'));
           return;
         }
         if (!document.getElementById('f-mileage-moto').value) {
-          showToast('Wypełnij przebieg!');
+          showToast(t('toast_enter_mileage'));
           return;
         }
         
@@ -3030,11 +3495,11 @@ function submitAd(e) {
       } else if (category === 'realty' || category === 'realty_abroad') {
         title = document.getElementById('f-title-realty').value.trim();
         if (!title) {
-          showToast('Wypełnij tytuł!');
+          showToast(t('toast_enter_title'));
           return;
         }
         if (!document.getElementById('f-area').value) {
-          showToast('Wypełnij powierzchnię!');
+          showToast(t('toast_enter_area'));
           return;
         }
         price = Number(document.getElementById('f-price-realty').value);
@@ -3264,7 +3729,7 @@ ad.color = document.getElementById('f-color-auto').value || null;
               ads[idx] = updated && updated.id ? updated : { ...existing, ...payload };
             } catch (e) {
               console.error('PUT edit error:', e);
-              showToast((e && e.message) || 'Błąd zapisu');
+              showToast((e && e.message) || t('toast_save_error'));
               ads[idx] = { ...existing, ...payload };
             }
           }
@@ -3392,7 +3857,7 @@ ad.color = document.getElementById('f-color-auto').value || null;
       for (const file of toProcess) {
         if (!file.type.startsWith('image/')) continue;
         
-        showToast('Загрузка фото...'); 
+        showToast(t('toast_photo_uploading')); 
         
         try {
           const formData = new FormData();
@@ -3409,7 +3874,7 @@ ad.color = document.getElementById('f-color-auto').value || null;
           pendingPhotos.push(data.url);
         } catch (err) {
           console.error(err);
-          showToast('Ошибка загрузки фото');
+          showToast(t('toast_photo_error'));
         }
       }
       renderPhotoPreviews();
@@ -3531,7 +3996,7 @@ ad.color = document.getElementById('f-color-auto').value || null;
     function showSearchHistory(category) {
       const history = safeArray(STORAGE.json('search_history_' + category, []));
       if (history.length === 0) {
-        showToast('Brak historii wyszukiwania');
+        showToast(t('toast_no_search_history'));
         return;
       }
       
@@ -3578,7 +4043,7 @@ ad.color = document.getElementById('f-color-auto').value || null;
 
     function voiceSearch(category) {
       if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        showToast('Twoja przeglądarka nie obsługuje wyszukiwania głosowego');
+        showToast(t('toast_no_voice'));
         return;
       }
       
@@ -3593,15 +4058,15 @@ ad.color = document.getElementById('f-color-auto').value || null;
         const input = document.getElementById(category + '-search');
         input.value = transcript;
         input.dispatchEvent(new Event('input'));
-        showToast('Szukano: ' + transcript);
+        showToast(t('toast_voice_heard') + transcript);
       };
       
       recognition.onerror = () => {
-        showToast('Nie udało się rozpoznać mowy. Spróbuj ponownie.');
+        showToast(t('toast_voice_fail') || 'Nie udało się rozpoznać mowy. Spróbuj ponownie.');
       };
       
       recognition.start();
-      showToast('Powiedz frazę...');
+      showToast(t('toast_voice_listen'));
     }
 
     
@@ -3955,12 +4420,12 @@ ad.color = document.getElementById('f-color-auto').value || null;
 
     function useMyLocation(cat) {
       if (!navigator.geolocation) {
-        showToast(currentLang==='en' ? 'Geolocation not supported' : currentLang==='ru' ? 'Геолокация не поддерживается' : 'Geolokalizacja nie jest obsługiwana');
+        showToast(t('toast_geoloc_unsupported'));
         return;
       }
       const box = document.getElementById(cat + '-geo-box');
       if (box) box.classList.add('loading');
-      showToast(currentLang==='en' ? 'Detecting location…' : currentLang==='ru' ? 'Определяем локацию…' : 'Wykrywanie lokalizacji…');
+      showToast(t('toast_geoloc_detecting'));
 
       // Invalidate previous geo callbacks; this request is current
       const myToken = ++locGeoToken;
@@ -4020,9 +4485,9 @@ ad.color = document.getElementById('f-color-auto').value || null;
           closeLocPanel();
           if (typeof renderCategory === 'function') renderCategory(cat);
           const label = district ? `${city} — ${district}` : city;
-          showToast((currentLang==='en' ? 'Location: ' : currentLang==='ru' ? 'Локация: ' : 'Lokalizacja: ') + label);
+          showToast(t('toast_geoloc_prefix') + label);
         } else {
-          showToast(currentLang==='en' ? 'Could not determine city' : currentLang==='ru' ? 'Не удалось определить город' : 'Nie udało się ustalić miasta');
+          showToast(t('toast_geoloc_fail'));
         }
       }, (err) => {
         if (myToken !== locGeoToken) return;
@@ -4589,7 +5054,7 @@ if (__activePage && __activePage.id === 'page-my') renderMy();
       e.preventDefault();
 const termsCheckbox = document.getElementById('auth-accept-terms');
 if (!termsCheckbox || !termsCheckbox.checked) {
-  showToast('Musisz zaakceptować Regulamin i Politykę prywatności.');
+  showToast(t('toast_accept_rules'));
   return;
 }
       const email = document.getElementById('a-email').value.trim().toLowerCase();
@@ -4661,7 +5126,7 @@ if (!termsCheckbox || !termsCheckbox.checked) {
         else showPage('home');
       } catch (err) {
         console.error(err);
-        showToast('Błąd rejestracji');
+        showToast(t('toast_register_error'));
       }
     }
 
@@ -4962,7 +5427,7 @@ async function moderateAd(id, status) {
 
   } catch (error) {
     console.error('[moderateAd]', error);
-    showToast('Ошибка сохранения');
+    showToast(t('toast_save_error'));
   }
 }
 
@@ -4974,7 +5439,7 @@ async function moderateAd(id, status) {
       }
       const myAds = ads.filter(a => a.userId === currentUser.id);
       if (myAds.length === 0) {
-        showToast('Nie masz aktywnych ogłoszeń do przedłużenia.');
+        showToast(t('toast_no_ads_extend'));
         return;
       }
 
@@ -4987,20 +5452,20 @@ async function moderateAd(id, status) {
             payMethod: 'demo'
           });
         } catch (e) {
-          showToast((e && e.message) || 'Błąd przedłużenia');
+          showToast((e && e.message) || t('toast_extend_error'));
           return false;
         }
         if (data && data.ad) {
           Object.assign(ad, data.ad);
           return true;
         }
-        showToast('Błąd przedłużenia');
+        showToast(t('toast_extend_error'));
         return false;
       }
 
       if (myAds.length === 1) {
         if (!(await payExtend(myAds[0]))) return;
-        showToast('Przedłużono o 15 dni!');
+        showToast(t('toast_extended'));
         renderMy();
         return;
       }
@@ -5009,11 +5474,11 @@ async function moderateAd(id, status) {
       if (!choice) return;
       const idx = parseInt(choice, 10) - 1;
       if (idx < 0 || idx >= myAds.length) {
-        showToast('Nieprawidłowy numer.');
+        showToast(t('toast_invalid_number'));
         return;
       }
       if (!(await payExtend(myAds[idx]))) return;
-      showToast('Przedłużono o 15 dni!');
+      showToast(t('toast_extended'));
       renderMy();
     }
 
@@ -5021,7 +5486,7 @@ async function moderateAd(id, status) {
       if (!currentUser) { goAdd(); return; }
       const myAds = ads.filter(a => a.userId === currentUser.id);
       if (myAds.length === 0) {
-        showToast('Nie masz aktywnych ogłoszeń do podbicia.');
+        showToast(t('toast_no_ads_boost'));
         return;
       }
 
@@ -5037,7 +5502,7 @@ async function moderateAd(id, status) {
         ad.boostedAt = Date.now();
       }
     } catch (e) {
-      showToast((e && e.message) || 'Błąd płatności');
+      showToast((e && e.message) || t('toast_pay_error'));
       return false;
     }
     return true;
@@ -5046,7 +5511,7 @@ async function moderateAd(id, status) {
       if (myAds.length === 1) {
         const ad = myAds[0];
         if (!(await payAndBoost(ad))) return;
-        showToast('Podbito na 24h!');
+        showToast(t('toast_boosted_ok'));
         renderMy();
         return;
       }
@@ -5057,10 +5522,10 @@ async function moderateAd(id, status) {
         if (idx >= 0 && idx < myAds.length) {
           const ad = myAds[idx];
           if (!(await payAndBoost(ad))) return;
-          showToast('Podbito na 24h!');
+          showToast(t('toast_boosted_ok'));
           renderMy();
         } else {
-          showToast('Nieprawidłowy numer.');
+          showToast(t('toast_invalid_number'));
         }
       }
     }
@@ -5243,7 +5708,7 @@ function h23Req() {
   if (!currentUser) {
     showPage('auth');
     setAuthMode('login');
-    showToast('Zaloguj się, aby skorzystać z tej funkcji.');
+    showToast(t('toast_login_required_feature'));
     return false;
   }
   return true;
@@ -5296,7 +5761,7 @@ async function h23StartChat(adId) {
   const a = ads.find(x => x.id === adId);
   if (!a) return;
   if (String(a.userId) === String(H23.uid())) {
-    showToast('Nie możesz pisać do siebie.');
+    showToast(t('toast_no_self_chat') || 'Nie możesz pisać do siebie.');
     return;
   }
   await H23.loadUsers([a.userId]);
@@ -5333,8 +5798,8 @@ async function h23OpenChat(conv, adId, otherId) {
           data-conv="${escapeHtml(conv)}"
           data-ad="${escapeHtml(adId)}"
           data-other="${escapeHtml(otherId)}">
-      <input id="h23-input" maxlength="1000" placeholder="Napisz wiadomość..." required>
-      <button class="btn btn-primary">Wyślij</button>
+      <input id="h23-input" maxlength="1000" placeholder="${escapeHtml(t('placeholder_message'))}" required>
+      <button class="btn btn-primary">${escapeHtml(t('btn_send'))}</button>
     </form>
   </div>`;
 
@@ -5365,7 +5830,7 @@ async function h23Thread(conv) {
       : '<div class="h23-empty">Rozpocznij rozmowę.</div>';
     box.scrollTop = box.scrollHeight;
   } catch (e) {
-    box.innerHTML = '<div class="h23-empty">Błąd ładowania wiadomości.</div>';
+    box.innerHTML = '<div class="h23-empty">' + t('toast_generic_error') + '</div>';
   }
 }
 
@@ -5382,7 +5847,7 @@ async function h23Send(e, conv, adId, to) {
     await h23Thread(conv);
     h23RefreshBadges();
   } catch (err) {
-    showToast((err.data && err.data.error) || err.message || 'Błąd wysyłania');
+    showToast((err.data && err.data.error) || err.message || t('toast_send_error'));
   }
 }
 
@@ -5441,7 +5906,7 @@ async function h23RenderMessages() {
           <div class="h23-time">${escapeHtml(formatDate(x.last.created))}</div>
         </button>`;
       }).join('')
-        : '<div class="h23-empty">💬 Brak rozmów.</div>';
+        : '<div class="h23-empty">💬 ' + t('empty_chats') + '</div>';
 
   h23RefreshBadges();
   window.__h23OpeningChat = false;
@@ -5471,7 +5936,7 @@ async function h23RenderNotifications() {
         </div>
         ${n.read ? '' : `<button class="btn btn-outline" data-action="h23-mark" data-id="${escapeHtml(n.id)}">✓</button>`}
       </div>`).join('')
-    : '<div class="h23-empty">🔔 Brak powiadomień.</div>';
+    : '<div class="h23-empty">🔔 ' + t('empty_notifications') + '</div>';
 
   h23RefreshBadges();
 }
@@ -5507,17 +5972,17 @@ async function h23OpenReport(adId) {
 
   try {
     await API.createReport({ adId, reason: reasonText, comment });
-    showToast('Zgłoszenie wysłane.');
+    showToast(t('toast_report_ok'));
     closeModal();
   } catch (e) {
-    showToast((e.data && e.data.error) || e.message || 'Błąd zgłoszenia');
+    showToast((e.data && e.data.error) || e.message || t('toast_report_error'));
   }
 }
 
 async function h23RenderReports() {
   if (!isModerator()) {
     showPage('home');
-    showToast('Brak uprawnień.');
+    showToast(t('toast_no_permission'));
     return;
   }
   let rs = [];
@@ -5542,18 +6007,18 @@ async function h23RenderReports() {
           <div class="h23-main">
             <div class="h23-title">${escapeHtml(a?.title || 'Usunięte ogłoszenie')}</div>
             <div><strong>${escapeHtml(r.reason)}</strong> · ${escapeHtml(H23.name(u))}</div>
-            <div class="h23-muted">${escapeHtml(r.comment || 'Brak komentarza')} · ${escapeHtml(formatDate(r.created))}</div>
+            <div class="h23-muted">${escapeHtml(r.comment || t('report_no_comment'))} · ${escapeHtml(formatDate(r.created))}</div>
             <div class="h23-actions">
-              ${a ? `<button class="btn btn-outline" data-action="open-ad" data-id="${escapeAttr(a.id)}">Otwórz</button>` : ''}
+              ${a ? `<button class="btn btn-outline" data-action="open-ad" data-id="${escapeAttr(a.id)}">${escapeHtml(t('btn_open'))}</button>` : ''}
               ${r.status === 'open'
-                ? `<button class="btn btn-primary" data-action="h23-close-report" data-id="${escapeHtml(r.id)}">Zamknij</button>
-                   <button class="btn btn-danger" data-action="h23-hide-report" data-id="${escapeHtml(r.id)}">Ukryj</button>`
-                : '<span class="h23-status h23-closed">Zamknięte</span>'}
+                ? `<button class="btn btn-primary" data-action="h23-close-report" data-id="${escapeHtml(r.id)}">${escapeHtml(t('btn_close_report'))}</button>
+                   <button class="btn btn-danger" data-action="h23-hide-report" data-id="${escapeHtml(r.id)}">${escapeHtml(t('btn_hide_report'))}</button>`
+                : `<span class="h23-status h23-closed">${escapeHtml(t('report_closed'))}</span>`}
             </div>
           </div>
         </div>`;
       }).join('')
-    : '<div class="h23-empty">Brak zgłoszeń.</div>';
+    : '<div class="h23-empty">' + t('reports_empty') + '</div>';
 }
 
 async function h23CloseReport(id) {
@@ -5584,7 +6049,7 @@ async function h23HideReport(id) {
     renderHome();
     if (typeof renderAdmin === 'function') renderAdmin();
   } catch (e) {
-    showToast((e.data && e.data.error) || e.message || 'Błąd odrzucenia');
+    showToast((e.data && e.data.error) || e.message || t('toast_generic_error'));
   }
 }
 
@@ -5619,26 +6084,26 @@ async function h23RenderSeller() {
       <div>
         <h1 style="margin:0">${escapeHtml(name)}</h1>
         <div class="h23-muted">${escapeHtml(currentUser.email || '')}</div>
-        <div>⭐ Profil sprzedawcy</div>
+        <div>⭐ ${escapeHtml(t('seller_profile'))}</div>
       </div>
       <div style="margin-left:auto">
-        <button class="btn btn-outline" data-action="h23-seller" data-sec="settings">⚙️ Ustawienia</button>
+        <button class="btn btn-outline" data-action="h23-seller" data-sec="settings">⚙️ ${escapeHtml(t('seller_settings'))}</button>
       </div>
     </div>
     <div class="h23-grid">
-      <div class="h23-stat"><div class="n">${active}</div><div class="l">Aktywne</div></div>
-      <div class="h23-stat"><div class="n">${pending}</div><div class="l">Moderacja</div></div>
-      <div class="h23-stat"><div class="n">${rejected}</div><div class="l">Odrzucone</div></div>
-      <div class="h23-stat"><div class="n">${views}</div><div class="l">Wyświetlenia</div></div>
-      <div class="h23-stat"><div class="n">${msgs.filter(m => String(m.to) === String(uid) && !m.read).length}</div><div class="l">Nowe wiadomości</div></div>
-      <div class="h23-stat"><div class="n">${notifs.filter(n => !n.read).length}</div><div class="l">Nowe powiadomienia</div></div>
-      <div class="h23-stat"><div class="n">${mine.filter(a => favorites.includes(a.id)).length}</div><div class="l">W ulubionych</div></div>
-      <div class="h23-stat"><div class="n">${reports.length}</div><div class="l">Zgłoszenia</div></div>
+      <div class="h23-stat"><div class="n">${active}</div><div class="l">${escapeHtml(t('seller_active'))}</div></div>
+      <div class="h23-stat"><div class="n">${pending}</div><div class="l">${escapeHtml(t('seller_moderation'))}</div></div>
+      <div class="h23-stat"><div class="n">${rejected}</div><div class="l">${escapeHtml(t('seller_rejected'))}</div></div>
+      <div class="h23-stat"><div class="n">${views}</div><div class="l">${escapeHtml(t('seller_views'))}</div></div>
+      <div class="h23-stat"><div class="n">${msgs.filter(m => String(m.to) === String(uid) && !m.read).length}</div><div class="l">${escapeHtml(t('seller_new_messages'))}</div></div>
+      <div class="h23-stat"><div class="n">${notifs.filter(n => !n.read).length}</div><div class="l">${escapeHtml(t('seller_new_notifications'))}</div></div>
+      <div class="h23-stat"><div class="n">${mine.filter(a => favorites.includes(a.id)).length}</div><div class="l">${escapeHtml(t('seller_in_fav'))}</div></div>
+      <div class="h23-stat"><div class="n">${reports.length}</div><div class="l">${escapeHtml(t('seller_reports'))}</div></div>
     </div>
     <div class="h23-tabs">
-      <button class="btn btn-outline active" data-action="h23-seller" data-sec="overview">Przegląd</button>
-      <button class="btn btn-outline" data-action="h23-seller" data-sec="listings">Moje ogłoszenia</button>
-      <button class="btn btn-outline" data-action="nav" data-page="messages">💬 Chat</button>
+      <button class="btn btn-outline active" data-action="h23-seller" data-sec="overview">${escapeHtml(t('seller_overview'))}</button>
+      <button class="btn btn-outline" data-action="h23-seller" data-sec="listings">${escapeHtml(t('seller_listings'))}</button>
+      <button class="btn btn-outline" data-action="nav" data-page="messages">💬 ${escapeHtml(t('chat_title').replace(/^💬\s*/, ''))}</button>
       <button class="btn btn-outline" data-action="nav" data-page="notifications">🔔 Powiadomienia</button>
     </div>
     <div id="h23-seller-section"></div>
@@ -5659,19 +6124,19 @@ function h23SellerSection(sec, btn) {
           <div class="h23-item">
             <div class="h23-avatar">${escapeHtml(CATEGORIES[a.category]?.icon || '📦')}</div>
             <div class="h23-main">
-              <div class="h23-title">${escapeHtml(a.title || 'Bez tytułu')}</div>
+              <div class="h23-title">${escapeHtml(a.title || t('no_title'))}</div>
               <div class="h23-muted">${escapeHtml(formatPrice(a.price || 0))} · ${escapeHtml(a.city || '')}</div>
             </div>
             <span class="h23-status ${a.status === 'pending' ? 'h23-pending' : a.status === 'rejected' ? 'h23-open' : 'h23-closed'}">${escapeHtml(a.status || 'approved')}</span>
             <div class="h23-actions">
-              <button class="btn btn-outline" data-action="open-ad" data-id="${escapeAttr(a.id)}">Otwórz</button>
-              <button class="btn btn-outline" data-action="edit-ad" data-id="${escapeHtml(a.id)}">Edytuj</button>
+              <button class="btn btn-outline" data-action="open-ad" data-id="${escapeAttr(a.id)}">${escapeHtml(t('btn_open'))}</button>
+              <button class="btn btn-outline" data-action="edit-ad" data-id="${escapeHtml(a.id)}">${escapeHtml(t('btn_edit'))}</button>
             </div>
           </div>`).join('')}</div>`
-      : '<div class="h23-empty">Brak ogłoszeń.</div>';
+      : '<div class="h23-empty">' + t('seller_empty') + '</div>';
     return;
   }
-      root.innerHTML = '<div class="h23-item"><div class="h23-main"><div class="h23-title">Kabinet sprzedawcy</div><div class="h23-muted">Tu zebrane są Twoje statystyki i narzędzia sprzedażowe.</div></div></div>';
+      root.innerHTML = `<div class="h23-item"><div class="h23-main"><div class="h23-title">${escapeHtml(t('nav_seller'))}</div><div class="h23-muted">${escapeHtml(t('seller_cabinet_hint'))}</div></div></div>`;
 }
 
 /* ---------- init ---------- */
@@ -5692,10 +6157,10 @@ async function openSupportChat() {
   if (!currentUser) {
     showPage('auth');
     setAuthMode('login');
-    showToast('Zaloguj się, aby napisać do administratora.');
+    showToast(t('support_need_login'));
     return;
   }
-    window.__h23OpeningChat = true;
+  window.__h23OpeningChat = true;
 
   showPage('messages');
   const root = document.getElementById('h23-chat-list');
@@ -5706,15 +6171,15 @@ async function openSupportChat() {
   root.innerHTML = `<div class="h23-chat-window">
     <div class="h23-head-row">
       <div>
-        <h2>🆘 Wsparcie Handlio</h2>
-        <div class="h23-muted">Napisz do administratora — odpowiemy w ciągu 24h</div>
+        <h2>🆘 ${escapeHtml(t('support_title'))}</h2>
+        <div class="h23-muted">${escapeHtml(t('support_subtitle'))}</div>
       </div>
-      <button class="btn btn-outline" data-action="h23-messages">← Wszystkie rozmowy</button>
+      <button class="btn btn-outline" data-action="h23-messages">${escapeHtml(t('support_back'))}</button>
     </div>
     <div id="h23-thread" class="h23-messages"></div>
     <form class="h23-compose" data-on-submit="support-send" data-conv="${escapeHtml(conv)}">
-      <input id="support-input" maxlength="2000" placeholder="Napisz wiadomość do administratora..." required>
-      <button class="btn btn-primary">Wyślij</button>
+      <input id="support-input" maxlength="2000" placeholder="${escapeHtml(t('support_placeholder'))}" required>
+      <button class="btn btn-primary">${escapeHtml(t('btn_send'))}</button>
     </form>
   </div>`;
 
@@ -5739,10 +6204,10 @@ async function loadSupportThread(conv) {
             <div><small>${escapeHtml(formatDate(x.created))}</small></div>
           </div>`;
         }).join('')
-      : '<div class="h23-empty">Napisz pierwszą wiadomość — chętnie pomożemy.</div>';
+      : '<div class="h23-empty">' + t('support_empty') + '</div>';
     box.scrollTop = box.scrollHeight;
   } catch (e) {
-    box.innerHTML = '<div class="h23-empty">Błąd ładowania wiadomości.</div>';
+    box.innerHTML = '<div class="h23-empty">' + t('toast_generic_error') + '</div>';
   }
 }
 
@@ -5760,9 +6225,9 @@ async function sendSupportMessage(e, conv) {
     });
     input.value = '';
     await loadSupportThread(conv);
-    showToast('Wiadomość wysłana do administratora');
+    showToast(t('support_sent'));
   } catch (err) {
-    showToast((err.data && err.data.error) || err.message || 'Błąd wysyłania');
+    showToast((err.data && err.data.error) || err.message || t('toast_send_error'));
   }
 }
 
@@ -6015,7 +6480,7 @@ async function sendSupportMessage(e, conv) {
             if (confirm('Czy na pewno chcesz usunąć swoje konto? Ta operacja jest nieodwracalna.')) {
               API.deleteAccount()
                 .then(() => {
-                  showToast('Konto zostało usunięte');
+                  showToast(t('toast_account_deleted'));
                   setAuthToken(null, null);
                   currentUser = null;
                   STORAGE.remove('handlio_user');

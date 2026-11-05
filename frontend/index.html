@@ -30,9 +30,9 @@
         <button class="nav-btn" data-action="nav" data-page="abroad" data-i18n="nav_abroad">Nieruchomości zagraniczne</button>
         <button class="nav-btn nav-user-only" data-action="nav" data-page="fav" data-i18n="nav_fav">Ulubione</button>
         <button class="nav-btn nav-user-only" data-action="nav" data-page="my" data-i18n="nav_my">Moje</button>
-        <button class="nav-btn nav-user-only" data-action="nav" data-page="messages">💬 Chat <span id="chat-badge" class="h23-badge" hidden>0</span></button>
-        <button class="nav-btn nav-user-only" data-action="nav" data-page="seller">👤 Kabinet</button>
-        <button class="nav-btn nav-user-only" data-action="nav" data-page="notifications">🔔 <span id="notify-badge" class="h23-badge" hidden>0</span></button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="messages" data-i18n="nav_chat">💬 Chat <span id="chat-badge" class="h23-badge" hidden>0</span></button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="seller" data-i18n="nav_seller">👤 Kabinet</button>
+        <button class="nav-btn nav-user-only" data-action="nav" data-page="notifications" data-i18n="nav_notifications">🔔 <span id="notify-badge" class="h23-badge" hidden>0</span></button>
         <button class="nav-btn" data-action="nav" data-page="pricing" data-i18n="nav_pricing">Cennik</button>
         <button class="nav-btn" data-page="add" data-action="go-add" data-i18n="nav_add">+ Dodaj</button>
       </nav>
@@ -560,24 +560,22 @@
       <div class="ads-grid" id="my-ads"></div>
     </div>
 
-    <div id="page-messages" class="page"><div class="page-head"><h1>💬 Chat</h1><p class="subtitle">Rozmowy z kupującymi i sprzedającymi</p></div><div id="h23-chat-list" class="h23-list"></div></div>
-    <div id="page-notifications" class="page"><div class="page-head h23-head-row"><div><h1>🔔 Powiadomienia</h1><p class="subtitle">Ważne informacje dotyczące Twojego konta</p></div><button class="btn btn-outline" data-action="h23-mark-all">Oznacz wszystkie jako przeczytane</button></div><div id="h23-notifications" class="h23-list"></div></div>
+    <div id="page-messages" class="page"><div class="page-head"><h1 data-i18n="chat_title">💬 Chat</h1><p class="subtitle" data-i18n="chat_subtitle">Rozmowy z kupującymi i sprzedającymi</p></div><div id="h23-chat-list" class="h23-list"></div></div>
+    <div id="page-notifications" class="page"><div class="page-head h23-head-row"><div><h1 data-i18n="notifications_title">🔔 Powiadomienia</h1><p class="subtitle" data-i18n="notifications_subtitle">Ważne informacje dotyczące Twojego konta</p></div><button class="btn btn-outline" data-action="h23-mark-all" data-i18n="btn_mark_all_read">Oznacz wszystkie jako przeczytane</button></div><div id="h23-notifications" class="h23-list"></div></div>
             <div id="page-seller" class="page">
       <div id="h23-seller-dashboard"></div>
 
       <!-- 🆘 Поддержка / Написать админу -->
       <div style="margin-top: 24px; padding: 20px; border: 2px solid var(--primary); border-radius: 8px; background: var(--bg-card, #f8f9fa);">
-        <h3 style="margin-top: 0;">🆘 Potrzebujesz pomocy?</h3>
-        <p style="font-size: 0.9rem; color: #555; margin-bottom: 12px;">
-          Masz pytanie lub problem? Napisz do nas bezpośrednio — odpowiemy najszybciej jak to możliwe.
-        </p>
-        <button class="btn btn-primary" data-action="support-open">💬 Napisz do administratora</button>
+        <h3 style="margin-top: 0;" data-i18n="support_help_title">🆘 Potrzebujesz pomocy?</h3>
+        <p style="font-size: 0.9rem; color: #555; margin-bottom: 12px;" data-i18n="support_help_text">Masz pytanie lub problem? Napisz do nas bezpośrednio — odpowiemy najszybciej jak to możliwe.</p>
+        <button class="btn btn-primary" data-action="support-open" data-i18n="support_btn">💬 Napisz do administratora</button>
       </div>
 
       <!-- Красная зона удаления аккаунта -->
       <div style="margin-top: 40px; padding: 20px; border: 2px solid #ff4d4f; border-radius: 8px; background: #fff1f0;">
-        <h3 style="color: #ff4d4f; margin-top: 0;">Usuwanie konta</h3>
-        <p style="font-size: 0.9rem; color: #555;">Ta operacja jest nieodwracalna. Wszystkie Twoje ogłoszenia i wiadomości zostaną trwale usunięte.</p>
+        <h3 style="color: #ff4d4f; margin-top: 0;" data-i18n="delete_account_title">Usuwanie konta</h3>
+        <p style="font-size: 0.9rem; color: #555;" data-i18n="delete_account_text">Ta operacja jest nieodwracalna. Wszystkie Twoje ogłoszenia i wiadomości zostaną trwale usunięte.</p>
         <button class="btn btn-outline" style="border-color: #ff4d4f; color: #ff4d4f;" data-action="delete-account">Usuń konto</button>
       </div>
     </div>
@@ -1436,44 +1434,44 @@
       <h1 data-i18n="privacy_title">Polityka prywatności</h1>
       <p class="subtitle" data-i18n="privacy_subtitle">Ochrona danych osobowych (RODO)</p>
                   <div class="legal-content rules-content">
-        <p>Niniejsza Polityka prywatności opisuje zasady przetwarzania danych osobowych w serwisie Handlio zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).</p>
+        <p data-i18n="privacy_intro">Niniejsza Polityka prywatności opisuje zasady przetwarzania danych osobowych w serwisie Handlio zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).</p>
         
-        <h2>1. Administrator danych</h2>
-        <p>Administratorem danych jest podmiot prowadzący serwis Handlio. Kontakt w sprawach danych: admin@handlio.pl</p>
+        <h2 data-i18n="privacy_h1">1. Administrator danych</h2>
+        <p data-i18n="privacy_p1">Administratorem danych jest podmiot prowadzący serwis Handlio. Kontakt w sprawach danych: admin@handlio.pl</p>
         
-        <h2>2. Jakie dane zbieramy</h2>
+        <h2 data-i18n="privacy_h2">2. Jakie dane zbieramy</h2>
         <ul>
-          <li>Dane konta: imię/nazwa firmy, e-mail, telefon, hasło (przechowywane w formie zaszyfrowanej).</li>
-          <li>Treść ogłoszeń: tytuł, opis, cena, lokalizacja, zdjęcia, dane kontaktowe.</li>
-          <li>Treść wiadomości: wiadomości przesyłane między użytkownikami w ramach czatu (przechowywane na serwerze).</li>
-          <li>Dane techniczne: adres IP, dane przeglądarki (niezbędne do bezpieczeństwa).</li>
+          <li data-i18n="privacy_l2a">Dane konta: imię/nazwa firmy, e-mail, telefon, hasło (przechowywane w formie zaszyfrowanej).</li>
+          <li data-i18n="privacy_l2b">Treść ogłoszeń: tytuł, opis, cena, lokalizacja, zdjęcia, dane kontaktowe.</li>
+          <li data-i18n="privacy_l2c">Treść wiadomości: wiadomości przesyłane między użytkownikami w ramach czatu (przechowywane na serwerze).</li>
+          <li data-i18n="privacy_l2d">Dane techniczne: adres IP, dane przeglądarki (niezbędne do bezpieczeństwa).</li>
         </ul>
 
-        <h2>3. Cele i podstawy przetwarzania</h2>
+        <h2 data-i18n="privacy_h3">3. Cele i podstawy przetwarzania</h2>
         <ul>
-          <li>Świadczenie usług serwisu (konto, ogłoszenia, czat) — art. 6 ust. 1 lit. b RODO.</li>
-          <li>Bezpieczeństwo, moderacja i zapobieganie nadużyciom — art. 6 ust. 1 lit. f RODO.</li>
-          <li>Wysyłka e-maili (powiadomienia, reset hasła) — realizowana przez zewnętrznego dostawcę (Resend).</li>
+          <li data-i18n="privacy_l3a">Świadczenie usług serwisu (konto, ogłoszenia, czat) — art. 6 ust. 1 lit. b RODO.</li>
+          <li data-i18n="privacy_l3b">Bezpieczeństwo, moderacja i zapobieganie nadużyciom — art. 6 ust. 1 lit. f RODO.</li>
+          <li data-i18n="privacy_l3c">Wysyłka e-maili (powiadomienia, reset hasła) — realizowana przez zewnętrznego dostawcę (Resend).</li>
         </ul>
 
-        <h2>4. Odbiorcy danych (Komu przekazujemy dane)</h2>
-        <p>Twoje dane mogą być przekazywane zaufanym podmiotom trzecim (procesorom), które pomagają nam prowadzić serwis:</p>
+        <h2 data-i18n="privacy_h4">4. Odbiorcy danych (Komu przekazujemy dane)</h2>
+        <p data-i18n="privacy_p4a">Twoje dane mogą być przekazywane zaufanym podmiotom trzecim (procesorom), które pomagają nam prowadzić serwis:</p>
         <ul>
-          <li><strong>Neon</strong> (baza danych) — serwery w Irlandii (UE).</li>
-          <li><strong>Cloudflare R2</strong> (przechowywanie zdjęć) — serwery w UE.</li>
-          <li><strong>Resend</strong> (wysyłka e-maili) — serwery w USA (przekazywanie odbywa się na podstawie standardowych klauzul umownych zatwierdzonych przez Komisję Europejską).</li>
+          <li data-i18n="privacy_l4a"><strong>Neon</strong> (baza danych) — serwery w Irlandii (UE).</li>
+          <li data-i18n="privacy_l4b"><strong>Cloudflare R2</strong> (przechowywanie zdjęć) — serwery w UE.</li>
+          <li data-i18n="privacy_l4c"><strong>Resend</strong> (wysyłka e-maili) — serwery w USA (przekazywanie na podstawie standardowych klauzul umownych).</li>
         </ul>
-        <p>Nie sprzedajemy ani nie udostępniamy danych osobowych podmiotom trzecim w celach marketingowych.</p>
+        <p data-i18n="privacy_p4b">Nie sprzedajemy ani nie udostępniamy danych osobowych podmiotom trzecim w celach marketingowych.</p>
 
-        <h2>5. Prawa użytkownika</h2>
-        <p>Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia (poprzez przycisk „Usuń konto” w panelu sprzedawcy), ograniczenia przetwarzania oraz przenoszenia danych.</p>
-        <p>Masz również prawo wniesienia skargi do organu nadzorczego — Prezesa Urzędu Ochrony Danych Osobowych (UODO), ul. Stawki 2, 00-193 Warszawa.</p>
+        <h2 data-i18n="privacy_h5">5. Prawa użytkownika</h2>
+        <p data-i18n="privacy_p5a">Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia (poprzez przycisk „Usuń konto” w panelu sprzedawcy), ograniczenia przetwarzania oraz przenoszenia danych.</p>
+        <p data-i18n="privacy_p5b">Masz również prawo wniesienia skargi do organu nadzorczego — Prezesa Urzędu Ochrony Danych Osobowych (UODO), ul. Stawki 2, 00-193 Warszawa.</p>
 
-                <h2>6. Okres przechowywania</h2>
-        <p>Dane konta i ogłoszeń przechowujemy przez czas korzystania z serwisu. Po usunięciu konta dane są trwale usuwane z bazy. Wiadomości na czacie są przechowywane do momentu usunięcia konta. Dane transakcyjne (jeśli dotyczą płatności) przechowywane są przez 5 lat zgodnie z przepisami podatkowymi.</p>
+        <h2 data-i18n="privacy_h6">6. Okres przechowywania</h2>
+        <p data-i18n="privacy_p6">Dane konta i ogłoszeń przechowujemy przez czas korzystania z serwisu. Po usunięciu konta dane są trwale usuwane z bazy. Wiadomości na czacie są przechowywane do momentu usunięcia konta. Dane transakcyjne (jeśli dotyczą płatności) przechowywane są przez 5 lat zgodnie z przepisami podatkowymi.</p>
 
-        <h2>7. Płatności</h2>
-<p>W przypadku dokonywania płatności za pośrednictwem serwisu, dane niezbędne do realizacji transakcji (np. adres e-mail, kwota, identyfikator transakcji) mogą być przekazywane operatorowi płatności. Handlio nie przechowuje numerów kart płatniczych. Dane transakcyjne przechowujemy przez 5 lat zgodnie z przepisami podatkowymi.</p>
+        <h2 data-i18n="privacy_h7">7. Płatności</h2>
+        <p data-i18n="privacy_p7">W przypadku dokonywania płatności za pośrednictwem serwisu, dane niezbędne do realizacji transakcji (np. adres e-mail, kwota, identyfikator transakcji) mogą być przekazywane operatorowi płatności. Handlio nie przechowuje numerów kart płatniczych. Dane transakcyjne przechowujemy przez 5 lat zgodnie z przepisami podatkowymi.</p>
       </div>
     </div>
 
@@ -1481,23 +1479,23 @@
       <h1 data-i18n="cookies_title">Polityka cookies</h1>
       <p class="subtitle" data-i18n="cookies_subtitle">Pliki cookie i lokalne przechowywanie danych</p>
          <div class="legal-content rules-content">
-     <p>Handlio w wersji demonstracyjnej korzysta wyłącznie z pamięci lokalnej przeglądarki (localStorage) w celach niezbędnych do działania serwisu. <strong>Nie stosujemy plików cookie w celach analitycznych ani marketingowych.</strong></p>
+     <p data-i18n="cookies_intro">Handlio w wersji demonstracyjnej korzysta wyłącznie z pamięci lokalnej przeglądarki (localStorage) w celach niezbędnych do działania serwisu. Nie stosujemy plików cookie w celach analitycznych ani marketingowych.</p>
      
-     <h2>1. Co zapisujemy lokalnie</h2>
+     <h2 data-i18n="cookies_h1">1. Co zapisujemy lokalnie</h2>
      <ul>
-       <li>Sesja użytkownika i dane konta (po zalogowaniu) — abyś nie musiał logować się na każdej podstronie.</li>
-       <li>Ogłoszenia, ulubione, ustawienia języka i motywu (jasny/ciemny).</li>
-       <li>Stan zaakceptowania tego banera (aby nie pokazywać go przy każdej wizycie).</li>
+       <li data-i18n="cookies_l1a">Sesja użytkownika i dane konta (po zalogowaniu) — abyś nie musiał logować się na każdej podstronie.</li>
+       <li data-i18n="cookies_l1b">Ogłoszenia, ulubione, ustawienia języka i motywu (jasny/ciemny).</li>
+       <li data-i18n="cookies_l1c">Stan zaakceptowania tego banera (aby nie pokazywać go przy każdej wizycie).</li>
      </ul>
 
-     <h2>2. Po co to jest potrzebne</h2>
-     <p>Aby serwis działał (logowanie, Twoje ogłoszenia, filtry, zapamiętanie wybranego języka). Bez localStorage aplikacja nie zapamięta stanu.</p>
+     <h2 data-i18n="cookies_h2">2. Po co to jest potrzebne</h2>
+     <p data-i18n="cookies_p2">Aby serwis działał (logowanie, Twoje ogłoszenia, filtry, zapamiętanie wybranego języka). Bez localStorage aplikacja nie zapamięta stanu.</p>
 
-     <h2>3. Twoja kontrola</h2>
-     <p>Możesz w każdej chwili wyczyścić dane witryny w ustawieniach swojej przeglądarki. Spowoduje to wylogowanie i zresetowanie ustawień.</p>
+     <h2 data-i18n="cookies_h3">3. Twoja kontrola</h2>
+     <p data-i18n="cookies_p3">Możesz w każdej chwili wyczyścić dane witryny w ustawieniach swojej przeglądarki. Spowoduje to wylogowanie i zresetowanie ustawień.</p>
 
-     <h2>4. Zewnętrzni dostawcy</h2>
-     <p>Przy korzystaniu z funkcji geolokalizacji (wyszukiwanie po lokalizacji) serwis wysyła zapytanie do zewnętrznego dostawcy map (OpenStreetMap / Nominatim), przekazując jedynie współrzędne geograficzne. Nie stosujemy pikseli reklamowych (np. Facebook Pixel) ani Google Analytics.</p>
+     <h2 data-i18n="cookies_h4">4. Zewnętrzni dostawcy</h2>
+     <p data-i18n="cookies_p4">Przy korzystaniu z funkcji geolokalizacji (wyszukiwanie po lokalizacji) serwis wysyła zapytanie do zewnętrznego dostawcy map (OpenStreetMap / Nominatim), przekazując jedynie współrzędne geograficzne. Nie stosujemy pikseli reklamowych (np. Facebook Pixel) ani Google Analytics.</p>
    </div>
     </div>
 
@@ -1629,11 +1627,11 @@
   <div id="cookie-banner" class="cookie-banner" style="display: none;">
     <div class="cookie-text">
       <span>🍪</span>
-      <p><strong>Dbamy o Twoją prywatność.</strong> Nasz serwis wykorzystuje wyłącznie niezbędne pliki lokalne (localStorage) do zapamiętania Twojego logowania i ustawień (np. języka). Nie stosujemy analityki ani reklam. Szczegóły znajdziesz w naszej <a href="#top" data-action="nav" data-page="cookies">Polityce cookies</a>.</p>
+      <p data-i18n="cookie_banner_text">Dbamy o Twoją prywatność. Nasz serwis wykorzystuje wyłącznie niezbędne pliki lokalne (localStorage) do zapamiętania Twojego logowania i ustawień (np. języka). Nie stosujemy analityki ani reklam. Szczegóły znajdziesz w naszej Polityce cookies.</p>
     </div>
     <div class="cookie-actions">
-      <button class="btn btn-primary btn-sm" id="cookie-accept-btn">Akceptuję wszystkie</button>
-      <button class="btn btn-outline btn-sm" id="cookie-decline-btn">Tylko niezbędne</button>
+      <button class="btn btn-primary btn-sm" id="cookie-accept-btn" data-i18n="cookie_accept">Akceptuję wszystkie</button>
+      <button class="btn btn-outline btn-sm" id="cookie-decline-btn" data-i18n="cookie_decline">Tylko niezbędne</button>
     </div>
   </div>
 <footer style="display: block !important; visibility: visible !important; opacity: 1 !important; padding: 20px; text-align: center; font-size: 14px; color: #6b7280;">
