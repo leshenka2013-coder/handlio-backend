@@ -6676,5 +6676,12 @@ async function sendSupportMessage(e, conv) {
   if (acceptBtn) acceptBtn.addEventListener('click', () => hideBanner('all'));
   if (declineBtn) declineBtn.addEventListener('click', () => hideBanner('essential'));
 })();
-
+// Заполняем стандартный datalist для городов во всех полях
+document.addEventListener('DOMContentLoaded', () => {
+  const datalists = document.querySelectorAll('#poland-cities-list');
+  if (datalists.length > 0) {
+    const options = POLAND_CITIES.filter(c => c !== 'Other').map(c => `<option value="${c}">`).join('');
+    datalists.forEach(dl => { dl.innerHTML = options; });
+  }
+});
 
