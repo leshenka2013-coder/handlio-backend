@@ -1091,9 +1091,8 @@
             <div class="form-row" id="realty-pl-fields">
               <div class="form-group">
                 <label data-i18n="form_city">Miasto / miejscowość <span class="required">*</span></label>
-                <select id="f-city-realty" required data-on-change="realty-city">
-                  <option value="">Wybierz...</option>
-                </select>
+                <input type="text" id="f-city-realty" required data-on-input="realty-title" placeholder="Wpisz miasto..." autocomplete="off" style="width:100%; padding:9px 12px; border:1.5px solid var(--border); border-radius:9px; font-size:0.95rem;">
+<div id="city-suggestions" class="city-suggestions" style="display:none; position:absolute; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); z-index:1000; max-height:200px; overflow-y:auto; width: 100%;"></div>
                 <input type="text" id="f-city-realty-other" style="display:none;margin-top:8px" placeholder="Wpisz miejscowość..." maxlength="80" data-on-input="realty-title">
               </div>
               <div class="form-group">

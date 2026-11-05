@@ -1875,15 +1875,9 @@
       const rooms = document.getElementById('f-rooms')?.value || '';
       const deal = document.getElementById('f-deal')?.value || '';
       const floor = document.getElementById('f-floor')?.value || '';
-      let city = '';
-      if (typeof getRealtyCityValue === 'function') {
-        city = getRealtyCityValue() || '';
-      } else {
-        city = document.getElementById('f-city-realty')?.value || '';
-        if (city === '__other__') {
-          city = document.getElementById('f-city-realty-other')?.value || '';
-        }
-      }
+            let city = '';
+      const cityInput = document.getElementById('f-city-realty');
+      if (cityInput) city = cityInput.value.trim();
       const country = document.getElementById('f-country')?.value || '';
       const preview = document.getElementById('realty-title-text');
       const hidden = document.getElementById('f-title-realty');
@@ -4674,53 +4668,58 @@ ad.color = document.getElementById('f-color-auto').value || null;
       sel.style.display = districts.length ? '' : (allowEmpty ? '' : '');
     }
 
-    function onRealtyCityChange() {
-      const sel = document.getElementById('f-city-realty');
-      const other = document.getElementById('f-city-realty-other');
-      if (!sel || !other) return;
-      if (sel.value === '__other__') {
-        other.style.display = '';
-        other.required = true;
-      } else {
-        other.style.display = 'none';
-        other.required = false;
-        other.value = '';
-      }
-      const city = sel.value === '__other__' ? '' : sel.value;
-      // District select for realty
-      let distSel = document.getElementById('f-district-select');
-      const distInput = document.getElementById('f-district');
-      if (city && typeof CITY_DISTRICTS !== 'undefined' && CITY_DISTRICTS[city]) {
-        if (!distSel && distInput) {
-          distSel = document.createElement('select');
-          distSel.id = 'f-district-select';
-          distSel.style.cssText = 'width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:0.95rem;margin-bottom:8px';
-          distSel.onchange = function() {
-            if (this.value && this.value !== '__other__') {
-              distInput.value = this.value;
-              distInput.style.display = 'none';
-            } else {
-              distInput.value = '';
-              distInput.style.display = '';
-            }
-          };
-          distInput.parentNode.insertBefore(distSel, distInput);
-        }
-        if (distSel) {
-          distSel.style.display = '';
-          populateDistrictSelect(city, 'f-district-select', true);
-          distInput.style.display = 'none';
-          distInput.placeholder = 'Dzielnica';
-        }
-      } else {
-        if (distSel) distSel.style.display = 'none';
-        if (distInput) {
-          distInput.style.display = '';
-          distInput.placeholder = 'np. Mokotów';
-        }
-      }
-      if (typeof generateRealtyTitle === 'function') generateRealtyTitle();
+    // ===== АВТОДОПОЛНЕНИЕ ДЛЯ ГОРОДА =====
+function onRealtyCityChange() {
+  const input = document.getElementById('f-city-realty');
+  const suggestionsBox = document.getElementById('city-suggestions');
+  if (!input || !suggestionsBox) return;
+
+  // Делаем так, чтобы контейнер подсказок позиционировался относительно инпута
+  input.parentElement.style.position = 'relative';
+
+  input.addEventListener('input', function() {
+    const val = this.value.trim().toLowerCase();
+    
+    // Если ввели меньше 2 букв — скрываем подсказки
+    if (val.length < 2) {
+      suggestionsBox.style.display = 'none';
+      return;
     }
+
+    // Ищем города, которые начинаются с введенных букв (или содержат их)
+    const matches = POLAND_CITIES.filter(city => 
+      city !== 'Other' && city.toLowerCase().includes(val)
+    ).slice(0, 10); // Показываем максимум 10 вариантов
+
+    if (matches.length === 0) {
+      suggestionsBox.style.display = 'none';
+      return;
+    }
+
+    // Рисуем список подсказок
+    suggestionsBox.innerHTML = matches.map(city => 
+      `<div class="city-suggestion-item" style="padding:10px 12px; cursor:pointer; border-bottom:1px solid var(--border);" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='transparent'">${city}</div>`
+    ).join('');
+
+    suggestionsBox.style.display = 'block';
+
+    // Добавляем клик по каждому городу
+    suggestionsBox.querySelectorAll('.city-suggestion-item').forEach(item => {
+      item.addEventListener('click', function() {
+        input.value = this.textContent; // Подставляем выбранный город
+        suggestionsBox.style.display = 'none'; // Скрываем список
+        if (typeof generateRealtyTitle === 'function') generateRealtyTitle();
+      });
+    });
+  });
+
+  // Закрываем подсказки, если кликнули мимо
+  document.addEventListener('click', function(e) {
+    if (e.target !== input && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.style.display = 'none';
+    }
+  });
+}
 
     function onRealtyCountryChange() {
       if (typeof generateRealtyTitle === 'function') generateRealtyTitle();
@@ -5658,6 +5657,7 @@ async function moderateAd(id, status) {
     populateCountries('realty-country', true, false);
     populateCountries('abroad-country', true, false);
     onRealtyLocationTypeChange();
+onRealtyCityChange();
 
     ['auto','moto','realty'].forEach(c => { try { updateLocButtons(c); } catch(e) {} });
     setInterval(rotateBanners, 10000);
