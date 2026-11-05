@@ -806,7 +806,8 @@
               </div>
               <div class="form-group">
                 <label data-i18n="form_city">Miasto <span class="required">*</span></label>
-                <input type="text" id="f-city" required data-i18n-placeholder="ph_city" placeholder="Warszawa" data-on-input="auto-title" list="poland-cities-list" autocomplete="off">
+                <input type="text" id="f-city" required data-i18n-placeholder="ph_city" placeholder="Warszawa" data-on-input="auto-title" autocomplete="off">
+<div id="city-suggestions-auto" class="city-suggestions" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:1000; max-height:200px; overflow-y:auto; width: 100%;"></div>
 <datalist id="poland-cities-list"></datalist>
               </div>
             </div>
@@ -992,7 +993,8 @@
               </div>
               <div class="form-group">
                 <label data-i18n="form_city">Miasto <span class="required">*</span></label>
-                <input type="text" id="f-city-moto" required data-i18n-placeholder="ph_city" placeholder="Warszawa" data-on-input="moto-title" list="poland-cities-list" autocomplete="off">
+                <input type="text" id="f-city-moto" required data-i18n-placeholder="ph_city" placeholder="Warszawa" data-on-input="moto-title" autocomplete="off">
+<div id="city-suggestions-moto" class="city-suggestions" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:1000; max-height:200px; overflow-y:auto; width: 100%;"></div>
               </div>
             </div>
             <div class="form-row">
@@ -1092,7 +1094,9 @@
             <div class="form-row" id="realty-pl-fields">
               <div class="form-group">
                 <label data-i18n="form_city">Miasto / miejscowość <span class="required">*</span></label>
-                <input type="text" id="f-city-realty" required data-on-input="realty-title" placeholder="Wpisz miasto..." autocomplete="off" style="width:100%; padding:9px 12px; border:1.5px solid var(--border); border-radius:9px; font-size:0.95rem;" list="poland-cities-list">
+                <input type="text" id="f-city-realty" required data-on-input="realty-title" placeholder="Wpisz miasto..." autocomplete="off" style="width:100%; padding:9px 12px; border:1.5px solid var(--border); border-radius:9px; font-size:0.95rem;">
+<div id="city-suggestions" class="city-suggestions" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:1000; max-height:200px; overflow-y:auto; width: 100%;"></div>
+<input type="text" id="f-city-realty-other" style="display:none;margin-top:8px" placeholder="Wpisz miejscowość..." maxlength="80" data-on-input="realty-title">
                 <input type="text" id="f-city-realty-other" style="display:none;margin-top:8px" placeholder="Wpisz miejscowość..." maxlength="80" data-on-input="realty-title">
               </div>
               <div class="form-group">

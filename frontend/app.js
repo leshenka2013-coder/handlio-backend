@@ -4668,57 +4668,65 @@ ad.color = document.getElementById('f-color-auto').value || null;
       sel.style.display = districts.length ? '' : (allowEmpty ? '' : '');
     }
 
-    // ===== АВТОДОПОЛНЕНИЕ ДЛЯ ГОРОДА =====
-function onRealtyCityChange() {
-  const input = document.getElementById('f-city-realty');
-  const suggestionsBox = document.getElementById('city-suggestions');
-  if (!input || !suggestionsBox) return;
+    // ===== УНИВЕРСАЛЬНЫЕ ПОДСКАЗКИ ДЛЯ ГОРОДОВ =====
+function setupCityAutocomplete(inputId, suggestionsId) {
+  const input = document.getElementById(inputId);
+  const box = document.getElementById(suggestionsId);
+  if (!input || !box) return;
 
-  // Делаем так, чтобы контейнер подсказок позиционировался относительно инпута
+  // Привязываем позиционирование
   input.parentElement.style.position = 'relative';
 
+  // Показываем список при вводе
   input.addEventListener('input', function() {
     const val = this.value.trim().toLowerCase();
-    
-    // Если ввели меньше 2 букв — скрываем подсказки
     if (val.length < 2) {
-      suggestionsBox.style.display = 'none';
+      box.style.display = 'none';
       return;
     }
 
-    // Ищем города, которые начинаются с введенных букв (или содержат их)
     const matches = POLAND_CITIES.filter(city => 
       city !== 'Other' && city.toLowerCase().includes(val)
-    ).slice(0, 10); // Показываем максимум 10 вариантов
+    ).slice(0, 10);
 
     if (matches.length === 0) {
-      suggestionsBox.style.display = 'none';
+      box.style.display = 'none';
       return;
     }
 
-    // Рисуем список подсказок
-    suggestionsBox.innerHTML = matches.map(city => 
-      `<div class="city-suggestion-item" style="padding:10px 12px; cursor:pointer; border-bottom:1px solid var(--border);" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='transparent'">${city}</div>`
+    // Красим подсказки
+    box.innerHTML = matches.map(city => 
+      `<div class="city-suggestion-item" style="padding:10px 12px; cursor:pointer; border-bottom:1px solid #eee; color:#333;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='transparent'">${city}</div>`
     ).join('');
 
-    suggestionsBox.style.display = 'block';
+    box.style.display = 'block';
 
-    // Добавляем клик по каждому городу
-    suggestionsBox.querySelectorAll('.city-suggestion-item').forEach(item => {
+    // Обработка клика
+    box.querySelectorAll('.city-suggestion-item').forEach(item => {
       item.addEventListener('click', function() {
-        input.value = this.textContent; // Подставляем выбранный город
-        suggestionsBox.style.display = 'none'; // Скрываем список
-        if (typeof generateRealtyTitle === 'function') generateRealtyTitle();
+        input.value = this.textContent;
+        box.style.display = 'none';
+        // Обновляем заголовок
+        if (inputId === 'f-city' && typeof generateAutoTitle === 'function') generateAutoTitle();
+        if (inputId === 'f-city-moto' && typeof generateMotoTitle === 'function') generateMotoTitle();
+        if (inputId === 'f-city-realty' && typeof generateRealtyTitle === 'function') generateRealtyTitle();
       });
     });
   });
 
-  // Закрываем подсказки, если кликнули мимо
+  // Скрываем, если кликнули мимо
   document.addEventListener('click', function(e) {
-    if (e.target !== input && !suggestionsBox.contains(e.target)) {
-      suggestionsBox.style.display = 'none';
+    if (e.target !== input && !box.contains(e.target)) {
+      box.style.display = 'none';
     }
   });
+}
+
+// Запускаем это для всех трех полей
+function onRealtyCityChange() {
+  setupCityAutocomplete('f-city-realty', 'city-suggestions');
+  setupCityAutocomplete('f-city', 'city-suggestions-auto');
+  setupCityAutocomplete('f-city-moto', 'city-suggestions-moto');
 }
 
     function onRealtyCountryChange() {
@@ -6685,3 +6693,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+const style = document.createElement('style');
+style.innerHTML = `
+  .city-suggestion-item:hover {
+    background-color: #f0f0f0 !important;
+    color: #000 !important;
+  }
+`;
+document.head.appendChild(style);
