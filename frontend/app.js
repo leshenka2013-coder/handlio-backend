@@ -2814,7 +2814,18 @@ function isPolandRealty(a) {
 function buildSpecsHTML(ad) {
   const parts = [];
       // Иконка двигателя (SVG) 
-  const engineIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 2px; margin-left: -2px;"><path d="M7 10h2v4H7z"></path><path d="M9 12h6"></path><rect x="2" y="10" width="5" height="4" rx="1"></rect><path d="M15 10h5a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-5"></path><path d="M15 7v10"></path><path d="M9 7v3"></path><path d="M9 14v3"></path></svg>`;
+  const engineIcon = `<svg xmlns="http://www.w3.org/2000/svg"
+     width="24" height="24"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+  <path d="M3 10h2l2-3h8l2 3h3a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-3l-2 2H8l-2-2H3a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/>
+  <path d="M9 7V4h5v3"/>
+  <path d="M11 12v4M8 12v4M17 10v2M2 12H1"/>
+</svg>`;
   
   const chip = (icon, text) => {
     if (icon === 'ENGINE') {
