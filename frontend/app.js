@@ -6701,3 +6701,68 @@ style.innerHTML = `
   }
 `;
 document.head.appendChild(style);
+// ===== УНИВЕРСАЛЬНЫЕ ПОДСКАЗКИ ДЛЯ ГОРОДОВ =====
+function setupCityAutocomplete(inputId, suggestionsId) {
+  const input = document.getElementById(inputId);
+  const box = document.getElementById(suggestionsId);
+  if (!input || !box) return;
+
+  // Позиционирование относительно инпута
+  if (input.parentElement) {
+    input.parentElement.style.position = 'relative';
+  }
+
+  input.addEventListener('input', function() {
+    const val = this.value.trim().toLowerCase();
+    if (val.length < 2) {
+      box.style.display = 'none';
+      return;
+    }
+
+    const matches = POLAND_CITIES.filter(city =>
+      city !== 'Other' && city.toLowerCase().includes(val)
+    ).slice(0, 10);
+
+    if (matches.length === 0) {
+      box.style.display = 'none';
+      return;
+    }
+
+    box.innerHTML = matches.map(city =>
+      `<div class="city-suggestion-item" data-city="${escapeAttr(city)}">${city}</div>`
+    ).join('');
+
+    box.style.display = 'block';
+
+    box.querySelectorAll('.city-suggestion-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const chosen = this.getAttribute('data-city') || this.textContent;
+        input.value = chosen;
+        box.style.display = 'none';
+        if (inputId === 'f-city' && typeof generateAutoTitle === 'function') generateAutoTitle();
+        if (inputId === 'f-city-moto' && typeof generateMotoTitle === 'function') generateMotoTitle();
+        if (inputId === 'f-city-realty' && typeof generateRealtyTitle === 'function') generateRealtyTitle();
+      });
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (e.target !== input && !box.contains(e.target)) {
+      box.style.display = 'none';
+    }
+  });
+}
+
+// Запуск подсказок для всех трёх полей
+function onRealtyCityChange() {
+  setupCityAutocomplete('f-city-realty', 'city-suggestions');
+  setupCityAutocomplete('f-city', 'city-suggestions-auto');
+  setupCityAutocomplete('f-city-moto', 'city-suggestions-moto');
+}
+
+// Запускаем после загрузки DOM
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', onRealtyCityChange);
+} else {
+  onRealtyCityChange();
+}
