@@ -55,6 +55,7 @@ try {
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
+scriptSrcAttr: ["'unsafe-inline'"]
         styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
         connectSrc: ["'self'", "https://nominatim.openstreetmap.org"],
